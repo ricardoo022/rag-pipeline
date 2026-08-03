@@ -11,6 +11,8 @@ def main(argv: list[str] | None = None) -> int:
 
     sub.add_parser("migrate", help="Apply sql/*.sql against the configured database")
 
+    sub.add_parser("truncate", help="Truncate kb_docs/kb_chunks (destructive) so you can re-ingest from scratch")
+
     p_ingest = sub.add_parser("ingest", help="Stage kb/*.md into kb_docs, then chunk+embed into kb_chunks")
     p_ingest.add_argument("--base-dir", default="kb", help="Directory of .md files to ingest (default: kb)")
     p_ingest.add_argument("--strategy", default="fixed", choices=["fixed", "markdown", "semantic"], help="Chunking strategy (default: fixed)")
@@ -27,6 +29,12 @@ def main(argv: list[str] | None = None) -> int:
     if args.command == "migrate":
         from sql.migrate import migrate
         return migrate()
+
+    if args.command == "truncate":
+        from rag.ingest import truncate_kb_tables
+        truncate_kb_tables()
+        print("Truncated kb_docs and kb_chunks.")
+        return 0
 
     if args.command == "ingest":
         from rag.ingest import graph, truncate_kb_tables
