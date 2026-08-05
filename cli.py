@@ -15,7 +15,10 @@ def main(argv: list[str] | None = None) -> int:
 
     p_ingest = sub.add_parser("ingest", help="Stage kb/*.md into kb_docs, then chunk+embed into kb_chunks")
     p_ingest.add_argument("--base-dir", default="kb", help="Directory of .md files to ingest (default: kb)")
-    p_ingest.add_argument("--strategy", default="fixed", choices=["fixed", "markdown", "semantic"], help="Chunking strategy (default: fixed)")
+    p_ingest.add_argument(
+        "--strategy", nargs="+", default=["fixed"], choices=["fixed", "markdown", "semantic"],
+        help="Chunking strategy/strategies (default: fixed). Pass more than one (e.g. --strategy fixed markdown semantic) to materialize all of them in one run.",
+    )
     p_ingest.add_argument("--empresa", default=None, help="Optional empresa tag for staged docs/chunks")
     p_ingest.add_argument("--client-id", default=None, help="Optional client_id (uuid) tag")
     p_ingest.add_argument("--chunk-size", type=int, default=800)
@@ -41,6 +44,11 @@ def main(argv: list[str] | None = None) -> int:
     p_eval.add_argument("--max", type=int, default=0, help="Limit to N questions (0 = all)")
     p_eval.add_argument("--outfile", default="phase2", help="Output file prefix (default: phase2)")
 
+    p_eval_agent = sub.add_parser("eval-agent", help="Run eval/run_agent.py's agent E2E sweep (LLM-judge on final answer)")
+    p_eval_agent.add_argument("--fast", action="store_true", help="Use only ~10 questions")
+    p_eval_agent.add_argument("--max", type=int, default=0, help="Limit to N questions (0 = all)")
+    p_eval_agent.add_argument("--outfile", default="phase3", help="Output file prefix (default: phase3)")
+
     p_chat = sub.add_parser("chat", help="Ask the ReAct RAG agent (agent/rag_agent.py) a single question")
     p_chat.add_argument("question", help="Question for the agent")
 
@@ -64,7 +72,7 @@ def main(argv: list[str] | None = None) -> int:
 
         result = graph.invoke({
             "base_dir": args.base_dir,
-            "strategy": args.strategy,
+            "strategies": args.strategy,
             "empresa": args.empresa,
             "client_id": args.client_id,
             "chunk_size": args.chunk_size,
@@ -72,7 +80,28 @@ def main(argv: list[str] | None = None) -> int:
             "skip_stage": args.skip_stage,
             "skip_chunks": args.skip_chunks,
         })
-        print(f"Staged {result.get('staged', 0)} doc(s), materialized {result.get('chunked', 0)} chunk(s).")
+        print(f"[ingest] Done. Staged {result.get('staged', 0)} doc(s), materialized {result.get('chunked', 0)} chunk(s) total.")
+
+        if args.empresa:
+            from rag.db import get_conn
+
+            with get_conn() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        "select count(*) from public.kb_docs where lower(empresa)=lower(%s)",
+                        (args.empresa,),
+                    )
+                    docs_count = cur.fetchone()[0]
+                    cur.execute(
+                        "select meta->>'chunking' as chunking, count(*) from public.kb_chunks "
+                        "where lower(empresa)=lower(%s) group by 1 order by 1",
+                        (args.empresa,),
+                    )
+                    rows = cur.fetchall() or []
+            print("[ingest] Summary:")
+            print(f"  kb_docs(empresa={args.empresa}): {docs_count}")
+            for chunking, count in rows:
+                print(f"  kb_chunks(chunking={chunking}): {count}")
         return 0
 
     if args.command == "search":
@@ -99,6 +128,15 @@ def main(argv: list[str] | None = None) -> int:
         from eval.run import main as eval_main
 
         return eval_main([
+            *(["--fast"] if args.fast else []),
+            "--max", str(args.max),
+            "--outfile", args.outfile,
+        ])
+
+    if args.command == "eval-agent":
+        from eval.run_agent import main as eval_agent_main
+
+        return eval_agent_main([
             *(["--fast"] if args.fast else []),
             "--max", str(args.max),
             "--outfile", args.outfile,

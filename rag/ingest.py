@@ -184,6 +184,7 @@ def truncate_kb_tables() -> None:
 class IngestState(TypedDict, total=False):
     base_dir: str
     strategy: str
+    strategies: List[str]
     client_id: Optional[str]
     empresa: Optional[str]
     chunk_size: Optional[int]
@@ -197,28 +198,44 @@ class IngestState(TypedDict, total=False):
 def node_stage(state: IngestState) -> IngestState:
     if state.get("skip_stage"):
         return {"staged": 0}
-    n = stage_docs_from_dir(
-        state.get("base_dir") or "kb",
-        empresa=state.get("empresa"),
-        client_id=state.get("client_id"),
-    )
+    base_dir = state.get("base_dir") or "kb"
+    empresa = state.get("empresa")
+    client_id = state.get("client_id")
+    print(f"[ingest] Staging: base={base_dir} empresa={empresa or '-'} client_id={client_id or '-'}")
+    n = stage_docs_from_dir(base_dir, empresa=empresa, client_id=client_id)
+    print(f"[ingest] Staged {n} file(s) into kb_docs.")
     return {"staged": n}
 
 
 def node_chunk(state: IngestState) -> IngestState:
     if state.get("skip_chunks"):
         return {"chunked": 0}
-    kwargs: Dict[str, Any] = {
-        "strategy": state.get("strategy") or "fixed",
-        "empresa": state.get("empresa"),
-        "client_id": state.get("client_id"),
-    }
-    if isinstance(state.get("chunk_size"), int):
-        kwargs["chunk_size"] = state["chunk_size"]
-    if isinstance(state.get("chunk_overlap"), int):
-        kwargs["chunk_overlap"] = state["chunk_overlap"]
-    n = materialize_chunks_from_staging(**kwargs)
-    return {"chunked": n}
+
+    strategies = state.get("strategies") or [state.get("strategy") or "fixed"]
+    # doc_path_prefix only kicks in for >1 strategy, so a single-strategy run keeps
+    # writing doc_path == source_path (no collision to avoid, and preserves the
+    # scheme already used by chunks materialized before multi-strategy support existed).
+    multi = len(strategies) > 1
+    empresa = state.get("empresa")
+
+    total = 0
+    for s in strategies:
+        kwargs: Dict[str, Any] = {
+            "strategy": s,
+            "empresa": empresa,
+            "client_id": state.get("client_id"),
+        }
+        if multi:
+            kwargs["doc_path_prefix"] = s
+        if isinstance(state.get("chunk_size"), int):
+            kwargs["chunk_size"] = state["chunk_size"]
+        if isinstance(state.get("chunk_overlap"), int):
+            kwargs["chunk_overlap"] = state["chunk_overlap"]
+        print(f"[ingest] Materializing chunks: strategy={s} doc_path_prefix={s if multi else '-'}")
+        n = materialize_chunks_from_staging(**kwargs)
+        print(f"[ingest] -> {n} chunk(s) [{s}] for empresa '{empresa or '-'}'")
+        total += n
+    return {"chunked": total}
 
 
 def compile_graph():

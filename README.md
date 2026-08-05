@@ -18,11 +18,15 @@ hybrid search, phased evaluation) but drops everything CRM/sales-specific.
 | 3 | **Refine the tone** | Automated testing across all questions with the winning strategy |
 | 4 | *(prompt engineering)* | Refine the assistant's tone via prompt engineering + automated testing |
 
-**Current state:** Phase 0 (ingestion) and Phase 1/2 (retrieval + experiments) are implemented —
-see [`docs/ingest.md`](docs/ingest.md). `rag/search.py` exposes hybrid/vector/text search with
-optional HyDE and reranking; `eval/run.py` sweeps chunking x search_type x HyDE x threshold x
-reranker and reports hit@k / LLM-judge tables. `agent/` adds a conversational ReAct agent
-(KB search only, no CRM tools) on top of `rag/search.py`.
+**Current state:** Phase 0 (ingestion), Phase 1/2 (retrieval + experiments), and Phase 3
+(agent E2E) are implemented — see [`docs/ingest.md`](docs/ingest.md). `rag/search.py` exposes
+hybrid/vector/text search with optional HyDE and reranking; `eval/run.py` sweeps chunking x
+search_type x HyDE x threshold x reranker and reports hit@k / LLM-judge tables. `agent/` adds a
+conversational ReAct agent (KB search only, no CRM tools) on top of `rag/search.py`;
+`eval/run_agent.py` (`cli.py eval-agent` / `make rag_phase3_save*`) runs that agent end-to-end
+over `tests/rag/rag_queries.yaml` and LLM-judges the final answer, reporting/saving CSV+JSON to
+`eval/analysis/` — same idea as `eval/run.py` but for the agent as a whole rather than retrieval
+alone. Phase 4 (tone/prompt refinement) is not implemented yet.
 
 ## Setup
 
@@ -39,29 +43,29 @@ reranker and reports hit@k / LLM-judge tables. `agent/` adds a conversational Re
 
 ```bash
 make migrate                                              # apply sql/*.sql
-make ingest BASE_DIR=kb/empresa_x STRATEGY=fixed EMPRESA=empresa_x
+make rag_phase0 BASE_DIR=kb/empresa_x STRATEGY=fixed EMPRESA=empresa_x
 ```
 
-See `make help` for all `make ingest` variables (strategy, chunk size/overlap, skip-stage,
+See `make help` for all `make rag_phase0` variables (strategy, chunk size/overlap, skip-stage,
 truncate, ...), or run the pipeline as a LangGraph graph (`rag/ingest.py:graph`) directly —
 `langgraph dev` picks it up via `langgraph.json` as `rag_ingest`.
 
 ```bash
 make search QUERY="garantia do Produto A" EMPRESA=empresa_x   # prints JSON results
-make eval RAG_FAST=1                                           # writes eval/analysis/phase2_results.{json,csv}
+make rag_phase2_save_fast                                      # writes eval/analysis/phase2_fast.{json,csv}
 ```
 
-See `make help` for `make search`/`make eval` variables (search type, reranker, chunking filter,
-fast/max/outfile, ...).
+See `make help` for `make search`/`make rag_phase2_save*` variables (search type, reranker,
+chunking filter, outfile, ...).
 
 ```bash
 make chat QUESTION="Qual a garantia do Produto A?"   # one-shot ReAct answer, grounded + cited
 ```
 
 The agent's KB-search tool is fixed to `chunking=semantic` (no `empresa`/`client_id` filter), so
-ingest at least one company under `STRATEGY=semantic` first — e.g. `make ingest STRATEGY=semantic
-EMPRESA=empresa_x`. It's also a LangGraph graph (`agent/rag_agent.py:graph`), registered as
-`rag_agent` in `langgraph.json` for interactive use via `langgraph dev`.
+ingest at least one company under `STRATEGY=semantic` first — e.g. `make rag_phase0
+STRATEGY=semantic EMPRESA=empresa_x`. It's also a LangGraph graph (`agent/rag_agent.py:graph`),
+registered as `rag_agent` in `langgraph.json` for interactive use via `langgraph dev`.
 
 ## Testing
 
@@ -79,5 +83,5 @@ data you care about.
 
 - [`docs/database.md`](docs/database.md) — schema, connection, search functions.
 - [`docs/ingest.md`](docs/ingest.md) — ingestion pipeline: chunking strategies, embeddings,
-  LangGraph graph, `make ingest` reference.
+  LangGraph graph, `make rag_phase0` reference.
 - `CLAUDE.md` — full architecture notes for working on this repo with Claude Code.

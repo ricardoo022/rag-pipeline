@@ -1,0 +1,10 @@
+
+=== EXPERIMENTS RESULTS (sorted by llm_yes) ===
+name                 | chunking  | search       | hyde | thr  | rerank   | hit@5 | hit@1 | llm_yes
+----------------------------------------------------------------------------------------------------------------------
+exp3                 | semantic  | hybrid_rrf  | Fals | 0.50 | none     |  0.43 |  0.43 |   0.13
+exp1                 | semantic  | vector      | Fals | 0.50 | none     |  0.36 |  0.36 |   0.11
+exp2                 | semantic  | hybrid_union | True | 0.50 | none     |  0.49 |  0.48 |   0.11
+
+CSV: /home/ricardo/rag-pipeline/rag-pipeline/eval/analysis/phase2_results.csv
+JSON: /home/ricardo/rag-pipeline/rag-pipeline/eval/analysis/phase2_results.json

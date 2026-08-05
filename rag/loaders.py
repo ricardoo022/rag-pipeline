@@ -16,13 +16,18 @@ from langchain_text_splitters import (
 
 _HAS_SEMANTIC = False
 SemanticChunker = None  # type: ignore
-try:
-    from langchain_experimental.text_splitter import SemanticChunker as _SC  # type: ignore
+try:  # some langchain-text-splitters versions expose it here
+    from langchain_text_splitters import SemanticChunker as _SC  # type: ignore
     SemanticChunker = _SC  # type: ignore
     _HAS_SEMANTIC = True
 except Exception:
-    SemanticChunker = None  # type: ignore
-    _HAS_SEMANTIC = False
+    try:  # newer langchain-experimental versions
+        from langchain_experimental.text_splitter import SemanticChunker as _SC  # type: ignore
+        SemanticChunker = _SC  # type: ignore
+        _HAS_SEMANTIC = True
+    except Exception:
+        SemanticChunker = None  # type: ignore
+        _HAS_SEMANTIC = False
 
 
 def list_md_files(base_dir: str | Path) -> List[Path]:

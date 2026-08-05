@@ -165,10 +165,10 @@ compiled instance, referenced from both `cli.py` and `langgraph.json`.
 
 ## Running it
 
-### `make ingest`
+### `make rag_phase0`
 
 ```
-make ingest BASE_DIR=kb/empresa_x STRATEGY=fixed EMPRESA=empresa_x
+make rag_phase0 BASE_DIR=kb/empresa_x STRATEGY=fixed EMPRESA=empresa_x
 ```
 
 Variables (all optional, see `Makefile`):
@@ -191,8 +191,8 @@ Variables (all optional, see `Makefile`):
 .venv/bin/python cli.py ingest --base-dir kb/empresa_x --strategy fixed --empresa empresa_x
 ```
 
-Same flags as the `make ingest` variables, kebab-cased (`--chunk-size`, `--skip-stage`, ...).
-`make ingest` is a thin wrapper around this.
+Same flags as the `make rag_phase0` variables, kebab-cased (`--chunk-size`, `--skip-stage`, ...).
+`make rag_phase0` is a thin wrapper around this.
 
 ### Config required
 
@@ -208,5 +208,5 @@ Same flags as the `make ingest` variables, kebab-cased (`--chunk-size`, `--skip-
 | `rag/loaders.py` | chunking strategies (`split_fixed`/`split_markdown`/`split_semantic`/`split_text`), `.md` file discovery |
 | `rag/ingest.py` | staging, materialization, upsert, embeddings, the LangGraph graph |
 | `cli.py` | `ingest` subcommand — parses flags, invokes `graph.invoke(...)` |
-| `Makefile` | `make ingest` — ergonomic wrapper over `cli.py ingest` |
+| `Makefile` | `make rag_phase0` — ergonomic wrapper over `cli.py ingest` |
 | `langgraph.json` | exposes `graph` as `rag_ingest` for LangGraph Studio/`langgraph dev` |

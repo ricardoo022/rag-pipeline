@@ -4,5 +4,4 @@ __pycache__/
 .env
 *.egg-info/
 .pytest_cache/
-eval/analysis/
 .langgraph_api/

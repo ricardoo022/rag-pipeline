@@ -1,0 +1,81 @@
+{
+  "summary": [
+    {
+      "chunking": "semantic",
+      "total": 10,
+      "llm_yes": 0.7
+    }
+  ],
+  "details": [
+    {
+      "question": "Quais as condições comerciais e a garantia do Produto A?",
+      "expected": "Pagamento 30/60 e garantia de 12 meses.",
+      "answer": "Assumindo Empresa X, as condições comerciais do Produto A são: pagamento com parcelamento em 30/60 dias e modelo de contratação por assinatura anual com renovação automática. A garantia é padrão de 12 meses para defeitos de fabricação. O suporte é pelo canal padrão com tempos de resposta em horário comercial.\n\nSe for Empresa Y, as condições comerciais são pagamento por boleto em 45 dias, e a garantia é de 6 meses para defeitos de fabricação, com suporte por e-mail em horário comercial [empresa_x/products/produto_a.md#0, empresa_y/products/produto_a.md#0].",
+      "judge_yes": false,
+      "judge_justification": "The answer provides multiple scenarios with different payment terms and guarantees, but the expected answer specifies payment 30/60 and 12 months warranty only, so it does not directly match the expected conditions."
+    },
+    {
+      "question": "Qual o SLA do Serviço B?",
+      "expected": "SLA de 99.9% de disponibilidade mensal.",
+      "answer": "O SLA do Serviço B é:\n\n- Para a Empresa X: 99.9% de disponibilidade mensal.\n- Para a Empresa Y: 99% de disponibilidade mensal.\n\nAssumindo Empresa X como padrão, o SLA do Serviço B é 99.9% de disponibilidade mensal [servico_b.md#0].",
+      "judge_yes": true,
+      "judge_justification": "The answer specifies the SLA for Serviço B as 99.9% de disponibilidade mensal for Empresa X, matching the expected SLA."
+    },
+    {
+      "question": "Qual o prazo para cancelamento sem multa?",
+      "expected": "Cancelamento sem multa em até 7 dias úteis.",
+      "answer": "O prazo para cancelamento sem multa é:\n\n- Para a Empresa X: até 7 dias úteis após a assinatura do contrato.\n- Para a Empresa Y: até 14 dias corridos após a assinatura do contrato.\n\nApós esses prazos, há multa proporcional sobre o valor remanescente do contrato (10% para Empresa X e 5% para Empresa Y) [cancelamento.md#0].",
+      "judge_yes": false,
+      "judge_justification": "The answer provides different cancellation periods for two companies (7 days úteis for Empresa X and 14 dias corridos for Empresa Y), while the expected answer states a single period of 7 dias úteis without distinction."
+    },
+    {
+      "question": "Quais itens incluídos no Produto A?",
+      "expected": "Inclui instalação, treinamento inicial e suporte básico.",
+      "answer": "Os itens incluídos no Produto A, assumindo Empresa X, são:\n- instalação no ambiente do cliente\n- treinamento inicial para a equipe\n- suporte básico durante o período de garantia\n\nSe for Empresa Y, os itens incluídos são:\n- manual digital\n- suporte por e-mail\n\nEssas informações estão nas especificações dos produtos para cada empresa [produto_a.md#0].",
+      "judge_yes": true,
+      "judge_justification": "responde claramente os itens incluídos no Produto A para Empresa X, que são instalação, treinamento inicial e suporte básico, conforme esperado."
+    },
+    {
+      "question": "O modelo de contratação do Produto A é de qual tipo?",
+      "expected": "Contratação por assinatura anual com renovação automática.",
+      "answer": "O modelo de contratação do Produto A é de assinatura anual com renovação automática (Assumption: Empresa X) [produto_a.md#0].\n\nSe for para a Empresa Y, o modelo de contratação não está explicitamente detalhado, mas as condições comerciais indicam pagamento via boleto em 45 dias, sem menção a assinatura anual.",
+      "judge_yes": true,
+      "judge_justification": "Responde claramente que o modelo é de assinatura anual com renovação automática para a Empresa X, conforme esperado."
+    },
+    {
+      "question": "Qual canal prioritário de suporte do Serviço B?",
+      "expected": "Canal prioritário de suporte: portal do cliente.",
+      "answer": "O canal prioritário de suporte do Serviço B, assumindo Empresa X, é o portal do cliente. \n\nSe for Empresa Y, o canal prioritário é o e-mail [empresa_x/services/servico_b.md#0; empresa_y/services/servico_b.md#0].",
+      "judge_yes": true,
+      "judge_justification": "The answer specifies the canal prioritário de suporte do Serviço B as \"portal do cliente\" for Empresa X, directly addressing the question."
+    },
+    {
+      "question": "Qual é a janela de manutenção do Serviço B?",
+      "expected": "Janela de manutenção aos sábados das 01h às 05h.",
+      "answer": "A janela de manutenção do Serviço B, assumindo Empresa X, é aos sábados das 01h às 05h. \n\nSe for para a Empresa Y, a janela de manutenção é aos domingos das 02h às 04h [empresa_x/services/servico_b.md#0, empresa_y/services/servico_b.md#0].",
+      "judge_yes": true,
+      "judge_justification": "The answer specifies the maintenance window for Serviço B as Saturdays from 01h to 05h for Empresa X, matching the expected time frame."
+    },
+    {
+      "question": "Quais componentes formam o treinamento e suporte do Produto A?",
+      "expected": "Treinamento e suporte básico durante a garantia.",
+      "answer": "Para o Produto A da Empresa X, o treinamento e suporte incluem:\n\n- Treinamento inicial para a equipe.\n- Suporte básico durante o período de garantia.\n- Treinamento presencial e remoto para o time.\n- Suporte presencial em momentos críticos, como fechamentos e períodos de safra.\n- Trilha de treinamento objetiva, com plano de treinamento detalhado incluindo treinamento inicial e reciclagens.\n- Canais de atendimento claros e SLAs definidos para suporte.\n\nEsses componentes visam garantir a absorção do novo fluxo pelo time e suporte técnico adequado durante o uso do produto [produto_a.md#0, lead_joao.md#0]. \n\nSe desejar informações específicas para a Empresa Y, posso buscar também.",
+      "judge_yes": true,
+      "judge_justification": "The answer details training and basic support components during the warranty period, matching the expected \"Treinamento e suporte básico durante a garantia.\""
+    },
+    {
+      "question": "Confirme as condições de pagamento solicitadas pela Maria",
+      "expected": "Pagamento parcelado em 30/60 dias.",
+      "answer": "As condições de pagamento solicitadas pela Maria são parcelamento em 30/60 dias. Além disso, ela solicitou confirmação da garantia de 12 meses. Essas condições impactam a aprovação financeira da proposta [lead_maria.md#0].",
+      "judge_yes": true,
+      "judge_justification": "Confirma as condições de pagamento como \"parcelamento em 30/60 dias\", atendendo ao esperado."
+    },
+    {
+      "question": "Qual a garantia citada pela lead Maria?",
+      "expected": "Garantia padrão de 12 meses.",
+      "answer": "Não há evidência suficiente na base de conhecimento sobre a garantia citada pela lead Maria. Se desejar, posso tentar buscar com um limiar de similaridade menor para tentar encontrar mais informações. Deseja que eu faça isso?",
+      "judge_yes": false,
+      "judge_justification": "The answer states there is no evidence about the guarantee mentioned by lead Maria and does not provide the expected \"Garantia padrão de 12 meses.\""
+    }
+  ]
+}

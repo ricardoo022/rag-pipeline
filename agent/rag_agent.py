@@ -99,7 +99,10 @@ def build_kb_tool():
             "use_hyde": False,
         }
         if match_threshold is not None:
-            args["match_threshold"] = float(match_threshold)
+            try:
+                args["match_threshold"] = float(match_threshold)
+            except Exception:
+                pass
         return kb_search_client.invoke(args)
 
     return kb_search

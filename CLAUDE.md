@@ -16,28 +16,51 @@ wholesale.
 **Current state:** ingestion (`rag/db.py`, `rag/loaders.py`, `rag/ingest.py`, `sql/`, `cli.py`
 migrate/ingest), retrieval (`rag/search.py`, `cli.py search`), and a conversational RAG agent
 (`agent/`, `cli.py chat`) are implemented, run end-to-end against the real Supabase DB, and
-covered by the `tests/rag/` pytest suite (`phase0`-`phase2` markers). `eval/run.py` (+ `cli.py
-eval`) is a standalone experiments report script; `eval/queries.yaml`/`eval/experiments.yaml` are
-intentionally still empty — that config lives in `tests/rag/rag_queries.yaml`/`experiments.yaml`
-instead (see `eval/` below). `test_proposal_agent_v2.py` and `test_phase3_agent_dataset.py` from
-the sibling repo stay unported — they exercise its CRM-flavored proposal agent, not the RAG-only
-one built here (see "Agent (`agent/`)" below). There is no linter or build step configured yet —
-don't invent commands for tooling that doesn't exist. See `README.md` for the full phase roadmap
-(ingestion → retrieval → generation → tone refinement) and current position on it.
+covered by the `tests/rag/` pytest suite (`phase0`-`phase3` markers). `eval/run.py` (+ `cli.py
+eval`) is a standalone experiments report script sweeping retrieval-only experiments;
+`eval/run_agent.py` (+ `cli.py eval-agent`) is its Phase 3 sibling — runs the full agent
+(`agent/rag_agent.py`) over the same query dataset and LLM-judges the final answer instead of the
+retrieved chunks. `eval/queries.yaml`/`eval/experiments.yaml` are intentionally still empty — that
+config lives in `tests/rag/rag_queries.yaml`/`experiments.yaml` instead (see `eval/` below).
+`test_proposal_agent_v2.py` from the sibling repo stays unported — it exercises the CRM-flavored
+proposal agent, not the RAG-only one built here. `test_phase3_agent_dataset.py` **does** have an
+equivalent here now (same filename, adapted to import `agent.rag_agent.graph` instead of
+`app.rag.proposal_agent_v2` and to use the `seeded_kb_empresa_xy` fixture, since this repo's
+`clean_db` truncates the KB before every test unlike the source repo's) — see "Agent (`agent/`)"
+below. There is no linter or build step configured yet — don't invent commands for tooling that
+doesn't exist. See `README.md` for the full phase roadmap (ingestion → retrieval → generation →
+tone refinement) and current position on it.
 
 ## Commands
 
 ```bash
 python3.11 -m venv .venv && .venv/bin/pip install -r requirements.txt   # setup
 make migrate                                                            # apply sql/*.sql, in filename order
-make ingest BASE_DIR=kb STRATEGY=fixed EMPRESA=empresa_x                # stage + chunk + embed
+make rag_phase0 BASE_DIR=kb EMPRESA=empresa_x                           # stage + chunk + embed, all 3 strategies
 ```
 
-`make ingest` variables (see `Makefile`): `BASE_DIR` (default `kb`), `STRATEGY`
-(`fixed`|`markdown`|`semantic`, default `fixed`), `EMPRESA`, `CLIENT_ID`, `CHUNK_SIZE` (800),
-`CHUNK_OVERLAP` (200), `SKIP_STAGE=1`, `SKIP_CHUNKS=1`, `TRUNCATE=1` (destructive — truncates
-`kb_docs`/`kb_chunks` first). `make ingest` is a thin wrapper over `cli.py ingest`; both accept
-the same options (kebab-case flags on the CLI). `make help` lists both targets.
+`make rag_phase0` variables (see `Makefile`): `BASE_DIR` (default `kb`), `STRATEGY`
+(`fixed`|`markdown`|`semantic`, **default is all three** — `"fixed markdown semantic"`; pass e.g.
+`STRATEGY=fixed` to materialize just one — stages once, then materializes each strategy under its
+own `doc_path_prefix` so they don't collide on the `(doc_path, chunk_ix)` upsert key), `EMPRESA`,
+`CLIENT_ID`, `CHUNK_SIZE` (800), `CHUNK_OVERLAP` (200), `SKIP_STAGE=1`, `SKIP_CHUNKS=1`,
+`TRUNCATE=1` (destructive — truncates `kb_docs`/`kb_chunks` first). `make rag_phase0` is a thin
+wrapper over `cli.py ingest`; both accept the same options (kebab-case flags on the CLI,
+`--strategy` takes `nargs="+"`, always passed to the graph as `IngestState.strategies`). `make
+help` lists both targets. The name mirrors `../ai-agent-sales`' `make rag_phase0` (same
+staging+materialization concept), and the multi-strategy handling now mirrors that repo's
+architecture too: `IngestState` carries a `strategies: List[str]` field and `rag/ingest.py`'s
+`node_chunk` loops over it — same shape as `app/rag/ingest.py`'s `node_chunk` there — rather than
+looping in `cli.py`. One deliberate difference from the sibling repo: there, `doc_path_prefix=s`
+is applied unconditionally (even for a single strategy, whose default there is `semantic`); here
+it's only applied when `len(strategies) > 1`, so a single-strategy run still writes
+`doc_path == source_path` — this repo and `../ai-agent-sales` share the same Supabase KB tables,
+and always-prefixing would orphan/duplicate rows already materialized under the old
+no-prefix scheme by either repo. `node_chunk` still also accepts a singular `strategy` string
+(back-compat for existing `graph.invoke({"strategy": ...})` callers, including `tests/rag/`).
+Also unlike the sibling repo, there's no truncate-by-default or empresa-autodetect-from-subdirectory
+("AUTO") mode — pass `TRUNCATE=1` explicitly if you want a clean re-run, and always pass `EMPRESA`
+explicitly.
 
 The ingest pipeline is also a LangGraph graph (`rag/ingest.py:graph`), runnable outside the CLI
 via `langgraph dev` (uses `langgraph.json`, exposes it as `rag_ingest`; writes checkpoint state
@@ -45,17 +68,23 @@ to `.langgraph_api/`, currently not gitignored).
 
 ```bash
 make search QUERY="garantia do Produto A" EMPRESA=empresa_x   # cli.py search, prints JSON
-make eval RAG_FAST=1                                           # cli.py eval -> eval/analysis/*.{json,csv}
+make rag_phase2_save_fast                                      # cli.py eval --fast -> eval/analysis/*.{json,csv}
+make rag_phase3_save_fast                                      # cli.py eval-agent --fast -> eval/analysis/*.{json,csv}
 make chat QUESTION="Qual a garantia do Produto A?"              # cli.py chat, one-shot ReAct answer
 ```
 
 The agent needs a `semantic`-chunked, globally-queryable KB to be useful (its search tool fixes
-`chunking=semantic`, no `empresa`/`client_id` filter) — e.g. `make ingest STRATEGY=semantic
+`chunking=semantic`, no `empresa`/`client_id` filter) — e.g. `make rag_phase0 STRATEGY=semantic
 EMPRESA=empresa_x` first.
 
 ```bash
 make test                          # pytest -m phase0 (default) against tests/rag/
 make test PYTEST_MARK=phase1       # or any other marker from pytest.ini
+make rag_phase1                    # equivalent to: make test PYTEST_MARK=phase1
+make rag_phase2_fast               # RAG_FAST=1 pytest -m phase2 (~10 questions, no CSV/JSON output)
+make rag_phase2_extra              # pytest -m phase2, full question set
+make rag_phase3_fast               # RAG_FAST=1 pytest -m phase3 (~10 questions, E2E agent, no CSV/JSON output)
+make rag_phase3_extra              # pytest -m phase3, full question set
 ```
 
 `clean_db` (`tests/rag/conftest.py`) truncates `kb_docs`/`kb_chunks` before every test — don't
@@ -144,7 +173,7 @@ code differs from that course project:
   `kb/empresa_x`/`kb/empresa_y` into empresa `"Empresa X"`/`"Empresa Y"` under all three chunking
   strategies — needed because, unlike `../ai-agent-sales`, `clean_db` here wipes `kb_chunks` before
   *every* test, so phase1/phase2 tests that query the shared `rag_queries.yaml` dataset can't rely
-  on out-of-band pre-seeding via `make ingest` the way the source repo's tests do).
+  on out-of-band pre-seeding via `make rag_phase0` the way the source repo's tests do).
 - **Ported (`phase0`, passing):** `test_kb_schema.py`, `test_kb_indexes.py`, `test_chunking.py`,
   `test_kb_ingest_graph.py`, `test_ingest_graph_two_nodes.py`, `test_kb_staging_smoke.py`,
   `test_kb_stage_then_chunk.py`, `test_kb_ingest_smoke.py`, `test_langgraph_registry.py`
@@ -163,6 +192,12 @@ code differs from that course project:
   `rag_queries.yaml` dataset without ingesting their own fixture data
   (`test_phase1_semantic_qa.py`, `test_eval_dataset.py`, `test_experiments_runner.py`) take the
   `seeded_kb_empresa_xy` fixture instead of assuming an already-populated KB.
+- **Ported (`phase3`):** `test_phase3_agent_dataset.py` — runs `agent/rag_agent.py`'s ReAct graph
+  end-to-end over `rag_queries.yaml` and LLM-judges only the final answer (not retrieved chunks);
+  asserts `llm_yes >= 0.5`. Adapted from the source repo's file of the same name: imports
+  `agent.rag_agent.graph` instead of `app.rag.proposal_agent_v2.graph`, and — like the other tests
+  that query the shared dataset — takes `seeded_kb_empresa_xy` instead of the source test's
+  skip-if-KB-empty check, since `clean_db` here always wipes `kb_chunks` first.
 - **Data files ported as-is:** `experiments.yaml`, `experiments.template.yaml`, `rag_queries.yaml`
   — same schema (`chunking`/`search_type`/`use_hyde`/`match_threshold`/`reranker` per experiment;
   `group`/`empresa`/`pergunta`/`expected`|`expected_all`/`answer` per query), same questions —
@@ -170,9 +205,7 @@ code differs from that course project:
   `tests/rag/data/`.
 - **Not ported (CRM-specific, out of scope for this repo):** `test_proposal_agent_v2.py` — exercises
   `../ai-agent-sales`' own `proposal_agent_v2` graph directly rather than through a reusable
-  import, and pulls in CRM fixtures this repo doesn't have; `test_phase3_agent_dataset.py` drives
-  `app/agent/workflow.py`'s lead/proposal graph, which this repo deliberately drops entirely (see
-  "What this is" above and "Agent (`agent/`)" below). Both are about the *sales* agent, not the
+  import, and pulls in CRM fixtures this repo doesn't have. It's about the *sales* agent, not the
   RAG-only one built here.
 
 ### `eval/`
@@ -180,9 +213,15 @@ code differs from that course project:
 `tests/rag/experiments.yaml` x `rag_queries.yaml` over the already-materialized KB via
 `rag.search.kb_search_client`, and writes CSV/JSON to `eval/analysis/` (gitignored) — mirrors
 `../ai-agent-sales/scripts/rag_phase2_runner.py`, adapted to OpenRouter-routed embeddings/LLM
-judge. `queries.yaml`/`experiments.yaml` in this directory are intentionally still empty — that
-config lives in `tests/rag/rag_queries.yaml`/`experiments.yaml` instead, which `eval/run.py`
-reads directly rather than owning its own separate definitions.
+judge. `run_agent.py` (+ `cli.py eval-agent`, `make rag_phase3_save*`) is its Phase 3 sibling —
+same CSV/JSON-to-`eval/analysis/` idea, but runs `agent/rag_agent.py`'s graph end-to-end per
+question and LLM-judges the final answer text instead of sweeping retrieval experiments; mirrors
+`../ai-agent-sales/scripts/rag_phase3_runner.py` (writes to `eval/analysis/`, not
+`tests/rag/analysis/`, and is wired through `cli.py` like `run.py` is, rather than being a
+standalone script only invoked directly). `queries.yaml`/`experiments.yaml` in this directory are
+intentionally still empty — that config lives in `tests/rag/rag_queries.yaml`/`experiments.yaml`
+instead, which both `run.py` and `run_agent.py` read directly rather than owning their own
+separate definitions.
 
 ### Agent (`agent/`)
 A conversational, tool-calling RAG agent — no CRM/proposal tools, just KB search — imports

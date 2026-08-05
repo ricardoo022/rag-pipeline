@@ -1,0 +1,5 @@
+
+=== PHASE 3 — AGENT (LLM-JUDGE ON DATASET) ===
+chunking=semantic | total=61 | llm_yes=0.69
+CSV: /home/ricardo/rag-pipeline/rag-pipeline/eval/analysis/phase3_results.csv
+JSON: /home/ricardo/rag-pipeline/rag-pipeline/eval/analysis/phase3_results.json
