@@ -59,6 +59,29 @@ def require_cohere():
     return True
 
 
+@pytest.fixture
+def seeded_kb_empresa_xy(require_embeddings):
+    """Stages+materializes kb/empresa_x -> "Empresa X" and kb/empresa_y -> "Empresa Y"
+    under all three chunking strategies (fixed/markdown/semantic), matching the empresa
+    names tests/rag/rag_queries.yaml hardcodes.
+
+    Runs after the autouse `clean_db` truncation, so phase1/phase2 tests that query
+    against the shared query dataset always have a freshly materialized KB to search
+    instead of relying on external pre-seeding (this repo's clean_db, unlike
+    ../ai-agent-sales', truncates kb_docs/kb_chunks before every test).
+    """
+    from pathlib import Path
+    from rag.ingest import materialize_chunks_from_staging, stage_docs_from_dir
+
+    repo_root = Path(__file__).resolve().parents[2]
+    stage_docs_from_dir(str(repo_root / "kb" / "empresa_x"), empresa="Empresa X")
+    stage_docs_from_dir(str(repo_root / "kb" / "empresa_y"), empresa="Empresa Y")
+    for strategy in ("fixed", "markdown", "semantic"):
+        materialize_chunks_from_staging(strategy=strategy, empresa="Empresa X", doc_path_prefix=strategy)
+        materialize_chunks_from_staging(strategy=strategy, empresa="Empresa Y", doc_path_prefix=strategy)
+    return True
+
+
 @pytest.fixture(scope="session")
 def llm_judge_yesno(require_embeddings):
     """Returns a callable(question, expected, contexts) -> bool LLM judge.

@@ -112,12 +112,19 @@ def materialize_chunks_from_staging(
     chunk_size: int = 800,
     chunk_overlap: int = 200,
     path_prefix: Optional[str] = None,
+    target_empresa: Optional[str] = None,
+    doc_path_prefix: Optional[str] = None,
 ) -> int:
     """Reads kb_docs (optionally filtered by empresa/client_id/path_prefix), chunks
     each document per `strategy`, embeds, and upserts into kb_chunks.
 
     Re-chunking with a different strategy doesn't require re-reading source files —
     it only reads from kb_docs.
+
+    `target_empresa` writes under a different empresa than the one read from (defaults
+    to `empresa`); `doc_path_prefix` prefixes the written `doc_path` — both exist so the
+    same staged docs can be materialized under multiple strategies without colliding on
+    the (doc_path, chunk_ix) upsert key.
     """
     with get_conn() as conn:
         with conn.cursor() as cur:
@@ -147,9 +154,10 @@ def materialize_chunks_from_staging(
     rows: List[Dict[str, Any]] = []
     for source_path, content in docs:
         chunks, resolved = split_text(content, strategy=strategy, embedder=embedder, chunk_size=chunk_size, chunk_overlap=chunk_overlap)
+        doc_path = f"{doc_path_prefix.rstrip('/')}/{source_path}" if doc_path_prefix else source_path
         for i, c in enumerate(chunks):
             rows.append({
-                "doc_path": source_path,
+                "doc_path": doc_path,
                 "chunk_ix": i,
                 "content": c,
                 "meta": {"chunking": resolved},
@@ -159,7 +167,7 @@ def materialize_chunks_from_staging(
     for r, vec in zip(rows, vectors):
         r["embedding"] = vec
 
-    return upsert_chunks(rows, client_id=client_id, empresa=empresa)
+    return upsert_chunks(rows, client_id=client_id, empresa=target_empresa or empresa)
 
 
 def truncate_kb_tables() -> None:

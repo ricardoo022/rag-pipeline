@@ -14,12 +14,16 @@ repo here; if in doubt, treat `../ai-agent-sales` as reference material, not a s
 wholesale.
 
 **Current state:** ingestion (`rag/db.py`, `rag/loaders.py`, `rag/ingest.py`, `sql/`, `cli.py`
-migrate/ingest) is implemented, has been run end-to-end against the real Supabase DB, and has a
-pytest suite (`tests/rag/`, phase0-marked) covering it. Still empty placeholder files:
-`rag/search.py`, `eval/run.py`, `eval/queries.yaml`, `eval/experiments.yaml`. There is no linter
-or build step configured yet — don't invent commands for tooling that doesn't exist. See
-`README.md` for the full phase roadmap (ingestion → retrieval → generation → tone refinement) and
-current position on it.
+migrate/ingest), retrieval (`rag/search.py`, `cli.py search`), and a conversational RAG agent
+(`agent/`, `cli.py chat`) are implemented, run end-to-end against the real Supabase DB, and
+covered by the `tests/rag/` pytest suite (`phase0`-`phase2` markers). `eval/run.py` (+ `cli.py
+eval`) is a standalone experiments report script; `eval/queries.yaml`/`eval/experiments.yaml` are
+intentionally still empty — that config lives in `tests/rag/rag_queries.yaml`/`experiments.yaml`
+instead (see `eval/` below). `test_proposal_agent_v2.py` and `test_phase3_agent_dataset.py` from
+the sibling repo stay unported — they exercise its CRM-flavored proposal agent, not the RAG-only
+one built here (see "Agent (`agent/`)" below). There is no linter or build step configured yet —
+don't invent commands for tooling that doesn't exist. See `README.md` for the full phase roadmap
+(ingestion → retrieval → generation → tone refinement) and current position on it.
 
 ## Commands
 
@@ -38,6 +42,16 @@ the same options (kebab-case flags on the CLI). `make help` lists both targets.
 The ingest pipeline is also a LangGraph graph (`rag/ingest.py:graph`), runnable outside the CLI
 via `langgraph dev` (uses `langgraph.json`, exposes it as `rag_ingest`; writes checkpoint state
 to `.langgraph_api/`, currently not gitignored).
+
+```bash
+make search QUERY="garantia do Produto A" EMPRESA=empresa_x   # cli.py search, prints JSON
+make eval RAG_FAST=1                                           # cli.py eval -> eval/analysis/*.{json,csv}
+make chat QUESTION="Qual a garantia do Produto A?"              # cli.py chat, one-shot ReAct answer
+```
+
+The agent needs a `semantic`-chunked, globally-queryable KB to be useful (its search tool fixes
+`chunking=semantic`, no `empresa`/`client_id` filter) — e.g. `make ingest STRATEGY=semantic
+EMPRESA=empresa_x` first.
 
 ```bash
 make test                          # pytest -m phase0 (default) against tests/rag/
@@ -104,12 +118,19 @@ Mirrors the pipeline stages; each file is independently swappable:
 - `ingest.py` — two-phase ingestion: `stage_docs_from_dir` stages raw files into `kb_docs`
   (idempotent, filesystem read), `materialize_chunks_from_staging` chunks+embeds+upserts into
   `kb_chunks` (reads only from `kb_docs`, never the filesystem — re-chunking with a new strategy
-  doesn't require re-staging). Also exposes `graph`, a two-node LangGraph `StateGraph`
-  (`stage_docs -> chunk_docs`) wrapping the same two functions, referenced by both `cli.py` and
-  `langgraph.json`. `get_embedder()` is the single place that owns the embeddings provider choice
-  (OpenRouter).
-- `search.py` (stub) — the retrieval function(s) calling the `sql/03_functions.sql` SQL
-  functions, with optional HyDE query expansion and optional reranking (e.g. Cohere).
+  doesn't require re-staging; optional `target_empresa`/`doc_path_prefix` let the same staged docs
+  be materialized under multiple strategies into the same empresa without colliding on the
+  `(doc_path, chunk_ix)` upsert key — used by the phase1 chunking-comparison test). Also exposes
+  `graph`, a two-node LangGraph `StateGraph` (`stage_docs -> chunk_docs`) wrapping the same two
+  functions, referenced by both `cli.py` and `langgraph.json`. `get_embedder()` is the single place
+  that owns the embeddings provider choice (OpenRouter).
+- `search.py` — `kb_search_client` (a LangChain `@tool`), calling the `sql/03_functions.sql`
+  functions via `query_candidates`, with optional HyDE query expansion (`hyde()`, OpenRouter-routed
+  `ChatOpenAI`) and optional reranking (`apply_rerank()`; `reranker="cohere"` needs
+  `COHERE_API_KEY` + `langchain-cohere`, both already in `requirements.txt`). Filter policy:
+  querying without `client_id`/`empresa`/`chunking` raises `RuntimeError`. Ported from
+  `../ai-agent-sales/app/rag/tools.py`, adapted to `rag.db.get_conn`/`rag.ingest.get_embedder()`
+  (OpenRouter) instead of direct OpenAI.
 
 ### `tests/rag/` — pytest suite
 Deliberately mirrors `../ai-agent-sales/tests/rag/` (same layout, same `phase0`-`phase3` marker
@@ -119,39 +140,69 @@ code differs from that course project:
   skips dependent tests if `DB_*` isn't configured/reachable), `clean_db` (autouse — truncates
   `kb_docs`/`kb_chunks` before every test), `require_embeddings` (skips unless
   `OPENROUTER_API_KEY` is set), `require_cohere`, `llm_judge_yesno` (routed through OpenRouter,
-  same as `rag/ingest.get_embedder()`).
+  same as `rag/ingest.get_embedder()`), `seeded_kb_empresa_xy` (stages+materializes
+  `kb/empresa_x`/`kb/empresa_y` into empresa `"Empresa X"`/`"Empresa Y"` under all three chunking
+  strategies — needed because, unlike `../ai-agent-sales`, `clean_db` here wipes `kb_chunks` before
+  *every* test, so phase1/phase2 tests that query the shared `rag_queries.yaml` dataset can't rely
+  on out-of-band pre-seeding via `make ingest` the way the source repo's tests do).
 - **Ported (`phase0`, passing):** `test_kb_schema.py`, `test_kb_indexes.py`, `test_chunking.py`,
   `test_kb_ingest_graph.py`, `test_ingest_graph_two_nodes.py`, `test_kb_staging_smoke.py`,
   `test_kb_stage_then_chunk.py`, `test_kb_ingest_smoke.py`, `test_langgraph_registry.py`
   (unmarked). Adapted for real differences from the source repo: `app.rag.*` → `rag.*` imports;
   `IngestState` here has no `processed` alias, only `staged`/`chunked`; there's no standalone
   `ingest_dir()` helper (tests use `graph.invoke(...)` instead); `test_langgraph_registry.py`
-  only asserts `rag_ingest` is registered (no `workflow`/`proposal_agent_v2` — those don't exist
-  here).
+  asserts `rag_ingest` and `rag_agent` are registered (no `workflow`/`proposal_agent_v2` — those
+  don't exist here).
+- **Also ported, retrieval-dependent (`phase0`/`phase1`/`phase2`/unmarked):** `test_filters.py`
+  (phase0), `test_phase1_chunking_vector_only.py` (phase0), `test_phase1_semantic_qa.py` (phase1),
+  `test_retrieval_strategies.py`/`test_rrf_vs_union.py`/`test_rerank.py`/`test_experiments_runner.py`
+  (phase2), `test_retrieval_eval_llm.py`/`test_eval_dataset.py` (unmarked, legacy — gated behind
+  `RAG_PHASE2_LEGACY=1`, skipped otherwise). Same `app.rag.tools` → `rag.search`,
+  `app.rag.ingest.ingest_dir` → `rag.ingest.graph.invoke(...)` adaptation as the phase0 set above,
+  plus `require_openai` → `require_embeddings`; the three that query the shared
+  `rag_queries.yaml` dataset without ingesting their own fixture data
+  (`test_phase1_semantic_qa.py`, `test_eval_dataset.py`, `test_experiments_runner.py`) take the
+  `seeded_kb_empresa_xy` fixture instead of assuming an already-populated KB.
 - **Data files ported as-is:** `experiments.yaml`, `experiments.template.yaml`, `rag_queries.yaml`
   — same schema (`chunking`/`search_type`/`use_hyde`/`match_threshold`/`reranker` per experiment;
   `group`/`empresa`/`pergunta`/`expected`|`expected_all`/`answer` per query), same questions —
   they line up 1:1 with `kb/empresa_x`/`kb/empresa_y`, which are byte-identical to that repo's
   `tests/rag/data/`.
-- **Not ported (needs `rag/search.py`/an agent, neither built yet):** `test_filters.py`,
-  `test_retrieval_strategies.py`, `test_rrf_vs_union.py`, `test_rerank.py`,
-  `test_retrieval_eval_llm.py`, `test_phase1_chunking_vector_only.py`,
-  `test_phase1_semantic_qa.py`, `test_eval_dataset.py`, `test_experiments_runner.py`,
-  `test_proposal_agent_v2.py`, `test_phase3_agent_dataset.py`. Port these once the code they
-  exercise exists — they all import `app.rag.tools.kb_search_client` or similar, which has no
-  equivalent here yet.
+- **Not ported (CRM-specific, out of scope for this repo):** `test_proposal_agent_v2.py` — exercises
+  `../ai-agent-sales`' own `proposal_agent_v2` graph directly rather than through a reusable
+  import, and pulls in CRM fixtures this repo doesn't have; `test_phase3_agent_dataset.py` drives
+  `app/agent/workflow.py`'s lead/proposal graph, which this repo deliberately drops entirely (see
+  "What this is" above and "Agent (`agent/`)" below). Both are about the *sales* agent, not the
+  RAG-only one built here.
 
 ### `eval/`
-Still just empty placeholder files (`queries.yaml`, `experiments.yaml`, `run.py`). Given
-`tests/rag/experiments.yaml`/`rag_queries.yaml` now own that config, `eval/run.py`'s remaining
-plausible role is a standalone report script (hit@k tables, etc.) consuming the same
-`tests/rag/` YAML files — mirroring `../ai-agent-sales/scripts/rag_phase2_runner.py` — rather
-than owning its own separate query/experiment definitions.
+`run.py` (+ `cli.py eval`) is a standalone experiments report script: sweeps
+`tests/rag/experiments.yaml` x `rag_queries.yaml` over the already-materialized KB via
+`rag.search.kb_search_client`, and writes CSV/JSON to `eval/analysis/` (gitignored) — mirrors
+`../ai-agent-sales/scripts/rag_phase2_runner.py`, adapted to OpenRouter-routed embeddings/LLM
+judge. `queries.yaml`/`experiments.yaml` in this directory are intentionally still empty — that
+config lives in `tests/rag/rag_queries.yaml`/`experiments.yaml` instead, which `eval/run.py`
+reads directly rather than owning its own separate definitions.
 
-### Agent (planned)
-This framework will eventually include a conversational/tool-calling RAG agent on top of
-ingestion + retrieval + evaluation — not yet built, and not scaffolded here. When it lands, it
-should import from `rag/search.py` rather than duplicating retrieval logic.
+### Agent (`agent/`)
+A conversational, tool-calling RAG agent — no CRM/proposal tools, just KB search — imports
+`rag.search.kb_search_client` rather than duplicating retrieval logic:
+- `react.py` — `create_react_executor(model, tools, prompt=...)`, a generic two-node LangGraph
+  loop (`agent -> tools -> agent`, looping until the model stops requesting tool calls). Not
+  RAG-specific; reused as-is.
+- `rag_agent.py` — the one KB-search tool (`kb_search`, fixed `chunking=semantic`/
+  `search_type=hybrid_rrf`/`reranker=none`, only `match_threshold` is model-adjustable), an
+  OpenRouter-routed `ChatOpenAI` (`RAG_AGENT_LLM_MODEL`, default `openai/gpt-4.1-mini`), and a
+  system prompt that instructs grounding-only answers with `doc_path#chunk_ix` citations. Exposes
+  `graph`, registered in `langgraph.json` as `rag_agent` and driven by `cli.py chat`/`make chat`.
+  Ported from `../ai-agent-sales/app/rag/proposal_agent_v2.py` (already CRM-tool-free — its own
+  docstring calls it an "isolated RAG-only test version") and `app/agent/new_react.py`, stripped
+  of the "proposal agent" framing and adapted to OpenRouter. The KB-search tool passes no
+  `empresa`/`client_id` filter (only the fixed `chunking`), so it searches across all empresas
+  that have semantic chunks — same behavior as the source.
+- Deliberately not ported: `app/agent/workflow.py`, `tools.py`, `helpers.py`, `prompt.py` (the
+  CRM/lead/proposal sales agent) and `app/rag/proposal_agent_v2.py`'s own CRM siblings — out of
+  scope per "What this is" above.
 
 ### `kb/`
 Sample data only (`kb/empresa_x/`, `kb/empresa_y/`, each with `lead_reports/`, `policies/`,

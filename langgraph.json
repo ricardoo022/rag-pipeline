@@ -2,6 +2,7 @@
   "dependencies": ["."],
   "env": ".env",
   "graphs": {
-    "rag_ingest": "rag/ingest.py:graph"
+    "rag_ingest": "rag/ingest.py:graph",
+    "rag_agent": "agent/rag_agent.py:graph"
   }
 }

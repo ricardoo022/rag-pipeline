@@ -8,3 +8,4 @@ def test_graphs_registered():
     data = json.loads(p.read_text(encoding="utf-8"))
     graphs = data.get("graphs") or {}
     assert "rag_ingest" in graphs
+    assert "rag_agent" in graphs

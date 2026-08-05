@@ -1,0 +1,76 @@
+"""Generic ReAct executor: a two-node LangGraph loop (agent -> tools -> agent) that
+keeps calling tools until the model stops requesting them. Not RAG-specific — takes
+any model + tool list, so it's reused as-is by `agent/rag_agent.py`.
+"""
+
+from typing import Annotated, Iterable, List, Optional
+
+from langchain_core.messages import AIMessage, AnyMessage, BaseMessage, SystemMessage
+from langgraph.graph import END, StateGraph
+from langgraph.graph.message import add_messages
+from langgraph.prebuilt import ToolNode
+from typing_extensions import TypedDict
+
+
+class AppState(TypedDict, total=False):
+    # Message history, accumulated via add_messages.
+    messages: Annotated[List[AnyMessage], add_messages]
+    # Resolved/optional prompt text injected as a SystemMessage.
+    react_prompt: str
+
+
+def create_react_executor(
+    model,
+    tools: Iterable,
+    prompt: Optional[str] = None,
+    prompt_vars: Optional[List[str]] = None,
+):
+    """ReAct executor: agent -> tools -> agent (until there are no more tool_calls)."""
+    tool_list = list(tools)
+    tool_node = ToolNode(tool_list)
+    bound_model = model.bind_tools(tool_list)
+
+    def prepare(state: AppState):
+        if not prompt:
+            return {}
+        prompt_text = prompt
+        if prompt_vars:
+            try:
+                values = {k: state.get(k) for k in prompt_vars}
+                prompt_text = prompt.format(**values)
+            except Exception:
+                prompt_text = prompt
+        return {"react_prompt": prompt_text}
+
+    def call_model(state: AppState):
+        msgs = state["messages"]
+        prompt_text = state.get("react_prompt") if isinstance(state, dict) else None
+        if prompt_text:
+            msgs = [SystemMessage(content=prompt_text), *msgs]
+        response = bound_model.invoke(msgs)
+        return {"messages": [response]}  # add_messages handles the append
+
+    def should_continue(state: AppState) -> str:
+        last: BaseMessage = state["messages"][-1]
+        if isinstance(last, AIMessage) and getattr(last, "tool_calls", None):
+            return "continue"
+        return "end"
+
+    graph = StateGraph(AppState)
+    graph.add_node("agent", call_model)
+    graph.add_node("prepare", prepare)
+    graph.add_node("tools", tool_node)
+
+    # Enters through the preparation node when there's a dynamic prompt.
+    graph.set_entry_point("prepare" if prompt else "agent")
+    graph.add_edge("prepare", "agent")
+    graph.add_conditional_edges(
+        "agent",
+        should_continue,
+        {"continue": "tools", "end": END},
+    )
+    graph.add_edge("tools", "agent")
+
+    # Finishes on the agent node so it returns the model's last response.
+    graph.set_finish_point("agent")
+    return graph.compile()
