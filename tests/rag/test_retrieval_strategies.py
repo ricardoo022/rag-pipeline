@@ -15,14 +15,14 @@ def test_retrieval_hybrid_filters_and_relevance(tmp_path: Path, db_ready, requir
 
     fx = kb / "empresa_x" / "produto_a.md"
     fx.write_text("""
-# Produto A — Políticas (Empresa X)
-[KB_TEST_EMPRESA_X] O Produto A possui garantia de 12 meses e permite pagamento em 30/60 dias.
+# Product A — Policies (Empresa X)
+[KB_TEST_EMPRESA_X] Product A has a 12-month warranty and allows payment over 30/60 days.
 """.strip(), encoding="utf-8")
 
     fy = kb / "empresa_y" / "produto_a.md"
     fy.write_text("""
-# Produto A — Políticas (Empresa Y)
-[KB_TEST_EMPRESA_Y] Para Empresa Y, política diferente sem menção à garantia de 12 meses.
+# Product A — Policies (Empresa Y)
+[KB_TEST_EMPRESA_Y] For Empresa Y, a different policy with no mention of the 12-month warranty.
 """.strip(), encoding="utf-8")
 
     # Ingest with an empresa filter (unique name to isolate from the shared DB)
@@ -33,7 +33,7 @@ def test_retrieval_hybrid_filters_and_relevance(tmp_path: Path, db_ready, requir
     res2 = graph.invoke({"base_dir": str(kb / "empresa_y"), "strategy": "markdown", "empresa": empresa_y_name})
     assert (res1.get("chunked") or 0) >= 1 and (res2.get("chunked") or 0) >= 1
 
-    query = "garantia de 12 meses"
+    query = "12-month warranty"
 
     # TEXT
     res_text = kb_search_client.invoke({

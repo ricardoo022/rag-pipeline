@@ -1,43 +1,43 @@
-# Relatório de Lead — Carla (Empresa Y)
+# Lead Report — Carla (Empresa Y)
 
-## Resumo Executivo
-- Indústria: distribuição de insumos agrícolas
-- Porte: pequeno
-- Orçamento estimado: R$ 40.000
-- Prazo desejado: 45 dias
+## Executive Summary
+- Industry: distribution of agricultural inputs
+- Size: small
+- Estimated budget: R$ 40,000
+- Desired timeline: 45 days
 
-## Contexto e Objetivos
-Carla coordena o administrativo/financeiro e relatou a necessidade de reduzir o esforço manual em conciliações bancárias e fechamento financeiro. Busca maior previsibilidade de fluxo de caixa e geração de relatórios mensais com cortes por centro de custo e filial.
+## Context and Objectives
+Carla coordinates administration/finance and reported the need to reduce manual effort in bank reconciliations and financial closing. She's looking for better cash-flow predictability and monthly reports broken down by cost center and branch.
 
-### Escopo inicial sugerido
-- Conciliação de boletos e cartões com regras simples
-- Relatórios mensais padronizados (PDF/planilha)
-- Painel financeiro com indicadores de atraso e inadimplência
+### Suggested initial scope
+- Reconciliation of invoices and card payments with simple rules
+- Standardized monthly reports (PDF/spreadsheet)
+- Financial dashboard with delinquency and overdue-payment indicators
 
-## Dores e Oportunidades
-A gestão de boletos e conciliações é feita hoje em planilhas, com alto risco de erro. Há dificuldade em gerar relatórios mensais em tempo hábil para diretoria, e o retrabalho consome o time em período de fechamento.
+## Pain Points and Opportunities
+Invoice management and reconciliation are currently done in spreadsheets, with a high risk of error. There's difficulty producing monthly reports in time for management, and rework eats into the team's time during the closing period.
 
-### Conciliação e Relatórios
-- Integração com extratos para automação de conciliações
-- Modelos de relatórios mensais reutilizáveis
+### Reconciliation and Reports
+- Integration with bank statements to automate reconciliation
+- Reusable monthly report templates
 
-## Solução e Requisitos
-Interesse principal em Produto A (versão básica), com foco em módulos financeiros e relatórios. Foram levantadas condições comerciais: parcelamento superior a 30 dias e confirmação de garantia de 6 meses, pontos relevantes para aprovação interna.
+## Solution and Requirements
+Main interest in Product A (basic version), focused on financial and reporting modules. Commercial terms raised included: installment terms beyond 30 days and confirmation of a 6-month warranty, points relevant to internal approval.
 
-### Requisitos funcionais
-- Conciliação automática com regras configuráveis
-- Exportação de relatórios em PDF/CSV
+### Functional requirements
+- Automatic reconciliation with configurable rules
+- Report export in PDF/CSV
 
-### Requisitos não funcionais
-- Facilidade de uso e onboarding rápido
-- Integração simples com banco/ERP atual
+### Non-functional requirements
+- Ease of use and fast onboarding
+- Simple integration with the current bank/ERP
 
-## Critérios de Decisão
-1) Redução de esforço manual no fechamento; 2) Prazo de implantação (45 dias); 3) Parcelamento > 30 dias; 4) Garantia de 6 meses.
+## Decision Criteria
+1) Reduced manual effort in closing; 2) Deployment timeline (45 days); 3) Installments over 30 days; 4) 6-month warranty.
 
-## Riscos e Mitigações
-- Resistência à mudança → treinamento prático e material de apoio
-- Dependência de layout bancário → fase piloto com ajustes
+## Risks and Mitigations
+- Resistance to change → hands-on training and support material
+- Dependency on the bank file layout → pilot phase with adjustments
 
-## Próximos Passos
-Enviar proposta com: escopo por fase, cronograma, condições de pagamento (parcelamento > 30 dias), garantia de 6 meses e plano de treinamento. Agendar walkthrough do fluxo de conciliação e validação dos relatórios mensais.
+## Next Steps
+Send a proposal with: scope by phase, schedule, payment terms (installments over 30 days), the 6-month warranty, and a training plan. Schedule a walkthrough of the reconciliation flow and validation of the monthly reports.

@@ -27,17 +27,17 @@ with a new chunking strategy" and "reingest changed source files" are independen
 ## Chunking strategies (`rag/loaders.py`)
 
 `split_text(text, strategy, embedder=None, chunk_size=800, chunk_overlap=200)` dispatches to one
-of the three splitters below and returns `(chunks, resolved_strategy)`. An invalid or
+of the five splitters below and returns `(chunks, resolved_strategy)`. An invalid or
 unavailable strategy **raises** (`RuntimeError`) rather than silently falling back to `fixed` —
 e.g. calling `semantic` without an embedder, or without `langchain-experimental` installed, is a
 hard error.
 
-All three also get a blank-chunk filter (`[c for c in chunks if c.strip()]`) — `SemanticChunker`
+All five also get a blank-chunk filter (`[c for c in chunks if c.strip()]`) — `SemanticChunker`
 in particular emits a trailing empty-string chunk on some inputs, which some embeddings
 endpoints (OpenRouter) reject outright as invalid input.
 
 The resolved strategy is stored as `meta.chunking` on each `kb_chunks` row, which is what
-`sql/03_functions.sql`'s `p_chunking` filter matches against — so all three can be materialized
+`sql/03_functions.sql`'s `p_chunking` filter matches against — so all five can be materialized
 side by side (as long as they don't collide on `(doc_path, chunk_ix)`, see the known gap below)
 and compared at query time by passing `p_chunking`.
 
@@ -54,7 +54,21 @@ boundary is still fully present in at least one chunk.
 - Chunk count scales predictably with document length: roughly
   `len(text) / (chunk_size - chunk_overlap)`.
 - Good default when you don't know/trust the source formatting, or want a stable baseline to
-  compare the other two strategies against.
+  compare the other strategies against.
+
+### `token` — `split_token` / `RecursiveCharacterTextSplitter.from_tiktoken_encoder`
+
+Same recursive-separator walk as `fixed`, but `chunk_size`/`chunk_overlap` count **tokens**
+(tiktoken `cl100k_base` encoding) instead of characters.
+
+- Sizes chunks against what embedding models actually meter and truncate on, rather than an
+  approximation — char count vs. token count diverges depending on language/script (Portuguese
+  and English don't tokenize at the same chars-per-token ratio), so this is the more accurate
+  choice when staying under a model's context/token limit matters more than raw text length.
+  chunk boundaries can land in different places than `fixed` for the same `chunk_size` number.
+- Same cost profile as `fixed` — no embedding calls, just an extra tokenizer pass per split.
+- Use in place of `fixed` when you want size guarantees expressed in the same units the
+  embedding provider bills/limits on.
 
 ### `markdown` — `split_markdown` / `MarkdownHeaderTextSplitter`
 
@@ -75,6 +89,21 @@ size-based split.
   and a short, context-free header (e.g. a one-line "Observações" section) becomes its own
   chunk with little content to search on.
 - No embedding calls needed — same cost profile as `fixed`.
+
+### `markdown_hybrid` — `split_markdown_hybrid` / `MarkdownHeaderTextSplitter` + `RecursiveCharacterTextSplitter`
+
+Splits on markdown headers first, same as `markdown`, but then recursively sub-splits any
+section whose content is still longer than `chunk_size` characters — `chunk_size`/
+`chunk_overlap` **are** applied here, unlike plain `markdown`.
+
+- Fixes `markdown`'s main risk: a long section under one header no longer becomes a single
+  unbounded chunk — it gets the same char-boundary treatment `fixed` gives the whole document,
+  scoped to just that section.
+- Short sections stay intact as one chunk (same as `markdown`) — the sub-split only kicks in
+  when a section actually exceeds `chunk_size`.
+- No embedding calls needed — same cost profile as `fixed`/`markdown`.
+- The strategy to reach for when you want structure-awareness *and* a predictable upper bound
+  on chunk size, without semantic chunking's embedding-call cost.
 
 ### `semantic` — `split_semantic` / `SemanticChunker` (langchain-experimental)
 

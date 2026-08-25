@@ -1,39 +1,39 @@
-# Relatório de Lead — João (Empresa X)
+# Lead Report — João (Empresa X)
 
-## Resumo Executivo
-- Indústria: agropecuária (cultivo de soja) — agro
-- Porte: médio‑grande
-- Orçamento estimado: R$ 150.000
-- Prazo desejado: 90 dias
+## Executive Summary
+- Industry: agriculture (soybean farming) — agro
+- Size: mid-large
+- Estimated budget: R$ 150,000
+- Desired timeline: 90 days
 
-## Contexto Operacional
-João é gerente de operações, com foco em planejamento de safra e disponibilidade de insumos. O objetivo é reduzir rupturas e melhorar previsibilidade de entrega aos clientes, com visibilidade consolidada de vendas e estoque por região e categoria de produto.
+## Operational Context
+João is an operations manager, focused on harvest planning and input availability. The goal is to reduce stockouts and improve delivery predictability to customers, with consolidated visibility of sales and inventory by region and product category.
 
-### Situação atual
-- Divergências entre ERP e inventário físico (atraso na atualização de notas/entradas)
-- Falta de indicadores de vendas em tempo quase real por fazenda/região
+### Current situation
+- Discrepancies between the ERP and physical inventory (delays updating invoices/receipts)
+- Lack of near-real-time sales indicators by farm/region
 
-## Desafios
-### Previsibilidade de Estoque
-- Necessidade de projeções de demanda/estoque e alertas de ruptura
-- Ajustes de giro para insumos críticos
+## Challenges
+### Inventory Predictability
+- Need for demand/inventory forecasts and stockout alerts
+- Turnover adjustments for critical inputs
 
-### Integração com Marketplace
-- Integração com marketplace regional para escoar itens ociosos
-- Comparativos de desempenho por canal e mix de produtos
+### Marketplace Integration
+- Integration with a regional marketplace to move idle stock
+- Performance comparisons by channel and product mix
 
-## Solução Requerida
-Preferência por Produto A (módulo de relatórios avançados) e Serviço B com SLA de 99.9%. O painel deve consolidar vendas, estoque e canais (incluindo marketplace), com relatórios exportáveis e APIs documentadas para a equipe de dados.
+## Required Solution
+Preference for Product A (advanced reporting module) and Service B with a 99.9% SLA. The dashboard should consolidate sales, inventory, and channels (including the marketplace), with exportable reports and documented APIs for the data team.
 
-## Treinamento e Suporte
-João indicou a necessidade de treinamento do time (treinamento presencial e remoto) e suporte presencial em momentos críticos (fechamentos e períodos de safra), com SLAs definidos e canais de atendimento claros.
+## Training and Support
+João flagged the need for team training (in-person and remote training) and on-site support during critical moments (closings and harvest periods), with defined SLAs and clear support channels.
 
-## Critérios de Decisão
-1) Aderência ao processo de recebimento/expedição; 2) Qualidade da Integração com sistemas e marketplace; 3) Trilha de treinamento objetiva; 4) Suporte técnico e tempos de resposta; 5) Roadmap para telemetria/sensores agrícolas.
+## Decision Criteria
+1) Fit with the receiving/shipping process; 2) Quality of integration with systems and the marketplace; 3) A clear training track; 4) Technical support and response times; 5) Roadmap for agricultural telemetry/sensors.
 
-## Riscos e Mitigações
-- Dependência do fornecedor do ERP para integrações → cronograma de homologação conjunta
-- Capacidade do time interno de absorver novo fluxo → treinamentos e acompanhamento inicial
+## Risks and Mitigations
+- Dependency on the ERP vendor for integrations → joint validation schedule
+- Internal team's capacity to absorb the new workflow → training and initial follow-up
 
-## Próximos Passos
-Disponibilizar proposta com cronograma de implantação, plano de treinamento detalhado (treinamento inicial + reciclagens), métricas de SLA do Serviço B (99.9%) e estimativa de ganhos em ruptura e giro. Agendar sessão técnica para mapear integrações com o marketplace e requisitos de dados.
+## Next Steps
+Provide a proposal with a deployment schedule, a detailed training plan (initial training + refreshers), Service B SLA metrics (99.9%), and an estimate of gains in stockouts and turnover. Schedule a technical session to map marketplace integrations and data requirements.

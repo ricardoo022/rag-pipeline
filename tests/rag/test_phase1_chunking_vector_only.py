@@ -30,208 +30,208 @@ def test_phase1_chunking_vector_only(tmp_path: Path, db_ready, require_embedding
 
     _w(kb / "x_fixed" / "produto_a.md",
         """
-# Produto A — Políticas (Empresa X)
-Garantia padrão de 12 meses. Pagamento parcelado em 30/60 dias.
+# Product A — Policies (Empresa X)
+Standard 12-month warranty. Installment payment over 30/60 days.
 """
     )
     _w(kb / "x_markdown" / "produto_a.md",
         """
-# Produto A — Políticas (Empresa X)
-Garantia padrão de 12 meses. Pagamento parcelado em 30/60 dias.
+# Product A — Policies (Empresa X)
+Standard 12-month warranty. Installment payment over 30/60 days.
 """
     )
     _w(kb / "x_semantic" / "produto_a.md",
         """
-# Produto A — Políticas (Empresa X)
-Garantia padrão de 12 meses. Pagamento parcelado em 30/60 dias.
+# Product A — Policies (Empresa X)
+Standard 12-month warranty. Installment payment over 30/60 days.
 """
     )
 
     _w(kb / "x_fixed" / "servico_b.md",
         """
-# Serviço B — SLA (Empresa X)
-O SLA alvo é de 99.9% de disponibilidade mensal.
+# Service B — SLA (Empresa X)
+The target SLA is 99.9% monthly uptime.
 """
     )
     _w(kb / "x_markdown" / "servico_b.md",
         """
-# Serviço B — SLA (Empresa X)
-O SLA alvo é de 99.9% de disponibilidade mensal.
+# Service B — SLA (Empresa X)
+The target SLA is 99.9% monthly uptime.
 """
     )
     _w(kb / "x_semantic" / "servico_b.md",
         """
-# Serviço B — SLA (Empresa X)
-O SLA alvo é de 99.9% de disponibilidade mensal.
+# Service B — SLA (Empresa X)
+The target SLA is 99.9% monthly uptime.
 """
     )
 
     _w(kb / "x_fixed" / "cancelamento.md",
         """
-# Políticas de Cancelamento (Empresa X)
-Cancelamento permitido em até 7 dias úteis após assinatura.
+# Cancellation Policy (Empresa X)
+Cancellation allowed within 7 business days after signing.
 """
     )
     _w(kb / "x_markdown" / "cancelamento.md",
         """
-# Políticas de Cancelamento (Empresa X)
-Cancelamento permitido em até 7 dias úteis após assinatura.
+# Cancellation Policy (Empresa X)
+Cancellation allowed within 7 business days after signing.
 """
     )
     _w(kb / "x_semantic" / "cancelamento.md",
         """
-# Políticas de Cancelamento (Empresa X)
-Cancelamento permitido em até 7 dias úteis após assinatura.
+# Cancellation Policy (Empresa X)
+Cancellation allowed within 7 business days after signing.
 """
     )
 
     _w(kb / "x_fixed" / "financeiro.md",
         """
-# Condições Financeiras (Empresa X)
-Desconto à vista de 5%. Parcelamento em 30/60/90 dias para pedidos acima de R$ 10.000.
+# Financial Terms (Empresa X)
+5% cash discount. Installments over 30/60/90 days for orders above R$ 10,000.
 """
     )
     _w(kb / "x_markdown" / "financeiro.md",
         """
-# Condições Financeiras (Empresa X)
-Desconto à vista de 5%. Parcelamento em 30/60/90 dias para pedidos acima de R$ 10.000.
+# Financial Terms (Empresa X)
+5% cash discount. Installments over 30/60/90 days for orders above R$ 10,000.
 """
     )
     _w(kb / "x_semantic" / "financeiro.md",
         """
-# Condições Financeiras (Empresa X)
-Desconto à vista de 5%. Parcelamento em 30/60/90 dias para pedidos acima de R$ 10.000.
+# Financial Terms (Empresa X)
+5% cash discount. Installments over 30/60/90 days for orders above R$ 10,000.
 """
     )
 
     _w(kb / "x_fixed" / "suporte.md",
         """
-# Suporte e Atendimento (Empresa X)
-Suporte 24/7 por chat e e-mail. Tempo alvo de primeira resposta: 2 horas.
+# Support (Empresa X)
+24/7 support via chat and email. Target first-response time: 2 hours.
 """
     )
     _w(kb / "x_markdown" / "suporte.md",
         """
-# Suporte e Atendimento (Empresa X)
-Suporte 24/7 por chat e e-mail. Tempo alvo de primeira resposta: 2 horas.
+# Support (Empresa X)
+24/7 support via chat and email. Target first-response time: 2 hours.
 """
     )
     _w(kb / "x_semantic" / "suporte.md",
         """
-# Suporte e Atendimento (Empresa X)
-Suporte 24/7 por chat e e-mail. Tempo alvo de primeira resposta: 2 horas.
+# Support (Empresa X)
+24/7 support via chat and email. Target first-response time: 2 hours.
 """
     )
 
     _w(kb / "x_fixed" / "implantacao.md",
         """
-# Implantação (Empresa X)
-Prazo de implementação típico: 5 dias úteis. Oferecemos treinamento remoto.
+# Deployment (Empresa X)
+Typical implementation timeline: 5 business days. We offer remote training.
 """
     )
     _w(kb / "x_markdown" / "implantacao.md",
         """
-# Implantação (Empresa X)
-Prazo de implementação típico: 5 dias úteis. Oferecemos treinamento remoto.
+# Deployment (Empresa X)
+Typical implementation timeline: 5 business days. We offer remote training.
 """
     )
     _w(kb / "x_semantic" / "implantacao.md",
         """
-# Implantação (Empresa X)
-Prazo de implementação típico: 5 dias úteis. Oferecemos treinamento remoto.
+# Deployment (Empresa X)
+Typical implementation timeline: 5 business days. We offer remote training.
 """
     )
 
     _w(kb / "x_fixed" / "troca.md",
         """
-# Políticas de Troca (Empresa X)
-Troca permitida em até 30 dias corridos com nota fiscal.
+# Exchange Policy (Empresa X)
+Exchanges allowed within 30 calendar days with a receipt.
 """
     )
     _w(kb / "x_markdown" / "troca.md",
         """
-# Políticas de Troca (Empresa X)
-Troca permitida em até 30 dias corridos com nota fiscal.
+# Exchange Policy (Empresa X)
+Exchanges allowed within 30 calendar days with a receipt.
 """
     )
     _w(kb / "x_semantic" / "troca.md",
         """
-# Políticas de Troca (Empresa X)
-Troca permitida em até 30 dias corridos com nota fiscal.
+# Exchange Policy (Empresa X)
+Exchanges allowed within 30 calendar days with a receipt.
 """
     )
 
     _w(kb / "x_fixed" / "seguranca.md",
         """
-# Segurança e Conformidade (Empresa X)
-Criptografia em repouso AES-256. Backups diários por 30 dias.
+# Security and Compliance (Empresa X)
+AES-256 encryption at rest. Daily backups retained for 30 days.
 """
     )
     _w(kb / "x_markdown" / "seguranca.md",
         """
-# Segurança e Conformidade (Empresa X)
-Criptografia em repouso AES-256. Backups diários por 30 dias.
+# Security and Compliance (Empresa X)
+AES-256 encryption at rest. Daily backups retained for 30 days.
 """
     )
     _w(kb / "x_semantic" / "seguranca.md",
         """
-# Segurança e Conformidade (Empresa X)
-Criptografia em repouso AES-256. Backups diários por 30 dias.
+# Security and Compliance (Empresa X)
+AES-256 encryption at rest. Daily backups retained for 30 days.
 """
     )
     # Empresa Y (noise)
     _w(kb / "y_fixed" / "produto_a.md",
         """
-# Produto A — Políticas (Empresa Y)
-Não há menção à garantia de 12 meses ou parcelamento 30/60.
+# Product A — Policies (Empresa Y)
+No mention of a 12-month warranty or 30/60 installments.
 """
     )
     _w(kb / "y_markdown" / "produto_a.md",
         """
-# Produto A — Políticas (Empresa Y)
-Não há menção à garantia de 12 meses ou parcelamento 30/60.
+# Product A — Policies (Empresa Y)
+No mention of a 12-month warranty or 30/60 installments.
 """
     )
     _w(kb / "y_semantic" / "produto_a.md",
         """
-# Produto A — Políticas (Empresa Y)
-Não há menção à garantia de 12 meses ou parcelamento 30/60.
+# Product A — Policies (Empresa Y)
+No mention of a 12-month warranty or 30/60 installments.
 """
     )
     _w(kb / "y_fixed" / "financeiro.md",
         """
-# Condições Financeiras (Empresa Y)
-Sem menção a desconto à vista ou parcelamentos 30/60/90.
+# Financial Terms (Empresa Y)
+No mention of a cash discount or 30/60/90 installments.
 """
     )
     _w(kb / "y_markdown" / "financeiro.md",
         """
-# Condições Financeiras (Empresa Y)
-Sem menção a desconto à vista ou parcelamentos 30/60/90.
+# Financial Terms (Empresa Y)
+No mention of a cash discount or 30/60/90 installments.
 """
     )
     _w(kb / "y_semantic" / "financeiro.md",
         """
-# Condições Financeiras (Empresa Y)
-Sem menção a desconto à vista ou parcelamentos 30/60/90.
+# Financial Terms (Empresa Y)
+No mention of a cash discount or 30/60/90 installments.
 """
     )
     _w(kb / "y_fixed" / "suporte.md",
         """
-# Suporte e Atendimento (Empresa Y)
-Atendimento em horário comercial.
+# Support (Empresa Y)
+Support during business hours.
 """
     )
     _w(kb / "y_markdown" / "suporte.md",
         """
-# Suporte e Atendimento (Empresa Y)
-Atendimento em horário comercial.
+# Support (Empresa Y)
+Support during business hours.
 """
     )
     _w(kb / "y_semantic" / "suporte.md",
         """
-# Suporte e Atendimento (Empresa Y)
-Atendimento em horário comercial.
+# Support (Empresa Y)
+Support during business hours.
 """
     )
 
@@ -252,19 +252,19 @@ Atendimento em horário comercial.
 
     # Queries and expected keywords
     cases = [
-        ("Qual a garantia do Produto A?", "12 meses"),
-        ("Quais as condições de pagamento do Produto A?", "30/60"),
-        ("Qual o parcelamento máximo oferecido?", "90"),
-        ("Existe desconto à vista?", "5%"),
-        ("O suporte é 24/7?", "24/7"),
-        ("Qual o tempo de primeira resposta?", "2 horas"),
-        ("Qual o prazo de implementação?", "5 dias úteis"),
-        ("Há treinamento remoto?", "treinamento remoto"),
-        ("Qual a política de cancelamento?", "7 dias"),
-        ("Qual a política de troca?", "30 dias"),
-        ("Como é a criptografia em repouso?", "AES-256"),
-        ("Backups são mantidos por quanto tempo?", "30 dias"),
-        ("Qual o SLA do Serviço B?", "99.9%"),
+        ("What is the warranty for Product A?", "12-month"),
+        ("What are the payment terms for Product A?", "30/60"),
+        ("What is the maximum number of installments offered?", "90"),
+        ("Is there a cash discount?", "5%"),
+        ("Is support available 24/7?", "24/7"),
+        ("What is the first-response time?", "2 hours"),
+        ("What is the implementation timeline?", "5 business days"),
+        ("Is remote training available?", "remote training"),
+        ("What is the cancellation policy?", "7 business days"),
+        ("What is the exchange policy?", "30 calendar days"),
+        ("How is encryption at rest handled?", "AES-256"),
+        ("How long are backups kept?", "30 days"),
+        ("What is the SLA for Service B?", "99.9%"),
     ]
 
     strategies = (
@@ -318,7 +318,7 @@ Atendimento em horário comercial.
 
     # Per-question feedback (hit@1) per chunking
     print("\n=== PHASE 1 — PER-QUESTION FEEDBACK (hit@1 per chunking) ===")
-    print("ix | pergunta                               | esperado        | fixed        | markdown     | semantic     ")
+    print("ix | question                                | expected        | fixed        | markdown     | semantic     ")
     print("-" * 106)
     # Reorganizes feedback by question (rows) and chunking (columns)
     # feedback = [(chunking, [(ok1, docloc, snippet), ...])]

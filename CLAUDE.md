@@ -137,13 +137,17 @@ Two-table design, staging separated from materialized/searchable chunks:
 ### Application layout (`rag/`)
 Mirrors the pipeline stages; each file is independently swappable:
 - `db.py` — `get_conn()`/`get_db_url()`, the only place DB connection details are assembled.
-- `loaders.py` — three chunking strategies (`split_fixed`/`split_markdown`/`split_semantic`,
-  dispatched via `split_text`): fixed-size (`RecursiveCharacterTextSplitter`), markdown-header-
-  aware (`MarkdownHeaderTextSplitter`, ignores `chunk_size`/`chunk_overlap`), and semantic
-  (`SemanticChunker`, embedding-guided, also ignores `chunk_size`/`chunk_overlap`). Each strategy
-  fails explicitly (`RuntimeError`) rather than silently falling back if unavailable (e.g.
-  semantic chunking without an embedder or `langchain-experimental`). See `docs/ingest.md` for a
-  detailed comparison of the three, including observed chunk counts on the sample `kb/` data.
+- `loaders.py` — five chunking strategies (`split_fixed`/`split_token`/`split_markdown`/
+  `split_markdown_hybrid`/`split_semantic`, dispatched via `split_text`): fixed-size
+  (`RecursiveCharacterTextSplitter`, chars), token-based (same splitter via
+  `from_tiktoken_encoder`, `chunk_size`/`chunk_overlap` count tokens instead of chars),
+  markdown-header-aware (`MarkdownHeaderTextSplitter`, ignores `chunk_size`/`chunk_overlap`),
+  markdown-hybrid (header split first, then recursively sub-splits any section still over
+  `chunk_size`), and semantic (`SemanticChunker`, embedding-guided, also ignores
+  `chunk_size`/`chunk_overlap`). Each strategy fails explicitly (`RuntimeError`) rather than
+  silently falling back if unavailable (e.g. semantic chunking without an embedder or
+  `langchain-experimental`). See `docs/ingest.md` for a detailed comparison, including observed
+  chunk counts on the sample `kb/` data.
 - `ingest.py` — two-phase ingestion: `stage_docs_from_dir` stages raw files into `kb_docs`
   (idempotent, filesystem read), `materialize_chunks_from_staging` chunks+embeds+upserts into
   `kb_chunks` (reads only from `kb_docs`, never the filesystem — re-chunking with a new strategy

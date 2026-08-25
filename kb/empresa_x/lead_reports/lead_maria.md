@@ -1,47 +1,47 @@
-# Relatório de Lead — Maria (Empresa X)
+# Lead Report — Maria (Empresa X)
 
-## Resumo Executivo
-- Indústria: varejo de agroinsumos (porte médio)
-- Orçamento estimado: R$ 80.000
-- Prazo desejado: 60 dias
-- Foco: padronizar jornada de atendimento e consolidar informações em um painel único
+## Executive Summary
+- Industry: agricultural-input retail (mid-size)
+- Estimated budget: R$ 80,000
+- Desired timeline: 60 days
+- Focus: standardize the support journey and consolidate information in a single dashboard
 
-## Contexto e Objetivos
-Maria atua como coordenadora de TI e operações na Empresa X. O objetivo é reduzir retrabalho e melhorar a visibilidade operacional/comercial por meio de um painel unificado que atenda vendas e pós‑venda. A primeira fase deve entrar em produção em até 60 dias, com um escopo mínimo viável que sustente a rotina do time.
+## Context and Objectives
+Maria works as IT and operations coordinator at Empresa X. The goal is to reduce rework and improve operational/commercial visibility through a unified dashboard covering sales and post-sales. The first phase must go live within 60 days, with a minimum viable scope that supports the team's day-to-day routine.
 
-### Escopo inicial sugerido
-- Fluxo de atendimento padronizado com registros completos
-- Painel operacional para acompanhamento diário
-- KPIs de produtividade e SLA de atendimento
+### Suggested initial scope
+- Standardized support flow with complete records
+- Operational dashboard for daily tracking
+- Productivity KPIs and support SLA
 
-## Dores e Oportunidades
-No cenário atual, a Empresa X depende de um ERP legado sem integrações nativas com o CRM. A Integração entre sistemas é a principal dor: hoje há exportação manual de planilhas e conciliação manual de pedidos, notas e faturas.
+## Pain Points and Opportunities
+In the current scenario, Empresa X depends on a legacy ERP with no native integrations with the CRM. Integration between systems is the main pain point: today there's manual spreadsheet export and manual reconciliation of orders, invoices, and receipts.
 
-### Integração (ERP/CRM)
-- Necessidade de conciliação automatizada para reduzir inconsistências
-- Sincronização de pedidos, notas e faturas com rastreabilidade
+### Integration (ERP/CRM)
+- Need for automated reconciliation to reduce inconsistencies
+- Synchronization of orders, invoices, and receipts with traceability
 
-### Produtividade em Campo
-- Tempo de atendimento elevado e baixa rastreabilidade de atividades
-- Meta: Relatórios de produtividade semanais por equipe/região/tipo de chamado
+### Field Productivity
+- High support handling time and low activity traceability
+- Goal: weekly productivity reports by team/region/ticket type
 
-## Solução e Requisitos
-Maria demonstrou interesse no Produto A (com suporte avançado) e no Serviço B com SLA de 99.9%. Ela também perguntou sobre condições de pagamento parcelado em 30/60 e solicitou confirmação da garantia de 12 meses, itens que impactam a aprovação financeira.
+## Solution and Requirements
+Maria showed interest in Product A (with advanced support) and Service B with a 99.9% SLA. She also asked about installment payment terms over 30/60 days and requested confirmation of the 12-month warranty, items that affect financial approval.
 
-### Requisitos funcionais
-- Painel unificado de operações e pós‑venda
-- Relatórios exportáveis e trilha de auditoria
+### Functional requirements
+- Unified dashboard for operations and post-sales
+- Exportable reports and an audit trail
 
-### Requisitos não funcionais
-- Integração estável com ERP legado
-- SLA de 99.9% no Serviço B
+### Non-functional requirements
+- Stable integration with the legacy ERP
+- 99.9% SLA on Service B
 
-## Critérios de Decisão
-1) Integração robusta com o ERP; 2) Prazo de implantação e treinamento compatíveis; 3) ROI esperado em até 6 meses por redução de retrabalho; 4) Escalabilidade para novas lojas/unidades.
+## Decision Criteria
+1) Robust integration with the ERP; 2) Deployment and training timeline compatible with the schedule; 3) Expected ROI within 6 months from reduced rework; 4) Scalability for new stores/units.
 
-### Riscos e Mitigações
-- Dependência de terceiros no ERP → plano de homologação em ondas
-- Curva de aprendizado → conteúdo de onboarding e reciclagens
+### Risks and Mitigations
+- Dependency on third parties for the ERP → phased validation plan
+- Learning curve → onboarding content and refresher training
 
-## Próximos Passos
-Enviar proposta com: escopo por fase, cronograma macro (incluindo Integração e homologação), condições de pagamento (30/60), garantia de 12 meses, e SLA do Serviço B (99.9%). Agendar demonstração técnica com suporte e financeiro para revisar conciliação e painel de produtividade.
+## Next Steps
+Send a proposal with: scope by phase, a macro schedule (including integration and validation), payment terms (30/60), the 12-month warranty, and the Service B SLA (99.9%). Schedule a technical demo with support and finance to review reconciliation and the productivity dashboard.

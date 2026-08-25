@@ -14,14 +14,14 @@ def test_rerank_with_cohere_smoke(tmp_path: Path, db_ready, require_embeddings, 
 
     kb = tmp_path / "kb"
     kb.mkdir()
-    (kb / "doc1.md").write_text("Garantia de 12 meses para Produto A.", encoding="utf-8")
-    (kb / "doc2.md").write_text("Texto genérico sem relação.", encoding="utf-8")
+    (kb / "doc1.md").write_text("12-month warranty for Product A.", encoding="utf-8")
+    (kb / "doc2.md").write_text("Generic unrelated text.", encoding="utf-8")
 
     graph.invoke({"base_dir": str(kb), "strategy": "fixed", "empresa": "Empresa X"})
 
     try:
         res = kb_search_client.invoke({
-            "query": "garantia de 12 meses",
+            "query": "12-month warranty",
             "k": 3,
             "search_type": "hybrid",
             "reranker": "cohere",

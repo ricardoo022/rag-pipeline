@@ -1,12 +1,12 @@
-# Serviço B — SLA e Escopo (Empresa Y)
+# Service B — SLA and Scope (Empresa Y)
 
-## Descrição
-O Serviço B consiste em atendimento básico e manutenção corretiva sob demanda, orientado a cenários de baixa complexidade.
+## Description
+Service B consists of basic support and corrective maintenance on demand, geared toward low-complexity scenarios.
 
-## SLA e Janela de Manutenção
-- SLA: 99% de disponibilidade mensal.
-- Janela de manutenção: domingos 02h–04h.
+## SLA and Maintenance Window
+- SLA: 99% monthly uptime.
+- Maintenance window: Sundays, 2am–4am.
 
-## Canais e Prioridades
-- Canal prioritário: e-mail.
-- Canais adicionais: base de conhecimento.
+## Channels and Priorities
+- Priority channel: email.
+- Additional channels: knowledge base.

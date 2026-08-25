@@ -1,15 +1,15 @@
-# Produto A — Especificações (Empresa Y)
+# Product A — Specifications (Empresa Y)
 
-## Visão Geral
-O Produto A é indicado para pequenas operações, priorizando simplicidade e baixo custo de implantação.
+## Overview
+Product A is intended for small operations, prioritizing simplicity and low deployment cost.
 
-## Condições Comerciais
-- Pagamento: boleto em 45 dias (não há 30/60).
+## Commercial Terms
+- Payment: invoice due in 45 days (no 30/60 installment option).
 
-## Garantia e Suporte
-- Garantia: 6 meses para defeitos de fabricação.
-- Suporte: por e‑mail em horário comercial.
+## Warranty and Support
+- Warranty: 6 months for manufacturing defects.
+- Support: by email during business hours.
 
-## Itens Incluídos
-- manual digital
-- suporte por e‑mail
+## Included Items
+- digital manual
+- email support

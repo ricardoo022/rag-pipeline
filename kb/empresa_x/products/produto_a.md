@@ -1,20 +1,20 @@
-# Produto A — Especificações e Políticas (Empresa X)
+# Product A — Specifications and Policies (Empresa X)
 
-## Visão Geral
-O Produto A foi desenvolvido para atender operações de médio porte, com foco em estabilidade, facilidade de uso e implantação rápida. Atende rotinas comerciais e operacionais, com trilha de treinamento inicial e base de conhecimento.
+## Overview
+Product A was built for mid-size operations, focused on stability, ease of use, and fast deployment. It supports commercial and operational routines, with an initial training track and a knowledge base.
 
-## Condições Comerciais
-- Pagamento: disponível parcelamento em 30/60 dias.
-- Modelos de contratação: assinatura anual com renovação automática.
+## Commercial Terms
+- Payment: installment plan available over 30/60 days.
+- Contract models: annual subscription with automatic renewal.
 
-## Garantia e Suporte
-- Garantia: padrão de 12 meses para defeitos de fabricação.
-- Suporte: canal padrão com tempos de resposta em horário comercial.
+## Warranty and Support
+- Warranty: standard 12 months for manufacturing defects.
+- Support: standard channel with response times during business hours.
 
-## Itens Incluídos
-- instalação no ambiente do cliente
-- treinamento inicial para a equipe
-- suporte básico durante o período de garantia
+## Included Items
+- installation at the customer's site
+- initial training for the team
+- basic support during the warranty period
 
-## Observações e Upgrades
-- Opções de upgrade para suporte avançado e add‑ons específicos.
+## Notes and Upgrades
+- Upgrade options for advanced support and specific add-ons.

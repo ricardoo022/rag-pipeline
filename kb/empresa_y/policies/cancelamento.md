@@ -1,13 +1,13 @@
-# Políticas de Cancelamento (Empresa Y)
+# Cancellation Policy (Empresa Y)
 
-## Âmbito
-Aplica‑se aos contratos do Produto A e do Serviço B.
+## Scope
+Applies to Product A and Service B contracts.
 
-## Período de Arrependimento
-- Cancelamento permitido em até 14 dias corridos após a assinatura, sem multa.
+## Cooling-Off Period
+- Cancellation allowed within 14 calendar days after signing, with no penalty.
 
-## Multas e Condições
-- Após 14 dias, multa proporcional de 5% do valor remanescente do contrato.
+## Penalties and Conditions
+- After 14 days, a proportional penalty of 5% of the remaining contract value applies.
 
-## Procedimentos
-- Solicitar por e‑mail com identificação do contrato e motivo do cancelamento.
+## Procedures
+- Request by email, providing the contract ID and reason for cancellation.
