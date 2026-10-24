@@ -73,6 +73,14 @@ make rag_phase3_save_fast                                      # cli.py eval-age
 make chat QUESTION="Qual a garantia do Produto A?"              # cli.py chat, one-shot ReAct answer
 ```
 
+`rag_phase2_save`/`rag_phase3_save` run the full (non-`--fast`) question set in the foreground —
+slow, since it's an LLM-judge call per question. The `_bg` variants (`make rag_phase2_save_bg`,
+`make rag_phase3_save_bg`) run the same full sweep via `nohup` in the background instead, writing
+`eval/analysis/{phase2,phase3}.nohup.log` plus a `.pid` file with the process id — use these for
+a full run rather than blocking the terminal. `make truncate` (`cli.py truncate`) wipes
+`kb_docs`/`kb_chunks` directly — the standalone form of `rag_phase0`'s `TRUNCATE=1` flag, without
+re-ingesting anything afterward.
+
 The agent needs a `semantic`-chunked, globally-queryable KB to be useful (its search tool fixes
 `chunking=semantic`, no `empresa`/`client_id` filter) — e.g. `make rag_phase0 STRATEGY=semantic
 EMPRESA=empresa_x` first.
@@ -119,7 +127,7 @@ Two-table design, staging separated from materialized/searchable chunks:
   `unique(source_path, source_hash)` — re-ingesting an unchanged file is a no-op.
 - `kb_chunks` (`01_init.sql`) — chunked, embedded content. `embedding vector(1536)` (OpenAI
   `text-embedding-3-small` dimensions, generated via OpenRouter — see Environment) plus a
-  generated `fts tsvector` column (`to_tsvector('portuguese', content)`) for full-text search.
+  generated `fts tsvector` column (`to_tsvector('english', content)`) for full-text search.
   Idempotent via `unique(doc_path, chunk_ix)` — **known gap:** re-materializing a doc under a
   strategy that yields fewer chunks than a previous run leaves stale higher-`chunk_ix` rows
   behind, since upsert only touches indices the new run actually produces.
@@ -137,17 +145,15 @@ Two-table design, staging separated from materialized/searchable chunks:
 ### Application layout (`rag/`)
 Mirrors the pipeline stages; each file is independently swappable:
 - `db.py` — `get_conn()`/`get_db_url()`, the only place DB connection details are assembled.
-- `loaders.py` — five chunking strategies (`split_fixed`/`split_token`/`split_markdown`/
-  `split_markdown_hybrid`/`split_semantic`, dispatched via `split_text`): fixed-size
-  (`RecursiveCharacterTextSplitter`, chars), token-based (same splitter via
-  `from_tiktoken_encoder`, `chunk_size`/`chunk_overlap` count tokens instead of chars),
-  markdown-header-aware (`MarkdownHeaderTextSplitter`, ignores `chunk_size`/`chunk_overlap`),
-  markdown-hybrid (header split first, then recursively sub-splits any section still over
-  `chunk_size`), and semantic (`SemanticChunker`, embedding-guided, also ignores
-  `chunk_size`/`chunk_overlap`). Each strategy fails explicitly (`RuntimeError`) rather than
-  silently falling back if unavailable (e.g. semantic chunking without an embedder or
-  `langchain-experimental`). See `docs/ingest.md` for a detailed comparison, including observed
-  chunk counts on the sample `kb/` data.
+- `loaders.py` — three chunking strategies (`split_fixed`/`split_markdown`/`split_semantic`,
+  dispatched via `split_text`): fixed-size (`RecursiveCharacterTextSplitter`, chars),
+  markdown-header-aware (`MarkdownHeaderTextSplitter`, ignores `chunk_size`/`chunk_overlap`;
+  reconstructs the heading it strips into `metadata` as an `h1 > h2 > h3` breadcrumb prepended to
+  each chunk — see `docs/markdown_header_drop.md`), and semantic (`SemanticChunker`,
+  embedding-guided, also ignores `chunk_size`/`chunk_overlap`). Each strategy fails explicitly
+  (`RuntimeError`) rather than silently falling back if unavailable (e.g. semantic chunking
+  without an embedder or `langchain-experimental`). See `docs/ingest.md` for a detailed
+  comparison, including observed chunk counts on the sample `kb/` data.
 - `ingest.py` — two-phase ingestion: `stage_docs_from_dir` stages raw files into `kb_docs`
   (idempotent, filesystem read), `materialize_chunks_from_staging` chunks+embeds+upserts into
   `kb_chunks` (reads only from `kb_docs`, never the filesystem — re-chunking with a new strategy

@@ -83,6 +83,23 @@ def query_candidates(
             return results
 
 
+def _cohere_with_retry(call):
+    # Trial keys allow 10 calls/min; back off instead of failing. COHERE_MAX_RETRIES=0 disables.
+    import time
+
+    from cohere.errors import TooManyRequestsError
+
+    retries = int(os.getenv("COHERE_MAX_RETRIES", "6"))
+    for attempt in range(retries + 1):
+        try:
+            return call()
+        # ValueError covers occasional garbled 200 bodies (UnicodeDecodeError/JSONDecodeError).
+        except (TooManyRequestsError, ValueError):
+            if attempt == retries:
+                raise
+            time.sleep(min(10 * (attempt + 1), 60))
+
+
 def apply_rerank(query: str, items: List[Dict[str, Any]], reranker: str, k: int) -> List[Dict[str, Any]]:
     if reranker == "none" or not items:
         return items[:k]
@@ -100,7 +117,7 @@ def apply_rerank(query: str, items: List[Dict[str, Any]], reranker: str, k: int)
         if hasattr(reranker_model, "rank"):
             results = reranker_model.rank(query=query, documents=docs)
         elif hasattr(reranker_model, "rerank"):
-            results = reranker_model.rerank(query=query, documents=docs)
+            results = _cohere_with_retry(lambda: reranker_model.rerank(query=query, documents=docs))
         else:
             try:
                 results = reranker_model.invoke({"query": query, "documents": docs})

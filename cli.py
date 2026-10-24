@@ -17,7 +17,7 @@ def main(argv: list[str] | None = None) -> int:
     p_ingest.add_argument("--base-dir", default="kb", help="Directory of .md files to ingest (default: kb)")
     p_ingest.add_argument(
         "--strategy", nargs="+", default=["fixed"],
-        choices=["fixed", "token", "markdown", "markdown_hybrid", "semantic"],
+        choices=["fixed", "markdown", "semantic"],
         help="Chunking strategy/strategies (default: fixed). Pass more than one (e.g. --strategy fixed markdown semantic) to materialize all of them in one run.",
     )
     p_ingest.add_argument("--empresa", default=None, help="Optional empresa tag for staged docs/chunks")
@@ -38,7 +38,7 @@ def main(argv: list[str] | None = None) -> int:
     p_search.add_argument("--empresa", default=None)
     p_search.add_argument(
         "--chunking", default=None,
-        choices=["fixed", "token", "markdown", "markdown_hybrid", "semantic"],
+        choices=["fixed", "markdown", "semantic"],
     )
     p_search.add_argument("--use-hyde", action="store_true")
     p_search.add_argument("--match-threshold", type=float, default=None)

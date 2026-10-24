@@ -3,436 +3,436 @@
     {
       "chunking": "semantic",
       "total": 61,
-      "llm_yes": 0.69
+      "llm_yes": 0.74
     }
   ],
   "details": [
     {
-      "question": "Quais as condições comerciais e a garantia do Produto A?",
-      "expected": "Pagamento 30/60 e garantia de 12 meses.",
-      "answer": "Assumindo Empresa X, as condições comerciais do Produto A são: pagamento com parcelamento em 30/60 dias e modelo de contratação por assinatura anual com renovação automática. A garantia é padrão de 12 meses para defeitos de fabricação. O suporte é pelo canal padrão com tempos de resposta em horário comercial [empresa_x/products/produto_a.md#0].\n\nSe for Empresa Y, as condições comerciais são pagamento por boleto em 45 dias, e a garantia é de 6 meses para defeitos de fabricação, com suporte por e-mail em horário comercial [empresa_y/products/produto_a.md#0].",
+      "question": "What are the commercial terms and warranty for Product A?",
+      "expected": "Payment over 30/60 and a 12-month warranty.",
+      "answer": "For Product A, the commercial terms and warranty differ by company:\n\n- For Empresa X (assumed default):\n  - Commercial terms: installment plan available over 30/60 days; annual subscription contract with automatic renewal.\n  - Warranty: standard 12 months for manufacturing defects.\n  - Support: standard channel with response times during business hours.\n  - Included: installation at the customer's site, initial training, and basic support during the warranty period.\n\n- For Empresa Y:\n  - Commercial terms: payment by invoice due in 45 days (no 30/60 installment option).\n  - Warranty: 6 months for manufacturing defects.\n  - Support: by email during business hours.\n  - Included: digital manual and email support.\n\nThis summary is based on the official product specifications and policies for Product A from both companies [semantic/kb/empresa_x/products/produto_a.md#0] and [semantic/kb/empresa_y/products/produto_a.md#0].",
+      "judge_yes": true,
+      "judge_justification": "The answer specifies commercial terms as \"installment plan available over 30/60 days\" and warranty as \"standard 12 months\" for Empresa X, matching the expected payment over 30/60 and 12-month warranty."
+    },
+    {
+      "question": "What is the SLA for Service B?",
+      "expected": "SLA of 99.9% monthly uptime.",
+      "answer": "The SLA for Service B is:\n\n- For Empresa X: 99.9% monthly uptime.\n- For Empresa Y: 99% monthly uptime.\n\n(Assumption: Empresa X, so the SLA is 99.9%) [semantic/kb/empresa_x/services/servico_b.md#0] [semantic/kb/empresa_y/services/servico_b.md#0]",
+      "judge_yes": true,
+      "judge_justification": "The answer specifies the SLA for Service B as 99.9% monthly uptime for Empresa X, matching the expected SLA and directly addressing the question."
+    },
+    {
+      "question": "What is the deadline for cancellation without penalty?",
+      "expected": "Cancellation without penalty within 7 business days.",
+      "answer": "Assuming Empresa X, the deadline for cancellation without penalty is within 7 business days after signing the contract. After this period, a proportional penalty of 10% of the remaining contract value applies.\n\nIf Empresa Y: the deadline for cancellation without penalty is within 14 calendar days after signing, with no penalty. After 14 days, a proportional penalty of 5% of the remaining contract value applies [policies/cancelamento.md#0].",
       "judge_yes": false,
-      "judge_justification": "The answer provides multiple conditions and guarantees depending on the company (Empresa X and Empresa Y), but the expected answer specifies only \"Pagamento 30/60 e garantia de 12 meses,\" which matches only Empresa X's terms; thus, the answer is not fully aligned with the expected concise response."
+      "judge_justification": "The answer provides two different deadlines (7 business days for Empresa X and 14 calendar days for Empresa Y), which does not match the expected single deadline of 7 business days."
     },
     {
-      "question": "Qual o SLA do Serviço B?",
-      "expected": "SLA de 99.9% de disponibilidade mensal.",
-      "answer": "O SLA do Serviço B é:\n\n- Para a Empresa X: 99.9% de disponibilidade mensal.\n- Para a Empresa Y: 99% de disponibilidade mensal.\n\n(Assumindo Empresa X como padrão, o SLA é 99.9%) [empresa_x/services/servico_b.md#0, empresa_y/services/servico_b.md#0].",
+      "question": "What items are included with Product A?",
+      "expected": "Includes installation, initial training, and basic support.",
+      "answer": "For Product A from Empresa X, the included items are:\n- Installation at the customer's site\n- Initial training for the team\n- Basic support during the warranty period\n\nFor Product A from Empresa Y, the included items are:\n- Digital manual\n- Email support\n\n(Assumption: Empresa X by default; if Empresa Y, see above) [semantic/kb/empresa_x/products/produto_a.md#0, semantic/kb/empresa_y/products/produto_a.md#0]",
       "judge_yes": true,
-      "judge_justification": "Responde claramente que o SLA do Serviço B é 99.9% de disponibilidade mensal para a Empresa X, assumida como padrão, atendendo à expectativa."
+      "judge_justification": "The answer explicitly lists installation, initial training, and basic support for Product A from Empresa X, matching the expected items."
     },
     {
-      "question": "Qual o prazo para cancelamento sem multa?",
-      "expected": "Cancelamento sem multa em até 7 dias úteis.",
-      "answer": "O prazo para cancelamento sem multa é de até 7 dias úteis após a assinatura para a Empresa X. Após esse período, há multa proporcional de 10% do valor remanescente do contrato. (Assumção: Empresa X)\n\nSe for para a Empresa Y, o prazo é de até 14 dias corridos após a assinatura, sem multa, e após isso a multa é proporcional de 5% do valor remanescente do contrato [policies/cancelamento.md#0].",
+      "question": "What type of contract model does Product A use?",
+      "expected": "Contracted via annual subscription with automatic renewal.",
+      "answer": "Product A uses an annual subscription contract model with automatic renewal (Assumption: Empresa X) [semantic/kb/empresa_x/products/produto_a.md#0].\n\nIf Empresa Y: The contract model details are not explicitly stated in the available evidence.",
+      "judge_yes": true,
+      "judge_justification": "The answer states \"annual subscription contract model with automatic renewal,\" matching the expected contract model."
+    },
+    {
+      "question": "What is the priority support channel for Service B?",
+      "expected": "Priority support channel: customer portal.",
+      "answer": "The priority support channel for Service B is the customer portal (Assumption: Empresa X). If Empresa Y, the priority support channel is email [semantic/kb/empresa_x/services/servico_b.md#0, semantic/kb/empresa_y/services/servico_b.md#0].",
+      "judge_yes": true,
+      "judge_justification": "The answer clearly states the priority support channel for Service B as the customer portal, matching the expected response."
+    },
+    {
+      "question": "What is the maintenance window for Service B?",
+      "expected": "Maintenance window on Saturdays, 1am to 5am.",
+      "answer": "The maintenance window for Service B is Saturdays, 1am–5am for Empresa X (Assumption: Empresa X). If Empresa Y, the maintenance window is Sundays, 2am–4am [semantic/kb/empresa_x/services/servico_b.md#0] [semantic/kb/empresa_y/services/servico_b.md#0].",
+      "judge_yes": true,
+      "judge_justification": "The answer specifies the maintenance window for Service B as Saturdays, 1am–5am for Empresa X, matching the expected time frame."
+    },
+    {
+      "question": "What makes up the training and support for Product A?",
+      "expected": "Training and basic support during the warranty period.",
+      "answer": "For Product A (assuming Empresa X), the training and support include:\n\n- Initial training for the team as part of the included items.\n- Basic support during the warranty period (12 months).\n- Installation at the customer's site.\n- Upgrade options for advanced support and specific add-ons are available.\n- The support channel is standard with response times during business hours.\n\nAdditional details from lead reports for Empresa X mention:\n\n- A training track including onboarding content and refresher training to mitigate learning curve risks.\n- Team training can be both in-person and remote.\n- On-site support during critical moments such as closings and harvest periods, with defined SLAs and clear support channels.\n- A detailed training plan including initial training and refreshers is part of the proposal considerations.\n\nThis indicates a structured training and support setup with initial training, ongoing basic support, and options for advanced support and on-site assistance during critical periods [semantic/kb/empresa_x/products/produto_a.md#0; semantic/kb/empresa_x/lead_reports/lead_joao.md#0; semantic/kb/empresa_x/lead_reports/lead_maria.md#0].",
+      "judge_yes": true,
+      "judge_justification": "The answer clearly states training and basic support during the warranty period, matching the expected \"Training and basic support during the warranty period,\" and provides additional relevant details."
+    },
+    {
+      "question": "Confirm the payment terms Maria requested",
+      "expected": "Installment payment over 30/60 days.",
+      "answer": "Maria requested payment terms with installment options over 30/60 days. She also requested confirmation of a 12-month warranty and a 99.9% SLA on Service B, which are relevant for financial approval [lead_maria.md#0].",
+      "judge_yes": true,
+      "judge_justification": "The answer confirms installment payment over 30/60 days as requested by Maria, directly addressing the payment terms."
+    },
+    {
+      "question": "What warranty did the lead Maria mention?",
+      "expected": "Standard 12-month warranty.",
+      "answer": "There is not enough evidence in the KB about the warranty mentioned by the lead Maria. If you can provide more context or details, I can try searching again.",
       "judge_yes": false,
-      "judge_justification": "The answer provides two different cancellation periods (7 days úteis for Empresa X and 14 dias corridos for Empresa Y), which does not match the expected single period of \"até 7 dias úteis.\""
+      "judge_justification": "The answer does not specify the warranty mentioned by lead Maria and states insufficient information, failing to provide the expected \"Standard 12-month warranty.\""
     },
     {
-      "question": "Quais itens incluídos no Produto A?",
-      "expected": "Inclui instalação, treinamento inicial e suporte básico.",
-      "answer": "Os itens incluídos no Produto A são:\n\nPara a Empresa X (assumido como padrão):\n- instalação no ambiente do cliente\n- treinamento inicial para a equipe\n- suporte básico durante o período de garantia\n\nPara a Empresa Y:\n- manual digital\n- suporte por e-mail\n\nEssas informações são específicas para cada empresa conforme o KB [empresa_x/products/produto_a.md#0] e [empresa_y/products/produto_a.md#0].",
+      "question": "What SLA did the lead Maria mention?",
+      "expected": "99.9% SLA requested by the lead.",
+      "answer": "The SLA mentioned by the lead Maria is 99.9% for Service B. This was part of her interest along with Product A and related to advanced support [lead_maria.md#0].",
       "judge_yes": true,
-      "judge_justification": "Responde claramente que o Produto A inclui instalação, treinamento inicial e suporte básico para a Empresa X, conforme esperado."
+      "judge_justification": "The answer specifies \"99.9% SLA\" mentioned by lead Maria, matching the expected SLA in the question."
     },
     {
-      "question": "O modelo de contratação do Produto A é de qual tipo?",
-      "expected": "Contratação por assinatura anual com renovação automática.",
-      "answer": "O modelo de contratação do Produto A é de assinatura anual com renovação automática (Assumption: Empresa X). \n\nSe for para a Empresa Y, o modelo de contratação não está explicitamente detalhado, mas as condições comerciais indicam pagamento via boleto em 45 dias, sem menção a assinatura anual [produto_a.md#0].",
+      "question": "What SLA was requested in João's lead?",
+      "expected": "99.9% SLA for Service B.",
+      "answer": "The SLA requested in João's lead (Empresa X) is 99.9% uptime for Service B. João specifically prefers Service B with a 99.9% SLA, along with advanced reporting from Product A. The SLA is part of the required solution and next steps include providing a proposal with Service B SLA metrics at 99.9% [lead_joao.md#0].",
       "judge_yes": true,
-      "judge_justification": "Responde claramente que o modelo é de assinatura anual com renovação automática para a Empresa X, conforme esperado."
+      "judge_justification": "The answer explicitly states \"99.9% uptime for Service B,\" matching the expected SLA and directly addressing the question."
     },
     {
-      "question": "Qual canal prioritário de suporte do Serviço B?",
-      "expected": "Canal prioritário de suporte: portal do cliente.",
-      "answer": "O canal prioritário de suporte do Serviço B, assumindo Empresa X, é o portal do cliente. \n\nSe for Empresa Y, o canal prioritário é o e-mail [empresa_x/services/servico_b.md#0; empresa_y/services/servico_b.md#0].",
+      "question": "What integration does João need to move idle stock?",
+      "expected": "Marketplace integration to move idle stock.",
+      "answer": "João needs an integration with a regional marketplace to move idle stock. The solution should include a dashboard consolidating sales, inventory, and channels (including the marketplace), with exportable reports and documented APIs for the data team. The integration quality with systems and the marketplace is a key decision criterion for João [lead_joao.md#0].",
       "judge_yes": true,
-      "judge_justification": "The answer specifies \"o portal do cliente\" como canal prioritário para o Serviço B na Empresa X, atendendo à pergunta sobre o canal prioritário de suporte."
+      "judge_justification": "The answer specifies \"integration with a regional marketplace\" to move idle stock, matching the expected \"Marketplace integration to move idle stock.\""
     },
     {
-      "question": "Qual é a janela de manutenção do Serviço B?",
-      "expected": "Janela de manutenção aos sábados das 01h às 05h.",
-      "answer": "A janela de manutenção do Serviço B, assumindo Empresa X, é aos sábados das 01h às 05h. \n\nSe for para a Empresa Y, a janela de manutenção é aos domingos das 02h às 04h [empresa_x/services/servico_b.md#0, empresa_y/services/servico_b.md#0].",
-      "judge_yes": true,
-      "judge_justification": "The answer specifies the maintenance window for Serviço B as Saturdays from 01h to 05h for Empresa X, matching the expected time frame."
-    },
-    {
-      "question": "Quais componentes formam o treinamento e suporte do Produto A?",
-      "expected": "Treinamento e suporte básico durante a garantia.",
-      "answer": "O treinamento e suporte do Produto A (considerando a Empresa X) incluem:\n\n- Treinamento inicial para a equipe.\n- Suporte básico durante o período de garantia.\n- Treinamento presencial e remoto para o time.\n- Suporte presencial em momentos críticos, como fechamentos e períodos de safra.\n- Trilha de treinamento objetiva, com reciclagens previstas.\n- Canais de atendimento claros e SLAs definidos para suporte.\n\nEsses componentes fazem parte do pacote padrão, com possibilidade de upgrade para suporte avançado e add-ons específicos [produto_a.md#0, lead_joao.md#0].",
-      "judge_yes": true,
-      "judge_justification": "The answer details components of training and basic support during the warranty, matching the expected \"Treinamento e suporte básico durante a garantia\" and expanding with additional relevant details."
-    },
-    {
-      "question": "Confirme as condições de pagamento solicitadas pela Maria",
-      "expected": "Pagamento parcelado em 30/60 dias.",
-      "answer": "As condições de pagamento solicitadas pela Maria são parcelamento em 30/60 dias. Além disso, ela solicitou confirmação da garantia de 12 meses. Essas condições impactam a aprovação financeira da proposta [lead_maria.md#0].",
-      "judge_yes": true,
-      "judge_justification": "Confirma as condições de pagamento como \"parcelamento em 30/60 dias\", atendendo ao esperado."
-    },
-    {
-      "question": "Qual a garantia citada pela lead Maria?",
-      "expected": "Garantia padrão de 12 meses.",
-      "answer": "A garantia citada pela lead Maria é de 12 meses. Ela solicitou confirmação dessa garantia, que impacta a aprovação financeira [lead_maria.md#0].",
-      "judge_yes": true,
-      "judge_justification": "A resposta menciona claramente \"garantia de 12 meses,\" que corresponde à garantia padrão esperada na pergunta."
-    },
-    {
-      "question": "Qual o SLA citado pela lead Maria?",
-      "expected": "SLA de 99.9% solicitado pela lead.",
-      "answer": "O SLA citado pela lead Maria é de 99.9% no Serviço B [lead_maria.md#0].",
-      "judge_yes": true,
-      "judge_justification": "The answer states \"SLA de 99.9%\" cited by lead Maria, matching the expected SLA of 99.9%."
-    },
-    {
-      "question": "Qual o SLA solicitado no lead do João?",
-      "expected": "SLA de 99.9% para o Serviço B.",
-      "answer": "O SLA solicitado no lead do João é de 99.9% para o Serviço B. João também indicou a necessidade de suporte presencial em momentos críticos, com SLAs definidos e canais de atendimento claros [lead_joao.md#0].",
-      "judge_yes": true,
-      "judge_justification": "The answer explicitly states \"SLA solicitado no lead do João é de 99.9% para o Serviço B,\" directly addressing the question."
-    },
-    {
-      "question": "Que integração João precisa para escoar itens?",
-      "expected": "Integração com marketplace para escoar itens ociosos.",
-      "answer": "João precisa de uma integração com marketplace regional para escoar itens ociosos. Essa integração deve permitir comparativos de desempenho por canal e mix de produtos, consolidar vendas, estoque e canais (incluindo marketplace), com relatórios exportáveis e APIs documentadas para a equipe de dados. A solução requerida inclui o Produto A (módulo de relatórios avançados) e o Serviço B com SLA de 99.9%, além de um painel que consolide essas informações [lead_joao.md#0].",
-      "judge_yes": true,
-      "judge_justification": "The answer specifies the need for \"integração com marketplace regional para escoar itens ociosos,\" directly addressing the expected integration with marketplace to offload idle items."
-    },
-    {
-      "question": "Que tipo de treinamento João solicitou?",
-      "expected": "Treinamento para o time (inicial e reciclagens).",
-      "answer": "Não há evidência suficiente na base de conhecimento para determinar que tipo de treinamento João solicitou. Se desejar, posso ajudar a buscar com termos diferentes ou mais específicos.",
+      "question": "What kind of training did João request?",
+      "expected": "Team training (in-person and remote, plus refreshers).",
+      "answer": "There is no specific information in the KB about the kind of training João requested. If you have more context or details, I can try searching again.",
       "judge_yes": false,
-      "judge_justification": "The answer states there is no evidence to determine the type of training João requested, thus it does not provide the expected information about \"Treinamento para o time (inicial e reciclagens).\""
+      "judge_justification": "The answer states there is no specific information about the training João requested, so it does not provide the expected detail about team training (in-person, remote, refreshers)."
     },
     {
-      "question": "Qual o prazo desejado pela Maria para a primeira fase?",
-      "expected": "Primeira fase em até 60 dias.",
-      "answer": "O prazo desejado pela Maria para a primeira fase é de 60 dias. A primeira fase deve entrar em produção em até 60 dias, com um escopo mínimo viável que sustente a rotina do time [lead_maria.md#0].",
+      "question": "What is Maria's desired timeline for the first phase?",
+      "expected": "First phase within 60 days.",
+      "answer": "Maria's desired timeline for the first phase is 60 days. The first phase must go live within this period with a minimum viable scope that supports the team's day-to-day routine [lead_maria.md#0].",
       "judge_yes": true,
-      "judge_justification": "The answer states \"60 dias\" as the desired deadline for the first phase, matching the expected \"Primeira fase em até 60 dias.\""
+      "judge_justification": "The answer states \"60 days\" and specifies the first phase must go live within this period, matching the expected timeline."
     },
     {
-      "question": "Qual é o foco principal solicitado pela Maria?",
-      "expected": "Painel unificado para operações e pós‑venda.",
-      "answer": "O foco principal solicitado pela Maria é padronizar a jornada de atendimento e consolidar informações em um painel único. Ela busca reduzir retrabalho e melhorar a visibilidade operacional e comercial por meio de um painel unificado que atenda vendas e pós-venda, com um escopo mínimo viável para sustentar a rotina do time, a ser implementado em até 60 dias [lead_maria.md#0].",
+      "question": "What is Maria's main focus?",
+      "expected": "Unified dashboard for operations and post-sales.",
+      "answer": "Maria's main focus is to standardize the support journey and consolidate information in a single dashboard. She aims to reduce rework and improve operational and commercial visibility through a unified dashboard covering sales and post-sales, with an initial scope that includes a standardized support flow with complete records, an operational dashboard for daily tracking, and productivity KPIs and support SLA [lead_maria.md#0].",
       "judge_yes": true,
-      "judge_justification": "The answer clearly states \"painel unificado que atenda vendas e pós-venda,\" matching the expected focus on a unified panel for operations and after-sales."
+      "judge_justification": "The answer clearly states Maria's focus on a unified dashboard for operations and post-sales, matching the expected \"Unified dashboard for operations and post-sales.\""
     },
     {
-      "question": "Qual a principal dor da Maria envolvendo integração de sistemas?",
-      "expected": "Conciliação automatizada entre ERP e CRM.",
-      "answer": "A principal dor da Maria envolvendo integração de sistemas é a integração entre o ERP legado e o CRM, que atualmente não possuem integrações nativas. Isso gera a necessidade de exportação manual de planilhas e conciliação manual de pedidos, notas e faturas, o que causa inconsistências. Ela precisa de uma conciliação automatizada para reduzir essas inconsistências, com sincronização de pedidos, notas e faturas e rastreabilidade [lead_maria.md#0].",
+      "question": "What is Maria's main pain point involving system integration?",
+      "expected": "Automated reconciliation between the ERP and CRM.",
+      "answer": "Maria's main pain point involving system integration is the lack of native integration between the legacy ERP and the CRM at Empresa X. Currently, there is manual spreadsheet export and manual reconciliation of orders, invoices, and receipts, which causes inconsistencies. She needs automated reconciliation to reduce these inconsistencies and synchronization of orders, invoices, and receipts with traceability [lead_maria.md#0].",
       "judge_yes": true,
-      "judge_justification": "The answer clearly states the main pain is the lack of native integration between ERP and CRM, causing manual reconciliation, and highlights the need for automated reconciliation, matching the expected \"Conciliação automatizada entre ERP e CRM.\""
+      "judge_justification": "The answer clearly states Maria's main pain point is the lack of native integration causing manual reconciliation, and she needs automated reconciliation between ERP and CRM, matching the expected response."
     },
     {
-      "question": "Quais itens a Maria pediu confirmação para aprovação financeira?",
-      "expected": "Pagamento 30/60 e garantia de 12 meses.",
-      "answer": "Maria pediu confirmação para aprovação financeira dos seguintes itens: condições de pagamento parcelado em 30/60 e garantia de 12 meses. Esses itens impactam a aprovação financeira, conforme o relatório de lead da Maria na Empresa X [lead_maria.md#0].",
+      "question": "Which items did Maria ask to confirm for financial approval?",
+      "expected": "Payment over 30/60 and the 12-month warranty.",
+      "answer": "Maria asked to confirm the following items for financial approval:\n- Installment payment terms over 30/60 days\n- The 12-month warranty\n- The 99.9% SLA on Service B\n\nThese items affect financial approval and were specifically mentioned by Maria in the context of her interest in Product A and Service B [lead_maria.md#0].",
       "judge_yes": true,
-      "judge_justification": "The answer explicitly mentions \"condições de pagamento parcelado em 30/60 e garantia de 12 meses,\" matching the expected items for Maria's financial approval confirmation."
+      "judge_justification": "The answer lists \"Installment payment terms over 30/60 days\" and \"The 12-month warranty,\" matching the expected items Maria asked to confirm for financial approval."
     },
     {
-      "question": "Qual é o prazo de pagamento do Produto A?",
-      "expected": "Pagamento por boleto em 45 dias.",
-      "answer": "O prazo de pagamento do Produto A, assumindo Empresa X, é parcelamento em 30/60 dias. \n\nSe for para Empresa Y, o prazo de pagamento é boleto em 45 dias.\n\nFonte: produto_a.md para Empresa X e Empresa Y [produto_a.md#0].",
+      "question": "What is the payment term for Product A?",
+      "expected": "Payment via invoice due in 45 days.",
+      "answer": "The payment term for Product A depends on the company:\n\n- For Empresa X, the payment term is an installment plan available over 30/60 days.\n- For Empresa Y, the payment term is invoice due in 45 days (no 30/60 installment option).\n\n(Assumption: Empresa X by default) [semantic/kb/empresa_x/products/produto_a.md#0] [semantic/kb/empresa_y/products/produto_a.md#0]",
       "judge_yes": true,
-      "judge_justification": "The answer specifies the payment term for Produto A as \"boleto em 45 dias\" for Empresa Y, matching the expected \"Pagamento por boleto em 45 dias.\""
+      "judge_justification": "The answer specifies Empresa Y's payment term as \"invoice due in 45 days,\" matching the expected payment term for Product A."
     },
     {
-      "question": "Qual o SLA do Serviço B?",
-      "expected": "SLA de 99% de disponibilidade mensal.",
-      "answer": "O SLA do Serviço B é:\n\n- Para a Empresa X: 99.9% de disponibilidade mensal.\n- Para a Empresa Y: 99% de disponibilidade mensal.\n\nAssumindo Empresa X como padrão, o SLA do Serviço B é 99.9% de disponibilidade mensal [servico_b.md#0].",
+      "question": "What is the SLA for Service B?",
+      "expected": "SLA of 99% monthly uptime.",
+      "answer": "The SLA for Service B is:\n\n- For Empresa X: 99.9% monthly uptime.\n- For Empresa Y: 99% monthly uptime.\n\n(Assumption: Empresa X, so the SLA is 99.9%) [semantic/kb/empresa_x/services/servico_b.md#0, semantic/kb/empresa_y/services/servico_b.md#0]",
+      "judge_yes": true,
+      "judge_justification": "The answer specifies the SLA for Service B as 99.9% monthly uptime for Empresa X and 99% for Empresa Y, directly addressing the SLA with the expected 99% monthly uptime mentioned."
+    },
+    {
+      "question": "What is the deadline for cancellation without penalty?",
+      "expected": "Cancellation without penalty within 14 calendar days.",
+      "answer": "Assuming Empresa X, the deadline for cancellation without penalty is within 7 business days after signing. After this period, a proportional penalty of 10% of the remaining contract value applies.\n\nIf Empresa Y: the deadline for cancellation without penalty is within 14 calendar days after signing, with a proportional penalty of 5% after that [policies/cancelamento.md#0].",
       "judge_yes": false,
-      "judge_justification": "The answer provides SLA values for Empresa X (99.9%) and Empresa Y (99%) but does not clearly state the SLA of Serviço B as 99%, which is the expected answer."
+      "judge_justification": "The answer provides two different deadlines (7 business days and 14 calendar days) depending on the company, but the expected answer specifies a single deadline of 14 calendar days without penalty."
     },
     {
-      "question": "Qual o prazo para cancelamento sem multa?",
-      "expected": "Cancelamento sem multa em até 14 dias corridos.",
-      "answer": "O prazo para cancelamento sem multa é de até 7 dias úteis após a assinatura para a Empresa X (Assumção: Empresa X). Após esse período, há multa proporcional de 10% do valor remanescente do contrato. \n\nSe for para a Empresa Y, o prazo é de até 14 dias corridos após a assinatura, sem multa, e após isso a multa é proporcional de 5% do valor remanescente do contrato [policies/cancelamento.md#0].",
+      "question": "What is the standard warranty for Product A?",
+      "expected": "6-month warranty.",
+      "answer": "The standard warranty for Product A is 12 months for manufacturing defects (Assumption: Empresa X). \n\nIf referring to Empresa Y, the warranty is 6 months for manufacturing defects [semantic/kb/empresa_x/products/produto_a.md#0, semantic/kb/empresa_y/products/produto_a.md#0].",
+      "judge_yes": true,
+      "judge_justification": "The answer specifies the standard warranty as 6 months for Empresa Y, matching the expected 6-month warranty."
+    },
+    {
+      "question": "What is the maintenance window for Service B?",
+      "expected": "Maintenance window on Sundays, 2am to 4am.",
+      "answer": "The maintenance window for Service B is Saturdays, 1am–5am for Empresa X (Assumption: Empresa X). If Empresa Y, the maintenance window is Sundays, 2am–4am [semantic/kb/empresa_x/services/servico_b.md#0] [semantic/kb/empresa_y/services/servico_b.md#0].",
+      "judge_yes": true,
+      "judge_justification": "The answer specifies the maintenance window for Service B as Sundays, 2am–4am for Empresa Y, matching the expected time."
+    },
+    {
+      "question": "What items are included with Product A at Empresa Y?",
+      "expected": "Includes a digital manual and email support.",
+      "answer": "For Product A at Empresa Y, the included items are:\n- digital manual\n- email support\n\nThis product is designed for small operations with simplicity and low deployment cost in mind, and it includes support by email during business hours [semantic/kb/empresa_y/products/produto_a.md#0].",
+      "judge_yes": true,
+      "judge_justification": "The answer explicitly lists \"digital manual\" and \"email support,\" matching the expected items included with Product A at Empresa Y."
+    },
+    {
+      "question": "What is Pedro's desired timeline?",
+      "expected": "Start timeline of 30 days.",
+      "answer": "Pedro's desired timeline is 30 days [semantic/kb/empresa_y/lead_reports/lead_pedro.md#0].",
+      "judge_yes": true,
+      "judge_justification": "The answer explicitly states \"Pedro's desired timeline is 30 days,\" matching the expected start timeline of 30 days."
+    },
+    {
+      "question": "What equipment integrations does Pedro need?",
+      "expected": "Integrations with scales and label printing.",
+      "answer": "Pedro needs equipment integrations with scales for automatic weighing and barcode/QR label printing for traceability. These integrations aim to improve real-time inventory accuracy and reduce losses from expiration in his perishables distribution center operations [lead_pedro.md#0].",
+      "judge_yes": true,
+      "judge_justification": "The answer specifies integrations with scales and label printing, directly addressing the question about Pedro's equipment needs."
+    },
+    {
+      "question": "What is Pedro's preferred support channel?",
+      "expected": "Preferred support by email.",
+      "answer": "There is no specific information in the available knowledge base about Pedro's preferred support channel. If you have more context or details about Pedro or the company he is associated with, I can try to search again.",
       "judge_yes": false,
-      "judge_justification": "The expected answer states a 14-day period for cancellation without penalty, but the answer provides 7 business days for Empresa X and 14 calendar days for Empresa Y, not matching the expected uniform 14-day period."
+      "judge_justification": "The answer states there is no information about Pedro's preferred support channel and does not provide the expected answer \"Preferred support by email.\""
     },
     {
-      "question": "Qual é a garantia padrão do Produto A?",
-      "expected": "Garantia de 6 meses.",
-      "answer": "A garantia padrão do Produto A é de 12 meses para defeitos de fabricação, considerando a Empresa X como referência. Se for para a Empresa Y, a garantia é de 6 meses para defeitos de fabricação [produto_a.md#0].",
+      "question": "What is Carla's desired timeline?",
+      "expected": "Deployment timeline of 45 days.",
+      "answer": "Carla's desired timeline is 45 days [lead_carla.md#0].",
+      "judge_yes": true,
+      "judge_justification": "The answer explicitly states \"Carla's desired timeline is 45 days,\" matching the expected deployment timeline."
+    },
+    {
+      "question": "What warranty did Carla mention?",
+      "expected": "6-month warranty.",
+      "answer": "Carla mentioned a 6-month warranty as part of the commercial terms relevant to internal approval. This was noted along with installment terms beyond 30 days and is part of the proposal to be sent to her [lead_carla.md#0].",
+      "judge_yes": true,
+      "judge_justification": "The answer explicitly states \"Carla mentioned a 6-month warranty,\" directly addressing the question."
+    },
+    {
+      "question": "What does Carla want to automate in finance?",
+      "expected": "Automation of financial reconciliation.",
+      "answer": "Carla wants to automate in finance the following tasks:\n- Reduce manual effort in bank reconciliations and financial closing.\n- Achieve better cash-flow predictability.\n- Generate monthly reports broken down by cost center and branch.\n- Automate reconciliation of invoices and card payments with simple rules.\n- Standardize monthly reports in PDF/spreadsheet format.\n- Have a financial dashboard with delinquency and overdue-payment indicators.\n\nHer main interest is in Product A (basic version), focused on financial and reporting modules, with functional requirements including automatic reconciliation with configurable rules and report export in PDF/CSV. Non-functional requirements include ease of use, fast onboarding, and simple integration with the current bank/ERP [semantic/kb/empresa_y/lead_reports/lead_carla.md#0].",
+      "judge_yes": true,
+      "judge_justification": "The answer explicitly mentions automating bank reconciliations and invoice/card payment reconciliation, aligning with the expected automation of financial reconciliation."
+    },
+    {
+      "question": "What reports does Carla need?",
+      "expected": "Monthly reports broken down by cost center.",
+      "answer": "Carla needs monthly reports broken down by cost center and branch, with standardized templates available in PDF or spreadsheet formats. She also requires a financial dashboard with delinquency and overdue-payment indicators. The reports should support automatic reconciliation with configurable rules and allow export in PDF/CSV formats. These reports aim to reduce manual effort in bank reconciliations and financial closing, improve cash-flow predictability, and be delivered within a 45-day timeline [lead_carla.md#0].",
+      "judge_yes": true,
+      "judge_justification": "The answer specifies monthly reports broken down by cost center (matching the expected), and adds relevant details without contradicting the question."
+    },
+    {
+      "question": "What indicators should Carla's financial dashboard show?",
+      "expected": "Delinquency indicators in the financial dashboard.",
+      "answer": "Carla's financial dashboard should show indicators related to delinquency and overdue payments. This aligns with her need for better cash-flow predictability and monthly reports broken down by cost center and branch. The dashboard is part of a solution focused on reducing manual effort in bank reconciliations and financial closing, with automatic reconciliation and standardized monthly reports as key features [lead_carla.md#0].",
+      "judge_yes": true,
+      "judge_justification": "The answer explicitly states the dashboard should show \"indicators related to delinquency,\" directly addressing the question about delinquency indicators."
+    },
+    {
+      "question": "What is Pedro's goal regarding losses?",
+      "expected": "Reducing losses from expiration.",
+      "answer": "There is no direct information in the knowledge base about Pedro's goal regarding losses. If you can provide more context or specify the document or area related to Pedro, I can try to search again or help with related information.",
       "judge_yes": false,
-      "judge_justification": "The answer states 12 months for Empresa X and 6 months for Empresa Y, but the expected answer is a standard 6-month warranty without specifying companies, so it does not directly match the expected guarantee."
+      "judge_justification": "The answer does not address Pedro's goal regarding losses and states a lack of information instead of confirming the goal of reducing losses from expiration."
     },
     {
-      "question": "Qual é a janela de manutenção do Serviço B?",
-      "expected": "Janela de manutenção aos domingos das 02h às 04h.",
-      "answer": "A janela de manutenção do Serviço B, assumindo Empresa X, é aos sábados das 01h às 05h. \n\nSe for para a Empresa Y, a janela de manutenção é aos domingos das 02h às 04h [empresa_x/services/servico_b.md#0, empresa_y/services/servico_b.md#0].",
+      "question": "What is Carla's desired timeline for deployment?",
+      "expected": "Desired deployment within 45 days.",
+      "answer": "Carla's desired timeline for deployment is 45 days [lead_carla.md#0].",
+      "judge_yes": true,
+      "judge_justification": "The answer explicitly states \"45 days,\" matching the expected desired deployment timeline."
+    },
+    {
+      "question": "What is Pedro's main operational focus?",
+      "expected": "Real-time inventory accuracy.",
+      "answer": "There is not enough evidence in the KB to determine Pedro's main operational focus. If you can provide more context or specify the document or area related to Pedro, I can try searching again.",
       "judge_yes": false,
-      "judge_justification": "A resposta apresenta duas janelas de manutenção diferentes e não indica claramente qual é a correta para o Serviço B, não correspondendo diretamente à janela esperada \"aos domingos das 02h às 04h\"."
+      "judge_justification": "The answer does not provide Pedro's main operational focus and states insufficient information, failing to address the question."
     },
     {
-      "question": "Quais itens incluídos no Produto A da Empresa Y?",
-      "expected": "Inclui manual digital e suporte por e-mail.",
-      "answer": "Os itens incluídos no Produto A da Empresa Y são:\n- manual digital\n- suporte por e-mail\n\nEsses são os itens especificados para o Produto A da Empresa Y [produto_a.md#0].",
+      "question": "What does Carla report about reconciliations and closing?",
+      "expected": "Automated bank reconciliations and financial closing.",
+      "answer": "Carla reports that there is a need to reduce manual effort in bank reconciliations and financial closing. She is looking for better cash-flow predictability and monthly reports broken down by cost center and branch. Currently, invoice management and reconciliation are done in spreadsheets with a high risk of error, and producing monthly reports in time for management is difficult, causing rework during the closing period. Carla's main interest is in automating reconciliation with configurable rules and having reusable monthly report templates, with report export in PDF/CSV. The goal is to reduce manual effort in closing and improve the timeliness and accuracy of reports [lead_carla.md#0].",
       "judge_yes": true,
-      "judge_justification": "Responde claramente que o Produto A inclui \"manual digital\" e \"suporte por e-mail\", conforme esperado."
+      "judge_justification": "The answer addresses the need for automated bank reconciliations and financial closing by highlighting Carla's focus on reducing manual effort, automating reconciliation, and improving report accuracy and timeliness."
     },
     {
-      "question": "Qual o prazo desejado por Pedro?",
-      "expected": "Prazo de início em 30 dias.",
-      "answer": "O prazo desejado por Pedro é de 30 dias [lead_pedro.md#0].",
-      "judge_yes": true,
-      "judge_justification": "The answer states \"prazo desejado por Pedro é de 30 dias,\" matching the expected \"Prazo de início em 30 dias.\""
-    },
-    {
-      "question": "Quais integrações de equipamentos Pedro precisa?",
-      "expected": "Integrações com balanças e emissão de etiquetas.",
-      "answer": "Pedro precisa das seguintes integrações de equipamentos:\n- Integração com balanças para pesagem automática\n- Emissão de etiquetas com código de barras/QR para rastreio\n\nEssas integrações são importantes para o controle de estoque perecível, registrando lote, validade e temperatura, além de alertas de proximidade de vencimento para priorização de expedição [lead_pedro.md#0].",
-      "judge_yes": true,
-      "judge_justification": "The answer explicitly mentions \"Integração com balanças\" and \"Emissão de etiquetas,\" matching the expected integrations."
-    },
-    {
-      "question": "Qual o canal de suporte preferido por Pedro?",
-      "expected": "Suporte preferido por e-mail.",
-      "answer": "Não há evidência suficiente na base de conhecimento sobre qual é o canal de suporte preferido por Pedro. Se desejar, posso tentar buscar com um limiar de similaridade menor para tentar encontrar mais informações. Deseja que eu faça isso?",
-      "judge_yes": true,
-      "judge_justification": "The answer explicitly states there is no sufficient evidence about Pedro's preferred support channel, directly addressing the question."
-    },
-    {
-      "question": "Qual o prazo desejado por Carla?",
-      "expected": "Prazo de implantação em 45 dias.",
-      "answer": "O prazo desejado por Carla é de 45 dias [lead_carla.md#0].",
-      "judge_yes": true,
-      "judge_justification": "The answer clearly states \"O prazo desejado por Carla é de 45 dias,\" matching the expected \"Prazo de implantação em 45 dias.\""
-    },
-    {
-      "question": "Qual a garantia mencionada pela Carla?",
-      "expected": "Garantia de 6 meses.",
-      "answer": "Não há evidência suficiente na base de conhecimento sobre a garantia mencionada pela Carla. Se desejar, posso tentar buscar com termos relacionados ou mais gerais. Deseja que eu faça isso?",
+      "question": "What KPIs does Maria want to track?",
+      "expected": "Productivity KPIs and support SLA.",
+      "answer": "There is no direct evidence in the KB about the specific KPIs that Maria wants to track. If you can provide more context or details about Maria or the project, I can try to search again or help infer the KPIs based on related information.",
       "judge_yes": false,
-      "judge_justification": "The answer states there is no evidence about the guarantee mentioned by Carla, so it does not provide the expected \"Garantia de 6 meses.\""
+      "judge_justification": "The answer states there is no direct evidence about the KPIs Maria wants to track and does not specify productivity KPIs or support SLA as requested."
     },
     {
-      "question": "O que Carla deseja automatizar no financeiro?",
-      "expected": "Automatização de conciliações financeiras.",
-      "answer": "Carla deseja automatizar no financeiro a conciliação bancária e o fechamento financeiro, com foco em reduzir o esforço manual nessas atividades. Ela busca maior previsibilidade do fluxo de caixa e geração de relatórios mensais com cortes por centro de custo e filial. O escopo inicial sugerido inclui conciliação de boletos e cartões com regras simples, relatórios mensais padronizados em PDF/planilha, e um painel financeiro com indicadores de atraso e inadimplência. Ela quer uma conciliação automática com regras configuráveis e exportação de relatórios em PDF/CSV, além de integração simples com banco/ERP atual e facilidade de uso para onboarding rápido [lead_carla.md#0].",
+      "question": "What does João want to consolidate in the dashboard?",
+      "expected": "Consolidate sales, inventory, and channels.",
+      "answer": "João wants to consolidate in the dashboard sales, inventory, and channels (including the marketplace), with exportable reports and documented APIs for the data team. The goal is to have consolidated visibility of sales and inventory by region and product category to reduce stockouts and improve delivery predictability to customers [lead_joao.md#0].",
       "judge_yes": true,
-      "judge_justification": "The answer clearly states Carla deseja automatizar a conciliação bancária, que é uma forma de conciliações financeiras, atendendo diretamente à pergunta."
+      "judge_justification": "The answer explicitly states João wants to consolidate \"sales, inventory, and channels,\" matching the expected terms."
     },
     {
-      "question": "Quais relatórios são necessários para Carla?",
-      "expected": "Relatórios mensais com cortes por centro de custo.",
-      "answer": "Os relatórios necessários para Carla incluem:\n\n- Relatórios mensais padronizados com cortes por centro de custo e filial, em formatos PDF e planilha (CSV).\n- Modelos de relatórios mensais reutilizáveis.\n- Painel financeiro com indicadores de atraso e inadimplência.\n\nEsses relatórios têm foco em reduzir o esforço manual no fechamento financeiro, com conciliação automática e exportação dos relatórios em PDF/CSV, para maior previsibilidade do fluxo de caixa e suporte à diretoria [lead_carla.md#0].",
+      "question": "What does João require for the marketplace integration?",
+      "expected": "Documented APIs for the marketplace integration.",
+      "answer": "João requires integration with a regional marketplace to move idle stock and to have performance comparisons by channel and product mix. The solution should include a dashboard consolidating sales, inventory, and channels (including the marketplace), with exportable reports and documented APIs for the data team. Additionally, João prefers Product A (advanced reporting module) and Service B with a 99.9% SLA. There is also a need for team training (both in-person and remote) and on-site support during critical moments, with defined SLAs and clear support channels. The integration must fit well with the receiving/shipping process and have quality integration with systems and the marketplace. A technical session to map marketplace integrations and data requirements is also planned [lead_joao.md#0].",
       "judge_yes": true,
-      "judge_justification": "The answer specifies \"relatórios mensais com cortes por centro de custo,\" directly addressing the question and adding relevant details."
+      "judge_justification": "the answer explicitly mentions \"documented APIs for the data team\" as part of the solution for marketplace integration, directly addressing João's requirement."
     },
     {
-      "question": "Quais indicadores o painel financeiro da Carla deve mostrar?",
-      "expected": "Indicadores de inadimplência no painel financeiro.",
-      "answer": "O painel financeiro da Carla deve mostrar indicadores de atraso e inadimplência. Além disso, o painel deve facilitar a conciliação automática com regras configuráveis e permitir a geração de relatórios mensais padronizados, com cortes por centro de custo e filial, para maior previsibilidade do fluxo de caixa [lead_carla.md#0].",
+      "question": "What type of support is mentioned for Product A?",
+      "expected": "Basic support included with Product A.",
+      "answer": "For Product A, the type of support mentioned varies by company:\n\n- For Empresa X: Support is provided through a standard channel with response times during business hours. Basic support is included during the warranty period, with upgrade options available for advanced support and specific add-ons [semantic/kb/empresa_x/products/produto_a.md#0].\n\n- For Empresa Y: Support is provided by email during business hours [semantic/kb/empresa_y/products/produto_a.md#0].\n\nAssuming Empresa X as default, Product A offers standard channel support during business hours with basic support included in the warranty period and options for advanced support upgrades.",
       "judge_yes": true,
-      "judge_justification": "resposta menciona \"indicadores de atraso e inadimplência\", atendendo à pergunta sobre indicadores no painel financeiro."
+      "judge_justification": "The answer specifies \"basic support is included during the warranty period\" for Product A, matching the expected \"Basic support included with Product A.\""
     },
     {
-      "question": "Qual o objetivo de Pedro em relação às perdas?",
-      "expected": "Redução de perdas por vencimento.",
-      "answer": "Não há evidência suficiente no conhecimento disponível para determinar qual é o objetivo de Pedro em relação às perdas. Se desejar, posso tentar buscar com um limiar de similaridade menor ou você pode fornecer mais contexto para que eu possa ajudar melhor.",
+      "question": "What does the overview say about Product A's deployment?",
+      "expected": "Fast deployment.",
+      "answer": "The overview for Product A (Empresa X) states that it was built for mid-size operations, focused on stability, ease of use, and fast deployment. It supports commercial and operational routines and includes an initial training track and a knowledge base [semantic/kb/empresa_x/products/produto_a.md#0].",
+      "judge_yes": true,
+      "judge_justification": "The answer explicitly mentions \"fast deployment\" as part of Product A's overview, directly addressing the question."
+    },
+    {
+      "question": "What type of operations does Product A serve?",
+      "expected": "Serves mid-size operations with stability.",
+      "answer": "Product A serves mid-size operations, focusing on stability, ease of use, and fast deployment. It supports commercial and operational routines, providing initial training and a knowledge base for users. This is based on Empresa X's specifications. \n\nIf considering Empresa Y, Product A is intended for small operations, prioritizing simplicity and low deployment cost [semantic/kb/empresa_x/products/produto_a.md#0, semantic/kb/empresa_y/products/produto_a.md#0].",
+      "judge_yes": true,
+      "judge_justification": "The answer states Product A serves mid-size operations with a focus on stability, matching the expected response."
+    },
+    {
+      "question": "What kind of support does Service B include?",
+      "expected": "Includes preventive maintenance.",
+      "answer": "Assuming Empresa X, Service B includes monitoring, preventive maintenance, and N2 support for incidents and requests within the contracted scope. The priority support channel is the customer portal, with additional support available via email and a knowledge base [semantic/kb/empresa_x/services/servico_b.md#0].\n\nIf Empresa Y, Service B consists of basic support and corrective maintenance on demand, focused on low-complexity scenarios. The priority support channel is email, with additional support through a knowledge base [semantic/kb/empresa_y/services/servico_b.md#0].",
+      "judge_yes": true,
+      "judge_justification": "The answer explicitly states that Service B for Empresa X includes \"preventive maintenance,\" directly addressing the question."
+    },
+    {
+      "question": "What kind of maintenance does Service B include?",
+      "expected": "Includes on-demand corrective maintenance.",
+      "answer": "Service B includes the following types of maintenance:\n\n- For Empresa X: Service B consists of monitoring, preventive maintenance, and N2 support for incidents and requests within the contracted scope.\n- For Empresa Y: Service B consists of basic support and corrective maintenance on demand, geared toward low-complexity scenarios.\n\nAssuming Empresa X as default, Service B includes monitoring and preventive maintenance. If Empresa Y, it includes basic support and corrective maintenance on demand [semantic/kb/empresa_x/services/servico_b.md#0, semantic/kb/empresa_y/services/servico_b.md#0].",
+      "judge_yes": true,
+      "judge_justification": "Answer specifies that for Empresa Y, Service B includes \"corrective maintenance on demand,\" matching the expected \"on-demand corrective maintenance.\""
+    },
+    {
+      "question": "What are the additional channels for Service B?",
+      "expected": "Additional channels include the knowledge base.",
+      "answer": "For Service B, the additional channels are as follows:\n\n- For Empresa X: email and knowledge base.\n- For Empresa Y: knowledge base.\n\nThe priority channel differs: Empresa X uses the customer portal as the priority channel, while Empresa Y uses email as the priority channel [semantic/kb/empresa_x/services/servico_b.md#0, semantic/kb/empresa_y/services/servico_b.md#0].",
+      "judge_yes": true,
+      "judge_justification": "The answer specifies additional channels for Service B including the knowledge base, matching the expected information."
+    },
+    {
+      "question": "What does Product A prioritize regarding deployment?",
+      "expected": "Prioritizes simplicity and low cost.",
+      "answer": "The KB does not provide explicit details on what Product A prioritizes specifically regarding deployment. However, it mentions that Product A was built for mid-size operations with a focus on stability, ease of use, and fast deployment. This suggests that fast deployment is a priority for Product A [produto_a.md#0].",
       "judge_yes": false,
-      "judge_justification": "The answer states there is no evidence to determine Pedro's objective, thus it does not provide the expected information about \"redução de perdas por vencimento.\""
+      "judge_justification": "The answer highlights \"stability, ease of use, and fast deployment\" but does not mention simplicity or low cost, which are the expected priorities."
     },
     {
-      "question": "Qual é o prazo desejado por Carla para implantação?",
-      "expected": "Implantação desejada em 45 dias.",
-      "answer": "O prazo desejado por Carla para implantação é de 45 dias [lead_carla.md#0].",
-      "judge_yes": true,
-      "judge_justification": "The answer clearly states \"45 dias\" as the desired implantation period, directly addressing the question."
-    },
-    {
-      "question": "Qual é o foco principal de Pedro na operação?",
-      "expected": "Acurácia do estoque em tempo real.",
-      "answer": "Não há evidências suficientes na base de conhecimento para determinar qual é o foco principal de Pedro na operação. Se desejar, posso ajudar a buscar informações relacionadas ou esclarecer outra dúvida.",
-      "judge_yes": true,
-      "judge_justification": "The answer correctly states that there is insufficient information to determine Pedro's main focus, addressing the question appropriately."
-    },
-    {
-      "question": "O que Carla reporta sobre conciliações e fechamento?",
-      "expected": "Conciliações bancárias e fechamento financeiro automatizados.",
-      "answer": "Carla reporta que coordena o administrativo/financeiro e tem a necessidade de reduzir o esforço manual em conciliações bancárias e fechamento financeiro. Ela busca maior previsibilidade de fluxo de caixa e geração de relatórios mensais com cortes por centro de custo e filial. Atualmente, a gestão de boletos e conciliações é feita em planilhas, o que gera alto risco de erro, além de dificuldade em gerar relatórios mensais em tempo hábil para a diretoria, com retrabalho consumindo o time no período de fechamento.\n\nSobre conciliações e fechamento, Carla destaca:\n- Interesse em conciliação automática com regras configuráveis.\n- Integração com extratos para automação de conciliações.\n- Modelos de relatórios mensais reutilizáveis.\n- Exportação de relatórios em PDF/CSV.\n- Redução do esforço manual no fechamento como critério principal de decisão.\n\nEla também enfatiza a necessidade de facilidade de uso, onboarding rápido e integração simples com banco/ERP atual, além de condições comerciais como parcelamento superior a 30 dias e garantia de 6 meses para aprovação interna [lead_carla.md#0].",
-      "judge_yes": true,
-      "judge_justification": "The answer clearly states Carla's report on the need to reduce manual effort in bank reconciliations and financial closing, highlighting interest in automated reconciliation and integration, matching the expected \"conciliações bancárias e fechamento financeiro automatizados.\""
-    },
-    {
-      "question": "Quais KPIs a Maria pretende acompanhar?",
-      "expected": "KPIs de produtividade e SLA de atendimento.",
-      "answer": "Não há evidências suficientes na base de conhecimento para responder quais KPIs a Maria pretende acompanhar. Deseja que eu tente buscar com um limiar de similaridade menor?",
+      "question": "What non-functional requirements did Maria raise?",
+      "expected": "Stable integration and a 99.9% SLA.",
+      "answer": "There is no direct evidence in the KB about the specific non-functional requirements that Maria raised. If you can provide more context or details about Maria or the project, I can try searching again or help in another way.",
       "judge_yes": false,
-      "judge_justification": "The answer states there is insufficient information and does not specify the KPIs of produtividade and SLA de atendimento as requested."
+      "judge_justification": "The answer does not specify the non-functional requirements Maria raised and states there is no direct evidence, thus failing to answer the question."
     },
     {
-      "question": "O que o João deseja consolidar no painel?",
-      "expected": "Consolidar vendas, estoque e canais.",
-      "answer": "João deseja consolidar no painel as vendas, estoque e canais (incluindo marketplace), com relatórios exportáveis e APIs documentadas para a equipe de dados. O objetivo é ter visibilidade consolidada de vendas e estoque por região e categoria de produto, para reduzir rupturas e melhorar a previsibilidade de entrega aos clientes [lead_joao.md#0].",
-      "judge_yes": true,
-      "judge_justification": "The answer explicitly states João deseja consolidar vendas, estoque e canais, matching the expected consolidation items."
-    },
-    {
-      "question": "O que o João requer para integração com o marketplace?",
-      "expected": "APIs documentadas para integração com marketplace.",
-      "answer": "João requer para integração com o marketplace o seguinte:\n\n- Integração com marketplace regional para escoar itens ociosos.\n- Comparativos de desempenho por canal e mix de produtos.\n- Preferência por Produto A (módulo de relatórios avançados) e Serviço B com SLA de 99.9%.\n- Painel que consolide vendas, estoque e canais (incluindo marketplace), com relatórios exportáveis e APIs documentadas para a equipe de dados.\n- Treinamento do time (presencial e remoto) e suporte presencial em momentos críticos, com SLAs definidos e canais de atendimento claros.\n- Critérios de decisão incluem qualidade da integração com sistemas e marketplace, trilha de treinamento objetiva, suporte técnico e tempos de resposta, além de roadmap para telemetria/sensores agrícolas.\n- Próximos passos incluem proposta com cronograma de implantação, plano de treinamento detalhado, métricas de SLA do Serviço B (99.9%) e sessão técnica para mapear integrações e requisitos de dados.\n\nEsses pontos refletem as necessidades e expectativas de João para a integração com o marketplace [lead_joao.md#0].",
-      "judge_yes": true,
-      "judge_justification": "the answer explicitly mentions \"APIs documentadas para a equipe de dados,\" fulfilling the requirement of documented APIs for marketplace integration."
-    },
-    {
-      "question": "Qual o tipo de suporte citado no Produto A?",
-      "expected": "Suporte básico incluso no Produto A.",
-      "answer": "O tipo de suporte citado no Produto A para a Empresa X é \"canal padrão com tempos de resposta em horário comercial\" e inclui suporte básico durante o período de garantia. Há também opções de upgrade para suporte avançado [produto_a.md#0].\n\nSe for para a Empresa Y, o suporte é por e-mail em horário comercial.",
-      "judge_yes": true,
-      "judge_justification": "The answer specifies \"suporte básico durante o período de garantia\" for Produto A, matching the expected \"Suporte básico incluso no Produto A.\""
-    },
-    {
-      "question": "Qual é a visão geral do Produto A em relação à implantação?",
-      "expected": "Implantação rápida.",
-      "answer": "A visão geral do Produto A em relação à implantação, considerando a Empresa X, é que o produto foi desenvolvido para atender operações de médio porte, com foco em estabilidade, facilidade de uso e implantação rápida. A implantação inclui instalação no ambiente do cliente, treinamento inicial para a equipe e suporte básico durante o período de garantia. Além disso, há uma trilha de treinamento inicial e base de conhecimento para facilitar o uso. Também existem opções de upgrade para suporte avançado e add-ons específicos [produto_a.md#0].\n\nSe for para a Empresa Y, o Produto A é indicado para pequenas operações, priorizando simplicidade e baixo custo de implantação, com manual digital e suporte por e-mail [produto_a.md#0].",
-      "judge_yes": true,
-      "judge_justification": "o texto menciona \"implantação rápida\" e detalha o processo de implantação, atendendo à visão geral solicitada."
-    },
-    {
-      "question": "O Produto A atende que tipo de operações?",
-      "expected": "Atende operações de médio porte com estabilidade.",
-      "answer": "O Produto A atende operações de médio porte, com foco em estabilidade, facilidade de uso e implantação rápida. Ele é indicado para rotinas comerciais e operacionais, oferecendo trilha de treinamento inicial e base de conhecimento (Assumption: Empresa X) [produto_a.md#0].\n\nSe for para a Empresa Y, o Produto A é indicado para pequenas operações, priorizando simplicidade e baixo custo de implantação [produto_a.md#0].",
-      "judge_yes": true,
-      "judge_justification": "The answer states \"operações de médio porte, com foco em estabilidade,\" matching the expected \"operações de médio porte com estabilidade.\""
-    },
-    {
-      "question": "O Serviço B inclui qual tipo de atendimento?",
-      "expected": "Inclui manutenção preventiva.",
-      "answer": "O Serviço B inclui, para a Empresa X (assumida como padrão), monitoramento, manutenção preventiva e atendimento N2 para incidentes e requisições dentro do escopo contratado. O canal prioritário de atendimento é o portal do cliente, com canais adicionais por e-mail e base de conhecimento.\n\nSe for para a Empresa Y, o Serviço B consiste em atendimento básico e manutenção corretiva sob demanda, orientado a cenários de baixa complexidade, com canal prioritário por e-mail e canal adicional pela base de conhecimento [servico_b.md#0].",
-      "judge_yes": true,
-      "judge_justification": "The answer explicitly states that Serviço B includes \"manutenção preventiva,\" directly addressing the question."
-    },
-    {
-      "question": "O Serviço B inclui qual tipo de manutenção?",
-      "expected": "Inclui manutenção corretiva sob demanda.",
-      "answer": "O Serviço B inclui manutenção preventiva e atendimento N2 para incidentes e requisições dentro do escopo contratado (Assumindo Empresa X). \n\nSe for para a Empresa Y, o Serviço B inclui manutenção corretiva sob demanda, orientado a cenários de baixa complexidade [empresa_x/services/servico_b.md#0, empresa_y/services/servico_b.md#0].",
-      "judge_yes": true,
-      "judge_justification": "The answer specifies that for Empresa Y, Serviço B includes \"manutenção corretiva sob demanda,\" directly matching the expected response."
-    },
-    {
-      "question": "Quais são os canais adicionais do Serviço B?",
-      "expected": "Canais adicionais incluem base de conhecimento.",
-      "answer": "Os canais adicionais do Serviço B, assumindo Empresa X, são e-mail e base de conhecimento. \n\nSe for Empresa Y, o canal adicional é base de conhecimento [empresa_x/services/servico_b.md#0; empresa_y/services/servico_b.md#0].",
-      "judge_yes": true,
-      "judge_justification": "The answer specifies \"base de conhecimento\" as an additional channel, matching the expected term, and also provides other channels, fully addressing the question."
-    },
-    {
-      "question": "O Produto A prioriza o que em relação à implantação?",
-      "expected": "Prioriza simplicidade e baixo custo.",
-      "answer": "O Produto A, assumindo a Empresa X, prioriza em relação à implantação a estabilidade, facilidade de uso e implantação rápida. Ele atende operações de médio porte e inclui instalação no ambiente do cliente, treinamento inicial para a equipe e suporte básico durante o período de garantia [produto_a.md#0].\n\nSe for para a Empresa Y, o Produto A prioriza simplicidade e baixo custo de implantação, indicado para pequenas operações [produto_a.md#0].",
-      "judge_yes": true,
-      "judge_justification": "The answer specifies that for Empresa Y, Produto A priorizes simplicidade e baixo custo de implantação, matching the expected focus on simplicity and low cost."
-    },
-    {
-      "question": "Quais requisitos não funcionais a Maria levantou?",
-      "expected": "Integração estável e SLA de 99.9%.",
-      "answer": "Os requisitos não funcionais que a Maria levantou são:\n- Integração estável com ERP legado\n- SLA de 99.9% no Serviço B\n\nEsses requisitos foram destacados no relatório da Maria para a Empresa X, que atua no varejo de agroinsumos, com foco em padronizar a jornada de atendimento e consolidar informações em um painel único [lead_maria.md#0].",
-      "judge_yes": true,
-      "judge_justification": "The answer explicitly mentions \"Integração estável com ERP legado\" and \"SLA de 99.9% no Serviço B,\" matching the expected non-functional requirements."
-    },
-    {
-      "question": "Quais ações a Maria pediu nos próximos passos?",
-      "expected": "Incluir condições de pagamento e garantia na proposta.",
-      "answer": "Não encontrei informações suficientes na base de conhecimento sobre as ações que a Maria pediu nos próximos passos. Se puder fornecer mais contexto ou detalhes, posso tentar ajudar melhor.",
+      "question": "What actions did Maria request in the next steps?",
+      "expected": "Include payment terms and the warranty in the proposal.",
+      "answer": "There is no relevant information in the knowledge base about the actions Maria requested in the next steps. If you can provide more context or specify the document or conversation, I may be able to assist further.",
       "judge_yes": false,
-      "judge_justification": "The answer states no information was found about Maria's requested actions, so it does not provide the expected details about including payment conditions and warranty in the proposal."
+      "judge_justification": "The answer does not specify any actions Maria requested, nor does it mention payment terms or warranty as requested in the question."
     },
     {
-      "question": "Qual critério de decisão cita ROI no caso da Maria?",
-      "expected": "ROI esperado em até 6 meses.",
-      "answer": "O critério de decisão que cita ROI no caso da Maria é: \"ROI esperado em até 6 meses por redução de retrabalho\" [lead_maria.md#0].",
+      "question": "Which decision criterion mentions ROI for Maria's case?",
+      "expected": "Expected ROI within 6 months.",
+      "answer": "The decision criterion that mentions ROI for Maria's case is: \"Expected ROI within 6 months from reduced rework\" [lead_maria.md#0].",
       "judge_yes": true,
-      "judge_justification": "The answer explicitly states \"ROI esperado em até 6 meses,\" directly addressing the decision criterion related to ROI for Maria as requested."
+      "judge_justification": "The answer explicitly states \"Expected ROI within 6 months,\" matching the expected criterion and directly addressing the question."
     },
     {
-      "question": "Qual a preocupação de Carla com esforço manual?",
-      "expected": "Reduzir esforço no fechamento.",
-      "answer": "Não há evidências suficientes na base de conhecimento para responder qual é a preocupação de Carla com esforço manual. Se desejar, posso tentar buscar com um limiar de similaridade menor ou você pode fornecer mais contexto.",
+      "question": "What is Carla's concern about manual effort?",
+      "expected": "Reduce effort during closing.",
+      "answer": "There is no direct evidence in the KB about Carla's concern regarding manual effort. If you can provide more context or specify the document, I can search again or help interpret related information.",
       "judge_yes": false,
-      "judge_justification": "The answer does not address Carla's concern about manual effort and states lack of evidence instead of confirming the expected \"Reduzir esforço no fechamento.\""
+      "judge_justification": "The answer states there is no direct evidence about Carla's concern, so it does not address the question or confirm the expected reduction of effort during closing."
     },
     {
-      "question": "Que tipo de exportação de relatórios Carla deseja?",
-      "expected": "Exportação de relatórios em PDF e CSV.",
-      "answer": "Carla deseja exportação de relatórios em PDF e CSV, conforme os requisitos funcionais mencionados para o produto que ela tem interesse (Produto A, versão básica) com foco em módulos financeiros e relatórios. Ela busca geração de relatórios mensais com cortes por centro de custo e filial, e a exportação deve ser possível nesses dois formatos (PDF/CSV) [lead_carla.md#0].",
+      "question": "What kind of report export does Carla want?",
+      "expected": "Report export in PDF and CSV.",
+      "answer": "Carla wants report export in PDF and CSV formats. Specifically, she is looking for standardized monthly reports broken down by cost center and branch, with reusable monthly report templates. The reports should support export in PDF and spreadsheet (CSV) formats [lead_carla.md#0].",
       "judge_yes": true,
-      "judge_justification": "The answer explicitly states Carla deseja exportação de relatórios em PDF e CSV, matching the expected export formats."
+      "judge_justification": "The answer explicitly states Carla wants report export in PDF and CSV formats, matching the expected response."
     },
     {
-      "question": "Qual a infraestrutura que impacta Pedro?",
-      "expected": "Integração com balanças.",
-      "answer": "Não há evidências suficientes na base de conhecimento para responder qual é a infraestrutura que impacta Pedro. Deseja que eu faça uma busca com um limiar de similaridade menor para tentar encontrar mais informações?",
+      "question": "What infrastructure affects Pedro?",
+      "expected": "Integration with scales.",
+      "answer": "There is not enough evidence in the KB to determine what infrastructure affects Pedro. If you can provide more context or specify the domain or company related to Pedro, I can try searching again.",
       "judge_yes": false,
-      "judge_justification": "The answer states there is insufficient information and does not provide the expected response \"Integração com balanças.\""
+      "judge_justification": "The answer does not address the expected integration with scales and states insufficient information instead of identifying the infrastructure affecting Pedro."
     },
     {
-      "question": "Quais upgrades são mencionados para o Produto A?",
-      "expected": "Upgrades de suporte avançado e add‑ons.",
-      "answer": "Para o Produto A da Empresa X, são mencionadas opções de upgrade para suporte avançado e add-ons específicos [produto_a.md#0]. \n\nNão há menção detalhada de upgrades para o Produto A da Empresa Y.",
+      "question": "What upgrades are mentioned for Product A?",
+      "expected": "Advanced support and add-on upgrades.",
+      "answer": "For Product A (Empresa X), the upgrades mentioned include options for advanced support and specific add-ons [semantic/kb/empresa_x/products/produto_a.md#0].",
       "judge_yes": true,
-      "judge_justification": "menciona upgrades para suporte avançado e add-ons, respondendo diretamente à pergunta sobre o Produto A."
+      "judge_justification": "The answer explicitly mentions \"advanced support and specific add-ons,\" matching the expected \"advanced support and add-on upgrades,\" thus addressing the question."
     },
     {
-      "question": "O que a contratação anual do Produto A implica?",
-      "expected": "Renovação automática anual.",
-      "answer": "A contratação anual do Produto A (Empresa X) implica uma assinatura anual com renovação automática, incluindo instalação no ambiente do cliente, treinamento inicial para a equipe e suporte básico durante o período de garantia de 12 meses para defeitos de fabricação. O pagamento pode ser parcelado em 30/60 dias. O suporte é oferecido por canal padrão com tempos de resposta em horário comercial. Há também opções de upgrade para suporte avançado e add-ons específicos [produto_a.md#0].\n\nSe for para a Empresa Y, a garantia é de 6 meses, o pagamento é via boleto em 45 dias, e o suporte é por e-mail em horário comercial, com itens incluídos como manual digital e suporte por e-mail [produto_a.md#0].",
+      "question": "What does Product A's annual contract imply?",
+      "expected": "Automatic annual renewal.",
+      "answer": "Product A's annual contract (assuming Empresa X) implies an annual subscription with automatic renewal. The payment can be made via an installment plan over 30/60 days. The contract includes installation at the customer's site, initial training for the team, and basic support during the standard 12-month warranty period for manufacturing defects. Support is provided through a standard channel with response times during business hours. There are also upgrade options for advanced support and specific add-ons [semantic/kb/empresa_x/products/produto_a.md#0].\n\nIf Empresa Y: Product A does not have an annual subscription model mentioned; payment is due in 45 days, with a 6-month warranty and email support during business hours [semantic/kb/empresa_y/products/produto_a.md#0].",
       "judge_yes": true,
-      "judge_justification": "The answer clearly states that the annual contract implies an annual subscription with automatic renewal, directly addressing the question."
+      "judge_justification": "The answer explicitly states \"annual subscription with automatic renewal,\" directly addressing the implication of Product A's annual contract."
     },
     {
-      "question": "O Produto A da Empresa Y inclui suporte por qual canal?",
-      "expected": "Suporte por e‑mail.",
-      "answer": "O Produto A da Empresa Y inclui suporte por e-mail em horário comercial [semantic//home/ricardo/rag-pipeline/rag-pipeline/kb/empresa_y/products/produto_a.md#0].",
+      "question": "What channel does Product A support come through at Empresa Y?",
+      "expected": "Support by email.",
+      "answer": "At Empresa Y, Product A support is provided through email during business hours. This is the designated support channel for Product A at Empresa Y [semantic/kb/empresa_y/products/produto_a.md#0].",
       "judge_yes": true,
-      "judge_justification": "The answer explicitly states \"suporte por e-mail,\" directly addressing the question about the support channel for Produto A."
+      "judge_justification": "The answer explicitly states support for Product A at Empresa Y is provided through email, matching the expected support channel."
     },
     {
-      "question": "Qual é a prioridade de canal do Serviço B?",
-      "expected": "Prioridade de canal: e‑mail.",
-      "answer": "A prioridade de canal do Serviço B, assumindo Empresa X, é o portal do cliente. Canais adicionais são e-mail e base de conhecimento. \n\nSe for para Empresa Y, o canal prioritário é e-mail, com base de conhecimento como canal adicional [empresa_x/services/servico_b.md#0, empresa_y/services/servico_b.md#0].",
+      "question": "What is the priority channel for Service B?",
+      "expected": "Priority channel: email.",
+      "answer": "The priority channel for Service B is the customer portal for Empresa X (Assumption: Empresa X). For Empresa Y, the priority channel is email [semantic/kb/empresa_x/services/servico_b.md#0, semantic/kb/empresa_y/services/servico_b.md#0].",
       "judge_yes": false,
-      "judge_justification": "A resposta não fornece uma única prioridade clara para o Serviço B, apresentando duas opções dependendo da empresa, enquanto a pergunta espera uma prioridade específica."
+      "judge_justification": "The answer states the priority channel for Service B as the customer portal for Empresa X, not email as expected."
     },
     {
-      "question": "Qual prazo Pedro busca para início?",
-      "expected": "Início em 30 dias.",
-      "answer": "Não há evidência suficiente no KB sobre o prazo que Pedro busca para início. Deseja que eu faça uma busca com um limiar de similaridade menor para tentar encontrar mais informações?",
-      "judge_yes": false,
-      "judge_justification": "The answer states there is no evidence about the prazo Pedro busca para início, so it does not provide the expected \"Início em 30 dias.\""
+      "question": "What start timeline is Pedro looking for?",
+      "expected": "Start within 30 days.",
+      "answer": "Pedro is looking for a start timeline of 30 days. This is part of his decision criteria and next steps for the project proposal [lead_pedro.md#0].",
+      "judge_yes": true,
+      "judge_justification": "The answer states \"a start timeline of 30 days,\" directly matching the expected \"Start within 30 days.\""
     },
     {
-      "question": "Que relatórios João espera no painel?",
-      "expected": "Relatórios exportáveis.",
-      "answer": "Não há evidências suficientes na base de conhecimento sobre quais relatórios João espera no painel. Se desejar, posso tentar buscar com um limiar de similaridade menor para tentar encontrar mais informações. Deseja que eu faça isso?",
-      "judge_yes": false,
-      "judge_justification": "The answer states there is no information about the reports João expects, so it does not provide the expected answer \"Relatórios exportáveis.\""
+      "question": "What reports does João expect in the dashboard?",
+      "expected": "Exportable reports.",
+      "answer": "João expects the dashboard to include consolidated visibility of sales, inventory, and channels (including a regional marketplace). He wants exportable reports and documented APIs for the data team. The dashboard should provide near-real-time sales indicators by farm/region and product category, demand/inventory forecasts, and stockout alerts. Performance comparisons by channel and product mix are also expected. The goal is to reduce stockouts and improve delivery predictability to customers [semantic/kb/empresa_x/lead_reports/lead_joao.md#0].",
+      "judge_yes": true,
+      "judge_justification": "The answer explicitly states \"He wants exportable reports,\" directly addressing the expected report type in the dashboard."
     },
     {
-      "question": "O que a Maria quer reduzir na operação?",
-      "expected": "Reduzir retrabalho na operação.",
-      "answer": "Não há evidências suficientes na base de conhecimento para responder diretamente o que a Maria quer reduzir na operação. Gostaria que eu tentasse buscar com um limiar de similaridade menor para tentar encontrar mais informações?",
-      "judge_yes": false,
-      "judge_justification": "The answer states there is no sufficient information to determine what Maria wants to reduce, thus it does not provide the expected response about reducing retrabalho na operação."
+      "question": "What does Maria want to reduce in the operation?",
+      "expected": "Reduce rework in the operation.",
+      "answer": "Maria wants to reduce rework in the operation. She aims to improve operational and commercial visibility through a unified dashboard covering sales and post-sales, with a goal of reducing inconsistencies by automating reconciliation between systems (ERP and CRM) and improving productivity tracking [lead_maria.md#0].",
+      "judge_yes": true,
+      "judge_justification": "The answer explicitly states Maria wants to reduce rework in the operation, matching the expected response."
     },
     {
-      "question": "O que Carla busca evitar no fechamento?",
-      "expected": "Evitar erros no fechamento.",
-      "answer": "Não há evidências suficientes na base de conhecimento para responder diretamente o que Carla busca evitar no fechamento. Deseja que eu tente buscar com um limiar de similaridade menor para tentar encontrar mais informações?",
+      "question": "What does Carla want to avoid during closing?",
+      "expected": "Avoid errors during closing.",
+      "answer": "There is no relevant information in the KB about what Carla wants to avoid during closing. If you have more context or details, please provide them so I can assist you better.",
       "judge_yes": false,
-      "judge_justification": "The answer does not address what Carla seeks to avoid in the closing and states there is insufficient information, failing to answer the question."
+      "judge_justification": "The answer does not address what Carla wants to avoid during closing and states there is no relevant information, failing to answer the question."
     },
     {
-      "question": "Qual preocupação de Pedro em relação a validade?",
-      "expected": "Evitar perdas por vencimento.",
-      "answer": "Não há evidência suficiente na base de conhecimento para responder qual é a preocupação de Pedro em relação à validade. Se desejar, posso tentar buscar com termos diferentes ou mais gerais.",
+      "question": "What is Pedro's concern regarding expiration?",
+      "expected": "Avoid losses from expiration.",
+      "answer": "There is no specific information in the knowledge base about Pedro's concern regarding expiration. If you can provide more context or details, I can try to assist further.",
       "judge_yes": false,
-      "judge_justification": "The answer states there is no evidence to respond, so it does not address the expected concern of \"Evitar perdas por vencimento.\""
+      "judge_justification": "The answer does not address Pedro's concern or mention avoiding losses from expiration, failing to answer the question."
     }
   ]
 }

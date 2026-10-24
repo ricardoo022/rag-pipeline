@@ -55,7 +55,7 @@ returns table (
       and (p_empresa  is null or lower(empresa) = lower(p_empresa))
       and (p_chunking is null or meta->>'chunking' = p_chunking)
   ), q as (
-    select plainto_tsquery('portuguese', query_text) as tsq
+    select plainto_tsquery('english', query_text) as tsq
   )
   select b.doc_path, b.chunk_ix, b.content,
          ts_rank_cd(b.fts, q.tsq) as score,

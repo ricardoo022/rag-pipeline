@@ -1,18 +1,92 @@
+# Search-strategy sweep — chunking fixed at the winning strategy (`semantic`).
+#
+# Dimensions covered
+# - search_type ∈ {vector, hybrid_rrf, hybrid_union}   (text search deliberately excluded)
+# - use_hyde ∈ {false, true}
+# - reranker ∈ {none, cohere}  (cohere needs COHERE_API_KEY; a 429 skips the run)
+# - match_threshold fixed at 0.50 for every experiment
+#
+# Total: 12 combinations
+#
+# Run: make rag_phase2_save_fast  (or make rag_phase2_save_bg for the full sweep)
 experiments:
-  - name: exp1
+  # -------- vector --------
+  - name: sem_vector
     chunking: semantic
     search_type: vector
     use_hyde: false
     match_threshold: 0.50
 
-  - name: exp2
+  - name: sem_vector_hyde
+    chunking: semantic
+    search_type: vector
+    use_hyde: true
+    match_threshold: 0.50
+
+  - name: sem_vector_rerank
+    chunking: semantic
+    search_type: vector
+    use_hyde: false
+    reranker: cohere
+    match_threshold: 0.50
+
+  - name: sem_vector_hyde_rerank
+    chunking: semantic
+    search_type: vector
+    use_hyde: true
+    reranker: cohere
+    match_threshold: 0.50
+
+  # -------- hybrid_rrf --------
+  - name: sem_hybrid_rrf
+    chunking: semantic
+    search_type: hybrid_rrf
+    use_hyde: false
+    match_threshold: 0.50
+
+  - name: sem_hybrid_rrf_hyde
+    chunking: semantic
+    search_type: hybrid_rrf
+    use_hyde: true
+    match_threshold: 0.50
+
+  - name: sem_hybrid_rrf_rerank
+    chunking: semantic
+    search_type: hybrid_rrf
+    use_hyde: false
+    reranker: cohere
+    match_threshold: 0.50
+
+  - name: sem_hybrid_rrf_hyde_rerank
+    chunking: semantic
+    search_type: hybrid_rrf
+    use_hyde: true
+    reranker: cohere
+    match_threshold: 0.50
+
+  # -------- hybrid_union --------
+  - name: sem_hybrid_union
+    chunking: semantic
+    search_type: hybrid_union
+    use_hyde: false
+    match_threshold: 0.50
+
+  - name: sem_hybrid_union_hyde
     chunking: semantic
     search_type: hybrid_union
     use_hyde: true
     match_threshold: 0.50
 
-  - name: exp3
+  - name: sem_hybrid_union_rerank
     chunking: semantic
-    search_type: hybrid_rrf
+    search_type: hybrid_union
     use_hyde: false
+    reranker: cohere
+    match_threshold: 0.50
+
+  - name: sem_hybrid_union_hyde_rerank
+    chunking: semantic
+    search_type: hybrid_union
+    use_hyde: true
+    reranker: cohere
     match_threshold: 0.50

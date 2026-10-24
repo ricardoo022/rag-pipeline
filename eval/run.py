@@ -14,8 +14,9 @@ Outputs:
   eval/analysis/<NAME>_results.json   (summary + details)
   eval/analysis/<NAME>_results.csv    (summary + details in a single CSV)
 
-Note: if the Cohere reranker hits a 429 (trial key), that experiment is skipped and
-recorded as such rather than failing the whole run.
+Note: Cohere 429s (trial key, 10 calls/min) are retried with backoff in
+`rag.search` (COHERE_MAX_RETRIES, default 6); if retries run out, that experiment is
+skipped and recorded as such rather than failing the whole run.
 """
 
 from __future__ import annotations
@@ -87,7 +88,9 @@ def _norm(s: str) -> str:
     s = s or ""
     s = unicodedata.normalize("NFKD", s)
     s = "".join(ch for ch in s if not unicodedata.combining(ch))
-    return s.lower()
+    s = s.lower()
+    s = s.replace("‑", "").replace("-", "")  # common and non-breaking hyphens
+    return s
 
 
 def load_experiments_and_queries() -> tuple[list[dict[str, Any]], list[dict[str, Any]], Path]:
@@ -145,7 +148,7 @@ def run(args: argparse.Namespace) -> int:
                 "k": 5,
                 "search_type": search_type,
                 "reranker": reranker,
-                "empresa": "Empresa X",
+                "empresa": q.get("empresa") or "Empresa X",
                 "chunking": chunking,
                 "use_hyde": use_hyde,
             }
@@ -157,7 +160,7 @@ def run(args: argparse.Namespace) -> int:
             try:
                 res = kb_search_client.invoke(req)
             except Exception as e:
-                if "TooManyRequests" in str(e):
+                if type(e).__name__ == "TooManyRequestsError" or getattr(e, "status_code", None) == 429:
                     skipped_reason = "cohere_429"
                     break
                 raise
@@ -196,7 +199,9 @@ def run(args: argparse.Namespace) -> int:
                 from pathlib import Path as _P
                 base_name = _P(doc).name if doc else "-"
                 scs = f"{sc:.2f}" if isinstance(sc, (int, float)) and sc is not None else "-"
-                judge_ctx_labeled.append(f"{cid} [{base_name}#{ix} score={scs}]: {sn}")
+                # Judge sees the full chunk (hit@5 matches against full content too); snippet is for the report only.
+                full = _snip(it.get("content") or "", 2000)
+                judge_ctx_labeled.append(f"{cid} [{base_name}#{ix} score={scs}]: {full}")
             try:
                 judge_ok, judge_reason = llm_judge_yesno_with_reason(
                     pergunta,

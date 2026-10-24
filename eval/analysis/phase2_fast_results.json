@@ -1,0 +1,948 @@
+{
+  "summary": [
+    {
+      "name": "exp1",
+      "chunking": "semantic",
+      "search_type": "vector",
+      "use_hyde": false,
+      "match_threshold": 0.5,
+      "reranker": "none",
+      "hit@5": 0.8,
+      "hit@1": 0.8,
+      "llm_yes": 0.3
+    },
+    {
+      "name": "exp2",
+      "chunking": "semantic",
+      "search_type": "hybrid_union",
+      "use_hyde": true,
+      "match_threshold": 0.5,
+      "reranker": "none",
+      "hit@5": 0.8,
+      "hit@1": 0.7,
+      "llm_yes": 0.4
+    },
+    {
+      "name": "exp3",
+      "chunking": "semantic",
+      "search_type": "hybrid_rrf",
+      "use_hyde": false,
+      "match_threshold": 0.5,
+      "reranker": "none",
+      "hit@5": 0.9,
+      "hit@1": 0.9,
+      "llm_yes": 0.3
+    }
+  ],
+  "details": [
+    {
+      "experiment": "exp1",
+      "chunking": "semantic",
+      "search_type": "vector",
+      "use_hyde": false,
+      "match_threshold": 0.5,
+      "reranker": "none",
+      "question": "What are the commercial terms and warranty for Product A?",
+      "expected": [
+        "30/60",
+        "12 months"
+      ],
+      "answer": "Payment over 30/60 and a 12-month warranty.",
+      "hit@5": true,
+      "hit@1": true,
+      "judge_yes": false,
+      "judge_justification": "CTX1 mentions commercial terms and policies but does not provide specific details on payment terms or warranty duration.",
+      "judge_contexts": [
+        {
+          "id": "CTX1",
+          "doc_path": "semantic/kb/empresa_x/products/produto_a.md",
+          "chunk_ix": 0,
+          "score": 0.657908126339413,
+          "snippet": "# Product A — Specifications and Policies (Empresa X)  ## Overview Product A was built for mid-size operations, focused on stability, ease of use, and fast deployment. It supports commercial and operational routines, with an initial training track and a knowledge base. ## Commercial Terms - Payment:…"
+        }
+      ],
+      "top1_path": "semantic/kb/empresa_x/products/produto_a.md",
+      "top1_chunk_ix": 0,
+      "top1_score": 0.657908126339413,
+      "top1_snippet": "# Product A — Specifications and Policies (Empresa X)  ## Overview Product A was built for mid-size operations, focused on stability, ease of use, and fast deployment. It supports commercial and operational routines, with an initial training track and a knowledge base. ## Commercial Terms - Payment:…"
+    },
+    {
+      "experiment": "exp1",
+      "chunking": "semantic",
+      "search_type": "vector",
+      "use_hyde": false,
+      "match_threshold": 0.5,
+      "reranker": "none",
+      "question": "What is the SLA for Service B?",
+      "expected": "99.9%",
+      "answer": "SLA of 99.9% monthly uptime.",
+      "hit@5": true,
+      "hit@1": true,
+      "judge_yes": true,
+      "judge_justification": "SLA is explicitly stated as \"99.9% monthly uptime\" in CTX1.",
+      "judge_contexts": [
+        {
+          "id": "CTX1",
+          "doc_path": "semantic/kb/empresa_x/services/servico_b.md",
+          "chunk_ix": 0,
+          "score": 0.677243911172739,
+          "snippet": "# Service B — SLA and Scope (Empresa X)  ## Description Service B consists of monitoring, preventive maintenance, and N2 support for incidents and requests within the contracted scope. ## SLA and Maintenance Window - SLA: 99.9% monthly uptime. - Maintenance window: Saturdays, 1am–5am. ## Channels an…"
+        }
+      ],
+      "top1_path": "semantic/kb/empresa_x/services/servico_b.md",
+      "top1_chunk_ix": 0,
+      "top1_score": 0.677243911172739,
+      "top1_snippet": "# Service B — SLA and Scope (Empresa X)  ## Description Service B consists of monitoring, preventive maintenance, and N2 support for incidents and requests within the contracted scope. ## SLA and Maintenance Window - SLA: 99.9% monthly uptime. - Maintenance window: Saturdays, 1am–5am. ## Channels an…"
+    },
+    {
+      "experiment": "exp1",
+      "chunking": "semantic",
+      "search_type": "vector",
+      "use_hyde": false,
+      "match_threshold": 0.5,
+      "reranker": "none",
+      "question": "What is the deadline for cancellation without penalty?",
+      "expected": "7 business days",
+      "answer": "Cancellation without penalty within 7 business days.",
+      "hit@5": true,
+      "hit@1": true,
+      "judge_yes": true,
+      "judge_justification": "Cancellation allowed within 7 business days after signing, with no penalty (CTX1).",
+      "judge_contexts": [
+        {
+          "id": "CTX1",
+          "doc_path": "semantic/kb/empresa_x/policies/cancelamento.md",
+          "chunk_ix": 0,
+          "score": 0.512470977972791,
+          "snippet": "# Cancellation Policy (Empresa X)  ## Scope Applies to Product A and Service B contracts. ## Cooling-Off Period - Cancellation allowed within 7 business days after signing, with no penalty. ## Penalties and Conditions - After 7 business days, a proportional penalty of 10% of the remaining contract v…"
+        }
+      ],
+      "top1_path": "semantic/kb/empresa_x/policies/cancelamento.md",
+      "top1_chunk_ix": 0,
+      "top1_score": 0.512470977972791,
+      "top1_snippet": "# Cancellation Policy (Empresa X)  ## Scope Applies to Product A and Service B contracts. ## Cooling-Off Period - Cancellation allowed within 7 business days after signing, with no penalty. ## Penalties and Conditions - After 7 business days, a proportional penalty of 10% of the remaining contract v…"
+    },
+    {
+      "experiment": "exp1",
+      "chunking": "semantic",
+      "search_type": "vector",
+      "use_hyde": false,
+      "match_threshold": 0.5,
+      "reranker": "none",
+      "question": "What items are included with Product A?",
+      "expected": [
+        "installation",
+        "training",
+        "support"
+      ],
+      "answer": "Includes installation, initial training, and basic support.",
+      "hit@5": true,
+      "hit@1": true,
+      "judge_yes": false,
+      "judge_justification": "Context mentions initial training and a knowledge base but does not specify installation or basic support included with Product A (CTX1).",
+      "judge_contexts": [
+        {
+          "id": "CTX1",
+          "doc_path": "semantic/kb/empresa_x/products/produto_a.md",
+          "chunk_ix": 0,
+          "score": 0.595248583589191,
+          "snippet": "# Product A — Specifications and Policies (Empresa X)  ## Overview Product A was built for mid-size operations, focused on stability, ease of use, and fast deployment. It supports commercial and operational routines, with an initial training track and a knowledge base. ## Commercial Terms - Payment:…"
+        }
+      ],
+      "top1_path": "semantic/kb/empresa_x/products/produto_a.md",
+      "top1_chunk_ix": 0,
+      "top1_score": 0.595248583589191,
+      "top1_snippet": "# Product A — Specifications and Policies (Empresa X)  ## Overview Product A was built for mid-size operations, focused on stability, ease of use, and fast deployment. It supports commercial and operational routines, with an initial training track and a knowledge base. ## Commercial Terms - Payment:…"
+    },
+    {
+      "experiment": "exp1",
+      "chunking": "semantic",
+      "search_type": "vector",
+      "use_hyde": false,
+      "match_threshold": 0.5,
+      "reranker": "none",
+      "question": "What type of contract model does Product A use?",
+      "expected": "annual subscription",
+      "answer": "Contracted via annual subscription with automatic renewal.",
+      "hit@5": true,
+      "hit@1": true,
+      "judge_yes": false,
+      "judge_justification": "CTX1 does not provide details on the contract model or mention annual subscription with automatic renewal.",
+      "judge_contexts": [
+        {
+          "id": "CTX1",
+          "doc_path": "semantic/kb/empresa_x/products/produto_a.md",
+          "chunk_ix": 0,
+          "score": 0.583681091218441,
+          "snippet": "# Product A — Specifications and Policies (Empresa X)  ## Overview Product A was built for mid-size operations, focused on stability, ease of use, and fast deployment. It supports commercial and operational routines, with an initial training track and a knowledge base. ## Commercial Terms - Payment:…"
+        }
+      ],
+      "top1_path": "semantic/kb/empresa_x/products/produto_a.md",
+      "top1_chunk_ix": 0,
+      "top1_score": 0.583681091218441,
+      "top1_snippet": "# Product A — Specifications and Policies (Empresa X)  ## Overview Product A was built for mid-size operations, focused on stability, ease of use, and fast deployment. It supports commercial and operational routines, with an initial training track and a knowledge base. ## Commercial Terms - Payment:…"
+    },
+    {
+      "experiment": "exp1",
+      "chunking": "semantic",
+      "search_type": "vector",
+      "use_hyde": false,
+      "match_threshold": 0.5,
+      "reranker": "none",
+      "question": "What is the priority support channel for Service B?",
+      "expected": "portal",
+      "answer": "Priority support channel: customer portal.",
+      "hit@5": true,
+      "hit@1": true,
+      "judge_yes": false,
+      "judge_justification": "CTX1 is incomplete and does not specify the priority support channel for Service B, so the expected \"customer portal\" is not confirmed.",
+      "judge_contexts": [
+        {
+          "id": "CTX1",
+          "doc_path": "semantic/kb/empresa_x/services/servico_b.md",
+          "chunk_ix": 0,
+          "score": 0.618471891890541,
+          "snippet": "# Service B — SLA and Scope (Empresa X)  ## Description Service B consists of monitoring, preventive maintenance, and N2 support for incidents and requests within the contracted scope. ## SLA and Maintenance Window - SLA: 99.9% monthly uptime. - Maintenance window: Saturdays, 1am–5am. ## Channels an…"
+        }
+      ],
+      "top1_path": "semantic/kb/empresa_x/services/servico_b.md",
+      "top1_chunk_ix": 0,
+      "top1_score": 0.618471891890541,
+      "top1_snippet": "# Service B — SLA and Scope (Empresa X)  ## Description Service B consists of monitoring, preventive maintenance, and N2 support for incidents and requests within the contracted scope. ## SLA and Maintenance Window - SLA: 99.9% monthly uptime. - Maintenance window: Saturdays, 1am–5am. ## Channels an…"
+    },
+    {
+      "experiment": "exp1",
+      "chunking": "semantic",
+      "search_type": "vector",
+      "use_hyde": false,
+      "match_threshold": 0.5,
+      "reranker": "none",
+      "question": "What is the maintenance window for Service B?",
+      "expected": [
+        "Saturdays",
+        "1am–5am"
+      ],
+      "answer": "Maintenance window on Saturdays, 1am to 5am.",
+      "hit@5": true,
+      "hit@1": true,
+      "judge_yes": true,
+      "judge_justification": "Maintenance window explicitly stated as \"Saturdays, 1am–5am\" in CTX1.",
+      "judge_contexts": [
+        {
+          "id": "CTX1",
+          "doc_path": "semantic/kb/empresa_x/services/servico_b.md",
+          "chunk_ix": 0,
+          "score": 0.679289553578992,
+          "snippet": "# Service B — SLA and Scope (Empresa X)  ## Description Service B consists of monitoring, preventive maintenance, and N2 support for incidents and requests within the contracted scope. ## SLA and Maintenance Window - SLA: 99.9% monthly uptime. - Maintenance window: Saturdays, 1am–5am. ## Channels an…"
+        }
+      ],
+      "top1_path": "semantic/kb/empresa_x/services/servico_b.md",
+      "top1_chunk_ix": 0,
+      "top1_score": 0.679289553578992,
+      "top1_snippet": "# Service B — SLA and Scope (Empresa X)  ## Description Service B consists of monitoring, preventive maintenance, and N2 support for incidents and requests within the contracted scope. ## SLA and Maintenance Window - SLA: 99.9% monthly uptime. - Maintenance window: Saturdays, 1am–5am. ## Channels an…"
+    },
+    {
+      "experiment": "exp1",
+      "chunking": "semantic",
+      "search_type": "vector",
+      "use_hyde": false,
+      "match_threshold": 0.5,
+      "reranker": "none",
+      "question": "What makes up the training and support for Product A?",
+      "expected": [
+        "training",
+        "basic support"
+      ],
+      "answer": "Training and basic support during the warranty period.",
+      "hit@5": true,
+      "hit@1": true,
+      "judge_yes": false,
+      "judge_justification": "CTX1 mentions \"initial training track and a knowledge base\" but does not specify \"basic support during the warranty period.\"",
+      "judge_contexts": [
+        {
+          "id": "CTX1",
+          "doc_path": "semantic/kb/empresa_x/products/produto_a.md",
+          "chunk_ix": 0,
+          "score": 0.652838768723937,
+          "snippet": "# Product A — Specifications and Policies (Empresa X)  ## Overview Product A was built for mid-size operations, focused on stability, ease of use, and fast deployment. It supports commercial and operational routines, with an initial training track and a knowledge base. ## Commercial Terms - Payment:…"
+        }
+      ],
+      "top1_path": "semantic/kb/empresa_x/products/produto_a.md",
+      "top1_chunk_ix": 0,
+      "top1_score": 0.652838768723937,
+      "top1_snippet": "# Product A — Specifications and Policies (Empresa X)  ## Overview Product A was built for mid-size operations, focused on stability, ease of use, and fast deployment. It supports commercial and operational routines, with an initial training track and a knowledge base. ## Commercial Terms - Payment:…"
+    },
+    {
+      "experiment": "exp1",
+      "chunking": "semantic",
+      "search_type": "vector",
+      "use_hyde": false,
+      "match_threshold": 0.5,
+      "reranker": "none",
+      "question": "Confirm the payment terms Maria requested",
+      "expected": "30/60",
+      "answer": "Installment payment over 30/60 days.",
+      "hit@5": false,
+      "hit@1": false,
+      "judge_yes": false,
+      "judge_justification": "no information about Maria's requested payment terms or installment payment over 30/60 days is provided in the contexts.",
+      "judge_contexts": [],
+      "top1_path": null,
+      "top1_chunk_ix": null,
+      "top1_score": null,
+      "top1_snippet": null
+    },
+    {
+      "experiment": "exp1",
+      "chunking": "semantic",
+      "search_type": "vector",
+      "use_hyde": false,
+      "match_threshold": 0.5,
+      "reranker": "none",
+      "question": "What warranty did the lead Maria mention?",
+      "expected": "12-month warranty",
+      "answer": "Standard 12-month warranty.",
+      "hit@5": false,
+      "hit@1": false,
+      "judge_yes": false,
+      "judge_justification": "No contexts provided mention Maria or any warranty details.",
+      "judge_contexts": [],
+      "top1_path": null,
+      "top1_chunk_ix": null,
+      "top1_score": null,
+      "top1_snippet": null
+    },
+    {
+      "experiment": "exp2",
+      "chunking": "semantic",
+      "search_type": "hybrid_union",
+      "use_hyde": true,
+      "match_threshold": 0.5,
+      "reranker": "none",
+      "question": "What are the commercial terms and warranty for Product A?",
+      "expected": [
+        "30/60",
+        "12 months"
+      ],
+      "answer": "Payment over 30/60 and a 12-month warranty.",
+      "hit@5": true,
+      "hit@1": true,
+      "judge_yes": false,
+      "judge_justification": "CTX1 and CTX2 mention commercial terms and warranty but do not specify payment over 30/60 days or a 12-month warranty.",
+      "judge_contexts": [
+        {
+          "id": "CTX1",
+          "doc_path": "semantic/kb/empresa_x/products/produto_a.md",
+          "chunk_ix": 0,
+          "score": 0.633625035838537,
+          "snippet": "# Product A — Specifications and Policies (Empresa X)  ## Overview Product A was built for mid-size operations, focused on stability, ease of use, and fast deployment. It supports commercial and operational routines, with an initial training track and a knowledge base. ## Commercial Terms - Payment:…"
+        },
+        {
+          "id": "CTX2",
+          "doc_path": "semantic/kb/empresa_x/products/produto_a.md",
+          "chunk_ix": 0,
+          "score": 0.0021739131771028,
+          "snippet": "# Product A — Specifications and Policies (Empresa X)  ## Overview Product A was built for mid-size operations, focused on stability, ease of use, and fast deployment. It supports commercial and operational routines, with an initial training track and a knowledge base. ## Commercial Terms - Payment:…"
+        }
+      ],
+      "top1_path": "semantic/kb/empresa_x/products/produto_a.md",
+      "top1_chunk_ix": 0,
+      "top1_score": 0.633625035838537,
+      "top1_snippet": "# Product A — Specifications and Policies (Empresa X)  ## Overview Product A was built for mid-size operations, focused on stability, ease of use, and fast deployment. It supports commercial and operational routines, with an initial training track and a knowledge base. ## Commercial Terms - Payment:…"
+    },
+    {
+      "experiment": "exp2",
+      "chunking": "semantic",
+      "search_type": "hybrid_union",
+      "use_hyde": true,
+      "match_threshold": 0.5,
+      "reranker": "none",
+      "question": "What is the SLA for Service B?",
+      "expected": "99.9%",
+      "answer": "SLA of 99.9% monthly uptime.",
+      "hit@5": true,
+      "hit@1": true,
+      "judge_yes": true,
+      "judge_justification": "CTX1 and CTX3 explicitly state the SLA for Service B as \"99.9% monthly uptime.\"",
+      "judge_contexts": [
+        {
+          "id": "CTX1",
+          "doc_path": "semantic/kb/empresa_x/services/servico_b.md",
+          "chunk_ix": 0,
+          "score": 0.684075689393429,
+          "snippet": "# Service B — SLA and Scope (Empresa X)  ## Description Service B consists of monitoring, preventive maintenance, and N2 support for incidents and requests within the contracted scope. ## SLA and Maintenance Window - SLA: 99.9% monthly uptime. - Maintenance window: Saturdays, 1am–5am. ## Channels an…"
+        },
+        {
+          "id": "CTX2",
+          "doc_path": "semantic/kb/empresa_x/lead_reports/lead_maria.md",
+          "chunk_ix": 0,
+          "score": 0.177905142307281,
+          "snippet": "# Lead Report — Maria (Empresa X)  ## Executive Summary - Industry: agricultural-input retail (mid-size) - Estimated budget: R$ 80,000 - Desired timeline: 60 days - Focus: standardize the support journey and consolidate information in a single dashboard  ## Context and Objectives Maria works as IT a…"
+        },
+        {
+          "id": "CTX3",
+          "doc_path": "semantic/kb/empresa_x/services/servico_b.md",
+          "chunk_ix": 0,
+          "score": 0.139215692877769,
+          "snippet": "# Service B — SLA and Scope (Empresa X)  ## Description Service B consists of monitoring, preventive maintenance, and N2 support for incidents and requests within the contracted scope. ## SLA and Maintenance Window - SLA: 99.9% monthly uptime. - Maintenance window: Saturdays, 1am–5am. ## Channels an…"
+        },
+        {
+          "id": "CTX4",
+          "doc_path": "semantic/kb/empresa_x/lead_reports/lead_joao.md",
+          "chunk_ix": 0,
+          "score": 0.12647619843483,
+          "snippet": "# Lead Report — João (Empresa X)  ## Executive Summary - Industry: agriculture (soybean farming) — agro - Size: mid-large - Estimated budget: R$ 150,000 - Desired timeline: 90 days  ## Operational Context João is an operations manager, focused on harvest planning and input availability. The goal is …"
+        }
+      ],
+      "top1_path": "semantic/kb/empresa_x/services/servico_b.md",
+      "top1_chunk_ix": 0,
+      "top1_score": 0.684075689393429,
+      "top1_snippet": "# Service B — SLA and Scope (Empresa X)  ## Description Service B consists of monitoring, preventive maintenance, and N2 support for incidents and requests within the contracted scope. ## SLA and Maintenance Window - SLA: 99.9% monthly uptime. - Maintenance window: Saturdays, 1am–5am. ## Channels an…"
+    },
+    {
+      "experiment": "exp2",
+      "chunking": "semantic",
+      "search_type": "hybrid_union",
+      "use_hyde": true,
+      "match_threshold": 0.5,
+      "reranker": "none",
+      "question": "What is the deadline for cancellation without penalty?",
+      "expected": "7 business days",
+      "answer": "Cancellation without penalty within 7 business days.",
+      "hit@5": true,
+      "hit@1": true,
+      "judge_yes": true,
+      "judge_justification": "Cancellation allowed within 7 business days after signing, with no penalty (CTX1).",
+      "judge_contexts": [
+        {
+          "id": "CTX1",
+          "doc_path": "semantic/kb/empresa_x/policies/cancelamento.md",
+          "chunk_ix": 0,
+          "score": 0.523617797479515,
+          "snippet": "# Cancellation Policy (Empresa X)  ## Scope Applies to Product A and Service B contracts. ## Cooling-Off Period - Cancellation allowed within 7 business days after signing, with no penalty. ## Penalties and Conditions - After 7 business days, a proportional penalty of 10% of the remaining contract v…"
+        }
+      ],
+      "top1_path": "semantic/kb/empresa_x/policies/cancelamento.md",
+      "top1_chunk_ix": 0,
+      "top1_score": 0.523617797479515,
+      "top1_snippet": "# Cancellation Policy (Empresa X)  ## Scope Applies to Product A and Service B contracts. ## Cooling-Off Period - Cancellation allowed within 7 business days after signing, with no penalty. ## Penalties and Conditions - After 7 business days, a proportional penalty of 10% of the remaining contract v…"
+    },
+    {
+      "experiment": "exp2",
+      "chunking": "semantic",
+      "search_type": "hybrid_union",
+      "use_hyde": true,
+      "match_threshold": 0.5,
+      "reranker": "none",
+      "question": "What items are included with Product A?",
+      "expected": [
+        "installation",
+        "training",
+        "support"
+      ],
+      "answer": "Includes installation, initial training, and basic support.",
+      "hit@5": true,
+      "hit@1": false,
+      "judge_yes": true,
+      "judge_justification": "includes initial training and a knowledge base mentioned in CTX2, which aligns with initial training and basic support; installation is implied by \"fast deployment\" (CTX2).",
+      "judge_contexts": [
+        {
+          "id": "CTX1",
+          "doc_path": "semantic/kb/empresa_x/lead_reports/lead_maria.md",
+          "chunk_ix": 0,
+          "score": 0.00156250002328306,
+          "snippet": "# Lead Report — Maria (Empresa X)  ## Executive Summary - Industry: agricultural-input retail (mid-size) - Estimated budget: R$ 80,000 - Desired timeline: 60 days - Focus: standardize the support journey and consolidate information in a single dashboard  ## Context and Objectives Maria works as IT a…"
+        },
+        {
+          "id": "CTX2",
+          "doc_path": "semantic/kb/empresa_x/products/produto_a.md",
+          "chunk_ix": 0,
+          "score": 0.00147058826405555,
+          "snippet": "# Product A — Specifications and Policies (Empresa X)  ## Overview Product A was built for mid-size operations, focused on stability, ease of use, and fast deployment. It supports commercial and operational routines, with an initial training track and a knowledge base. ## Commercial Terms - Payment:…"
+        }
+      ],
+      "top1_path": "semantic/kb/empresa_x/lead_reports/lead_maria.md",
+      "top1_chunk_ix": 0,
+      "top1_score": 0.00156250002328306,
+      "top1_snippet": "# Lead Report — Maria (Empresa X)  ## Executive Summary - Industry: agricultural-input retail (mid-size) - Estimated budget: R$ 80,000 - Desired timeline: 60 days - Focus: standardize the support journey and consolidate information in a single dashboard  ## Context and Objectives Maria works as IT a…"
+    },
+    {
+      "experiment": "exp2",
+      "chunking": "semantic",
+      "search_type": "hybrid_union",
+      "use_hyde": true,
+      "match_threshold": 0.5,
+      "reranker": "none",
+      "question": "What type of contract model does Product A use?",
+      "expected": "annual subscription",
+      "answer": "Contracted via annual subscription with automatic renewal.",
+      "hit@5": false,
+      "hit@1": false,
+      "judge_yes": false,
+      "judge_justification": "no information about Product A's contract model or subscription terms is provided in the contexts.",
+      "judge_contexts": [],
+      "top1_path": null,
+      "top1_chunk_ix": null,
+      "top1_score": null,
+      "top1_snippet": null
+    },
+    {
+      "experiment": "exp2",
+      "chunking": "semantic",
+      "search_type": "hybrid_union",
+      "use_hyde": true,
+      "match_threshold": 0.5,
+      "reranker": "none",
+      "question": "What is the priority support channel for Service B?",
+      "expected": "portal",
+      "answer": "Priority support channel: customer portal.",
+      "hit@5": true,
+      "hit@1": true,
+      "judge_yes": false,
+      "judge_justification": "The retrieved contexts do not mention the priority support channel or specify the customer portal as the priority channel for Service B.",
+      "judge_contexts": [
+        {
+          "id": "CTX1",
+          "doc_path": "semantic/kb/empresa_x/services/servico_b.md",
+          "chunk_ix": 0,
+          "score": 0.566534856490161,
+          "snippet": "# Service B — SLA and Scope (Empresa X)  ## Description Service B consists of monitoring, preventive maintenance, and N2 support for incidents and requests within the contracted scope. ## SLA and Maintenance Window - SLA: 99.9% monthly uptime. - Maintenance window: Saturdays, 1am–5am. ## Channels an…"
+        },
+        {
+          "id": "CTX2",
+          "doc_path": "semantic/kb/empresa_x/services/servico_b.md",
+          "chunk_ix": 0,
+          "score": 0.00333333341404796,
+          "snippet": "# Service B — SLA and Scope (Empresa X)  ## Description Service B consists of monitoring, preventive maintenance, and N2 support for incidents and requests within the contracted scope. ## SLA and Maintenance Window - SLA: 99.9% monthly uptime. - Maintenance window: Saturdays, 1am–5am. ## Channels an…"
+        }
+      ],
+      "top1_path": "semantic/kb/empresa_x/services/servico_b.md",
+      "top1_chunk_ix": 0,
+      "top1_score": 0.566534856490161,
+      "top1_snippet": "# Service B — SLA and Scope (Empresa X)  ## Description Service B consists of monitoring, preventive maintenance, and N2 support for incidents and requests within the contracted scope. ## SLA and Maintenance Window - SLA: 99.9% monthly uptime. - Maintenance window: Saturdays, 1am–5am. ## Channels an…"
+    },
+    {
+      "experiment": "exp2",
+      "chunking": "semantic",
+      "search_type": "hybrid_union",
+      "use_hyde": true,
+      "match_threshold": 0.5,
+      "reranker": "none",
+      "question": "What is the maintenance window for Service B?",
+      "expected": [
+        "Saturdays",
+        "1am–5am"
+      ],
+      "answer": "Maintenance window on Saturdays, 1am to 5am.",
+      "hit@5": true,
+      "hit@1": true,
+      "judge_yes": true,
+      "judge_justification": "CTX1 and CTX2 both state the maintenance window for Service B is Saturdays, 1am–5am.",
+      "judge_contexts": [
+        {
+          "id": "CTX1",
+          "doc_path": "semantic/kb/empresa_x/services/servico_b.md",
+          "chunk_ix": 0,
+          "score": 0.648232450092253,
+          "snippet": "# Service B — SLA and Scope (Empresa X)  ## Description Service B consists of monitoring, preventive maintenance, and N2 support for incidents and requests within the contracted scope. ## SLA and Maintenance Window - SLA: 99.9% monthly uptime. - Maintenance window: Saturdays, 1am–5am. ## Channels an…"
+        },
+        {
+          "id": "CTX2",
+          "doc_path": "semantic/kb/empresa_x/services/servico_b.md",
+          "chunk_ix": 0,
+          "score": 0.00555555569007993,
+          "snippet": "# Service B — SLA and Scope (Empresa X)  ## Description Service B consists of monitoring, preventive maintenance, and N2 support for incidents and requests within the contracted scope. ## SLA and Maintenance Window - SLA: 99.9% monthly uptime. - Maintenance window: Saturdays, 1am–5am. ## Channels an…"
+        }
+      ],
+      "top1_path": "semantic/kb/empresa_x/services/servico_b.md",
+      "top1_chunk_ix": 0,
+      "top1_score": 0.648232450092253,
+      "top1_snippet": "# Service B — SLA and Scope (Empresa X)  ## Description Service B consists of monitoring, preventive maintenance, and N2 support for incidents and requests within the contracted scope. ## SLA and Maintenance Window - SLA: 99.9% monthly uptime. - Maintenance window: Saturdays, 1am–5am. ## Channels an…"
+    },
+    {
+      "experiment": "exp2",
+      "chunking": "semantic",
+      "search_type": "hybrid_union",
+      "use_hyde": true,
+      "match_threshold": 0.5,
+      "reranker": "none",
+      "question": "What makes up the training and support for Product A?",
+      "expected": [
+        "training",
+        "basic support"
+      ],
+      "answer": "Training and basic support during the warranty period.",
+      "hit@5": true,
+      "hit@1": true,
+      "judge_yes": false,
+      "judge_justification": "CTX1 mentions \"initial training track and a knowledge base\" but does not specify basic support during the warranty period.",
+      "judge_contexts": [
+        {
+          "id": "CTX1",
+          "doc_path": "semantic/kb/empresa_x/products/produto_a.md",
+          "chunk_ix": 0,
+          "score": 0.622007158595462,
+          "snippet": "# Product A — Specifications and Policies (Empresa X)  ## Overview Product A was built for mid-size operations, focused on stability, ease of use, and fast deployment. It supports commercial and operational routines, with an initial training track and a knowledge base. ## Commercial Terms - Payment:…"
+        }
+      ],
+      "top1_path": "semantic/kb/empresa_x/products/produto_a.md",
+      "top1_chunk_ix": 0,
+      "top1_score": 0.622007158595462,
+      "top1_snippet": "# Product A — Specifications and Policies (Empresa X)  ## Overview Product A was built for mid-size operations, focused on stability, ease of use, and fast deployment. It supports commercial and operational routines, with an initial training track and a knowledge base. ## Commercial Terms - Payment:…"
+    },
+    {
+      "experiment": "exp2",
+      "chunking": "semantic",
+      "search_type": "hybrid_union",
+      "use_hyde": true,
+      "match_threshold": 0.5,
+      "reranker": "none",
+      "question": "Confirm the payment terms Maria requested",
+      "expected": "30/60",
+      "answer": "Installment payment over 30/60 days.",
+      "hit@5": true,
+      "hit@1": true,
+      "judge_yes": false,
+      "judge_justification": "CTX1 mentions Maria's desired timeline of 60 days but does not specify payment terms or installment details.",
+      "judge_contexts": [
+        {
+          "id": "CTX1",
+          "doc_path": "semantic/kb/empresa_x/lead_reports/lead_maria.md",
+          "chunk_ix": 0,
+          "score": 0.00400000018998981,
+          "snippet": "# Lead Report — Maria (Empresa X)  ## Executive Summary - Industry: agricultural-input retail (mid-size) - Estimated budget: R$ 80,000 - Desired timeline: 60 days - Focus: standardize the support journey and consolidate information in a single dashboard  ## Context and Objectives Maria works as IT a…"
+        }
+      ],
+      "top1_path": "semantic/kb/empresa_x/lead_reports/lead_maria.md",
+      "top1_chunk_ix": 0,
+      "top1_score": 0.00400000018998981,
+      "top1_snippet": "# Lead Report — Maria (Empresa X)  ## Executive Summary - Industry: agricultural-input retail (mid-size) - Estimated budget: R$ 80,000 - Desired timeline: 60 days - Focus: standardize the support journey and consolidate information in a single dashboard  ## Context and Objectives Maria works as IT a…"
+    },
+    {
+      "experiment": "exp2",
+      "chunking": "semantic",
+      "search_type": "hybrid_union",
+      "use_hyde": true,
+      "match_threshold": 0.5,
+      "reranker": "none",
+      "question": "What warranty did the lead Maria mention?",
+      "expected": "12-month warranty",
+      "answer": "Standard 12-month warranty.",
+      "hit@5": false,
+      "hit@1": false,
+      "judge_yes": false,
+      "judge_justification": "No contexts provided mention any warranty or details from lead Maria.",
+      "judge_contexts": [],
+      "top1_path": null,
+      "top1_chunk_ix": null,
+      "top1_score": null,
+      "top1_snippet": null
+    },
+    {
+      "experiment": "exp3",
+      "chunking": "semantic",
+      "search_type": "hybrid_rrf",
+      "use_hyde": false,
+      "match_threshold": 0.5,
+      "reranker": "none",
+      "question": "What are the commercial terms and warranty for Product A?",
+      "expected": [
+        "30/60",
+        "12 months"
+      ],
+      "answer": "Payment over 30/60 and a 12-month warranty.",
+      "hit@5": true,
+      "hit@1": true,
+      "judge_yes": false,
+      "judge_justification": "CTX1 mentions commercial terms but does not specify payment over 30/60 or a 12-month warranty.",
+      "judge_contexts": [
+        {
+          "id": "CTX1",
+          "doc_path": "semantic/kb/empresa_x/products/produto_a.md",
+          "chunk_ix": 0,
+          "score": 0.040983606557377,
+          "snippet": "# Product A — Specifications and Policies (Empresa X)  ## Overview Product A was built for mid-size operations, focused on stability, ease of use, and fast deployment. It supports commercial and operational routines, with an initial training track and a knowledge base. ## Commercial Terms - Payment:…"
+        }
+      ],
+      "top1_path": "semantic/kb/empresa_x/products/produto_a.md",
+      "top1_chunk_ix": 0,
+      "top1_score": 0.040983606557377,
+      "top1_snippet": "# Product A — Specifications and Policies (Empresa X)  ## Overview Product A was built for mid-size operations, focused on stability, ease of use, and fast deployment. It supports commercial and operational routines, with an initial training track and a knowledge base. ## Commercial Terms - Payment:…"
+    },
+    {
+      "experiment": "exp3",
+      "chunking": "semantic",
+      "search_type": "hybrid_rrf",
+      "use_hyde": false,
+      "match_threshold": 0.5,
+      "reranker": "none",
+      "question": "What is the SLA for Service B?",
+      "expected": "99.9%",
+      "answer": "SLA of 99.9% monthly uptime.",
+      "hit@5": true,
+      "hit@1": true,
+      "judge_yes": true,
+      "judge_justification": "CTX1 explicitly states the SLA for Service B as \"99.9% monthly uptime.\"",
+      "judge_contexts": [
+        {
+          "id": "CTX1",
+          "doc_path": "semantic/kb/empresa_x/services/servico_b.md",
+          "chunk_ix": 0,
+          "score": 0.0407191961924907,
+          "snippet": "# Service B — SLA and Scope (Empresa X)  ## Description Service B consists of monitoring, preventive maintenance, and N2 support for incidents and requests within the contracted scope. ## SLA and Maintenance Window - SLA: 99.9% monthly uptime. - Maintenance window: Saturdays, 1am–5am. ## Channels an…"
+        },
+        {
+          "id": "CTX2",
+          "doc_path": "semantic/kb/empresa_x/lead_reports/lead_maria.md",
+          "chunk_ix": 0,
+          "score": 0.0163934426229508,
+          "snippet": "# Lead Report — Maria (Empresa X)  ## Executive Summary - Industry: agricultural-input retail (mid-size) - Estimated budget: R$ 80,000 - Desired timeline: 60 days - Focus: standardize the support journey and consolidate information in a single dashboard  ## Context and Objectives Maria works as IT a…"
+        },
+        {
+          "id": "CTX3",
+          "doc_path": "semantic/kb/empresa_x/lead_reports/lead_joao.md",
+          "chunk_ix": 0,
+          "score": 0.0158730158730159,
+          "snippet": "# Lead Report — João (Empresa X)  ## Executive Summary - Industry: agriculture (soybean farming) — agro - Size: mid-large - Estimated budget: R$ 150,000 - Desired timeline: 90 days  ## Operational Context João is an operations manager, focused on harvest planning and input availability. The goal is …"
+        }
+      ],
+      "top1_path": "semantic/kb/empresa_x/services/servico_b.md",
+      "top1_chunk_ix": 0,
+      "top1_score": 0.0407191961924907,
+      "top1_snippet": "# Service B — SLA and Scope (Empresa X)  ## Description Service B consists of monitoring, preventive maintenance, and N2 support for incidents and requests within the contracted scope. ## SLA and Maintenance Window - SLA: 99.9% monthly uptime. - Maintenance window: Saturdays, 1am–5am. ## Channels an…"
+    },
+    {
+      "experiment": "exp3",
+      "chunking": "semantic",
+      "search_type": "hybrid_rrf",
+      "use_hyde": false,
+      "match_threshold": 0.5,
+      "reranker": "none",
+      "question": "What is the deadline for cancellation without penalty?",
+      "expected": "7 business days",
+      "answer": "Cancellation without penalty within 7 business days.",
+      "hit@5": true,
+      "hit@1": true,
+      "judge_yes": true,
+      "judge_justification": "Cancellation allowed within 7 business days after signing, with no penalty (CTX1).",
+      "judge_contexts": [
+        {
+          "id": "CTX1",
+          "doc_path": "semantic/kb/empresa_x/policies/cancelamento.md",
+          "chunk_ix": 0,
+          "score": 0.0245901639344262,
+          "snippet": "# Cancellation Policy (Empresa X)  ## Scope Applies to Product A and Service B contracts. ## Cooling-Off Period - Cancellation allowed within 7 business days after signing, with no penalty. ## Penalties and Conditions - After 7 business days, a proportional penalty of 10% of the remaining contract v…"
+        }
+      ],
+      "top1_path": "semantic/kb/empresa_x/policies/cancelamento.md",
+      "top1_chunk_ix": 0,
+      "top1_score": 0.0245901639344262,
+      "top1_snippet": "# Cancellation Policy (Empresa X)  ## Scope Applies to Product A and Service B contracts. ## Cooling-Off Period - Cancellation allowed within 7 business days after signing, with no penalty. ## Penalties and Conditions - After 7 business days, a proportional penalty of 10% of the remaining contract v…"
+    },
+    {
+      "experiment": "exp3",
+      "chunking": "semantic",
+      "search_type": "hybrid_rrf",
+      "use_hyde": false,
+      "match_threshold": 0.5,
+      "reranker": "none",
+      "question": "What items are included with Product A?",
+      "expected": [
+        "installation",
+        "training",
+        "support"
+      ],
+      "answer": "Includes installation, initial training, and basic support.",
+      "hit@5": true,
+      "hit@1": true,
+      "judge_yes": false,
+      "judge_justification": "Contexts mention initial training and a knowledge base (CTX1) but do not explicitly include installation or basic support.",
+      "judge_contexts": [
+        {
+          "id": "CTX1",
+          "doc_path": "semantic/kb/empresa_x/products/produto_a.md",
+          "chunk_ix": 0,
+          "score": 0.0407191961924907,
+          "snippet": "# Product A — Specifications and Policies (Empresa X)  ## Overview Product A was built for mid-size operations, focused on stability, ease of use, and fast deployment. It supports commercial and operational routines, with an initial training track and a knowledge base. ## Commercial Terms - Payment:…"
+        },
+        {
+          "id": "CTX2",
+          "doc_path": "semantic/kb/empresa_x/lead_reports/lead_maria.md",
+          "chunk_ix": 0,
+          "score": 0.0163934426229508,
+          "snippet": "# Lead Report — Maria (Empresa X)  ## Executive Summary - Industry: agricultural-input retail (mid-size) - Estimated budget: R$ 80,000 - Desired timeline: 60 days - Focus: standardize the support journey and consolidate information in a single dashboard  ## Context and Objectives Maria works as IT a…"
+        }
+      ],
+      "top1_path": "semantic/kb/empresa_x/products/produto_a.md",
+      "top1_chunk_ix": 0,
+      "top1_score": 0.0407191961924907,
+      "top1_snippet": "# Product A — Specifications and Policies (Empresa X)  ## Overview Product A was built for mid-size operations, focused on stability, ease of use, and fast deployment. It supports commercial and operational routines, with an initial training track and a knowledge base. ## Commercial Terms - Payment:…"
+    },
+    {
+      "experiment": "exp3",
+      "chunking": "semantic",
+      "search_type": "hybrid_rrf",
+      "use_hyde": false,
+      "match_threshold": 0.5,
+      "reranker": "none",
+      "question": "What type of contract model does Product A use?",
+      "expected": "annual subscription",
+      "answer": "Contracted via annual subscription with automatic renewal.",
+      "hit@5": true,
+      "hit@1": true,
+      "judge_yes": false,
+      "judge_justification": "CTX1 does not provide any information about the contract model or subscription terms for Product A.",
+      "judge_contexts": [
+        {
+          "id": "CTX1",
+          "doc_path": "semantic/kb/empresa_x/products/produto_a.md",
+          "chunk_ix": 0,
+          "score": 0.0245901639344262,
+          "snippet": "# Product A — Specifications and Policies (Empresa X)  ## Overview Product A was built for mid-size operations, focused on stability, ease of use, and fast deployment. It supports commercial and operational routines, with an initial training track and a knowledge base. ## Commercial Terms - Payment:…"
+        }
+      ],
+      "top1_path": "semantic/kb/empresa_x/products/produto_a.md",
+      "top1_chunk_ix": 0,
+      "top1_score": 0.0245901639344262,
+      "top1_snippet": "# Product A — Specifications and Policies (Empresa X)  ## Overview Product A was built for mid-size operations, focused on stability, ease of use, and fast deployment. It supports commercial and operational routines, with an initial training track and a knowledge base. ## Commercial Terms - Payment:…"
+    },
+    {
+      "experiment": "exp3",
+      "chunking": "semantic",
+      "search_type": "hybrid_rrf",
+      "use_hyde": false,
+      "match_threshold": 0.5,
+      "reranker": "none",
+      "question": "What is the priority support channel for Service B?",
+      "expected": "portal",
+      "answer": "Priority support channel: customer portal.",
+      "hit@5": true,
+      "hit@1": true,
+      "judge_yes": false,
+      "judge_justification": "CTX1 mentions channels but does not specify the priority support channel as the customer portal.",
+      "judge_contexts": [
+        {
+          "id": "CTX1",
+          "doc_path": "semantic/kb/empresa_x/services/servico_b.md",
+          "chunk_ix": 0,
+          "score": 0.040983606557377,
+          "snippet": "# Service B — SLA and Scope (Empresa X)  ## Description Service B consists of monitoring, preventive maintenance, and N2 support for incidents and requests within the contracted scope. ## SLA and Maintenance Window - SLA: 99.9% monthly uptime. - Maintenance window: Saturdays, 1am–5am. ## Channels an…"
+        }
+      ],
+      "top1_path": "semantic/kb/empresa_x/services/servico_b.md",
+      "top1_chunk_ix": 0,
+      "top1_score": 0.040983606557377,
+      "top1_snippet": "# Service B — SLA and Scope (Empresa X)  ## Description Service B consists of monitoring, preventive maintenance, and N2 support for incidents and requests within the contracted scope. ## SLA and Maintenance Window - SLA: 99.9% monthly uptime. - Maintenance window: Saturdays, 1am–5am. ## Channels an…"
+    },
+    {
+      "experiment": "exp3",
+      "chunking": "semantic",
+      "search_type": "hybrid_rrf",
+      "use_hyde": false,
+      "match_threshold": 0.5,
+      "reranker": "none",
+      "question": "What is the maintenance window for Service B?",
+      "expected": [
+        "Saturdays",
+        "1am–5am"
+      ],
+      "answer": "Maintenance window on Saturdays, 1am to 5am.",
+      "hit@5": true,
+      "hit@1": true,
+      "judge_yes": true,
+      "judge_justification": "Maintenance window explicitly stated as \"Saturdays, 1am–5am\" in CTX1.",
+      "judge_contexts": [
+        {
+          "id": "CTX1",
+          "doc_path": "semantic/kb/empresa_x/services/servico_b.md",
+          "chunk_ix": 0,
+          "score": 0.040983606557377,
+          "snippet": "# Service B — SLA and Scope (Empresa X)  ## Description Service B consists of monitoring, preventive maintenance, and N2 support for incidents and requests within the contracted scope. ## SLA and Maintenance Window - SLA: 99.9% monthly uptime. - Maintenance window: Saturdays, 1am–5am. ## Channels an…"
+        }
+      ],
+      "top1_path": "semantic/kb/empresa_x/services/servico_b.md",
+      "top1_chunk_ix": 0,
+      "top1_score": 0.040983606557377,
+      "top1_snippet": "# Service B — SLA and Scope (Empresa X)  ## Description Service B consists of monitoring, preventive maintenance, and N2 support for incidents and requests within the contracted scope. ## SLA and Maintenance Window - SLA: 99.9% monthly uptime. - Maintenance window: Saturdays, 1am–5am. ## Channels an…"
+    },
+    {
+      "experiment": "exp3",
+      "chunking": "semantic",
+      "search_type": "hybrid_rrf",
+      "use_hyde": false,
+      "match_threshold": 0.5,
+      "reranker": "none",
+      "question": "What makes up the training and support for Product A?",
+      "expected": [
+        "training",
+        "basic support"
+      ],
+      "answer": "Training and basic support during the warranty period.",
+      "hit@5": true,
+      "hit@1": true,
+      "judge_yes": false,
+      "judge_justification": "CTX1 mentions \"initial training track and a knowledge base\" but does not specify \"basic support during the warranty period\" or detail the full scope of training and support.",
+      "judge_contexts": [
+        {
+          "id": "CTX1",
+          "doc_path": "semantic/kb/empresa_x/products/produto_a.md",
+          "chunk_ix": 0,
+          "score": 0.0245901639344262,
+          "snippet": "# Product A — Specifications and Policies (Empresa X)  ## Overview Product A was built for mid-size operations, focused on stability, ease of use, and fast deployment. It supports commercial and operational routines, with an initial training track and a knowledge base. ## Commercial Terms - Payment:…"
+        }
+      ],
+      "top1_path": "semantic/kb/empresa_x/products/produto_a.md",
+      "top1_chunk_ix": 0,
+      "top1_score": 0.0245901639344262,
+      "top1_snippet": "# Product A — Specifications and Policies (Empresa X)  ## Overview Product A was built for mid-size operations, focused on stability, ease of use, and fast deployment. It supports commercial and operational routines, with an initial training track and a knowledge base. ## Commercial Terms - Payment:…"
+    },
+    {
+      "experiment": "exp3",
+      "chunking": "semantic",
+      "search_type": "hybrid_rrf",
+      "use_hyde": false,
+      "match_threshold": 0.5,
+      "reranker": "none",
+      "question": "Confirm the payment terms Maria requested",
+      "expected": "30/60",
+      "answer": "Installment payment over 30/60 days.",
+      "hit@5": true,
+      "hit@1": true,
+      "judge_yes": false,
+      "judge_justification": "CTX1 mentions Maria's desired timeline of 60 days but does not specify payment terms or installment details.",
+      "judge_contexts": [
+        {
+          "id": "CTX1",
+          "doc_path": "semantic/kb/empresa_x/lead_reports/lead_maria.md",
+          "chunk_ix": 0,
+          "score": 0.0163934426229508,
+          "snippet": "# Lead Report — Maria (Empresa X)  ## Executive Summary - Industry: agricultural-input retail (mid-size) - Estimated budget: R$ 80,000 - Desired timeline: 60 days - Focus: standardize the support journey and consolidate information in a single dashboard  ## Context and Objectives Maria works as IT a…"
+        }
+      ],
+      "top1_path": "semantic/kb/empresa_x/lead_reports/lead_maria.md",
+      "top1_chunk_ix": 0,
+      "top1_score": 0.0163934426229508,
+      "top1_snippet": "# Lead Report — Maria (Empresa X)  ## Executive Summary - Industry: agricultural-input retail (mid-size) - Estimated budget: R$ 80,000 - Desired timeline: 60 days - Focus: standardize the support journey and consolidate information in a single dashboard  ## Context and Objectives Maria works as IT a…"
+    },
+    {
+      "experiment": "exp3",
+      "chunking": "semantic",
+      "search_type": "hybrid_rrf",
+      "use_hyde": false,
+      "match_threshold": 0.5,
+      "reranker": "none",
+      "question": "What warranty did the lead Maria mention?",
+      "expected": "12-month warranty",
+      "answer": "Standard 12-month warranty.",
+      "hit@5": false,
+      "hit@1": false,
+      "judge_yes": false,
+      "judge_justification": "No contexts provided mention Maria or any warranty details.",
+      "judge_contexts": [],
+      "top1_path": null,
+      "top1_chunk_ix": null,
+      "top1_score": null,
+      "top1_snippet": null
+    }
+  ]
+}

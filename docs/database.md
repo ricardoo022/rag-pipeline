@@ -60,7 +60,7 @@ Chunked + embedded content, what search actually queries.
 | `chunk_ix` | int | chunk position within the document |
 | `content` | text | chunk text |
 | `embedding` | `vector(1536)` | OpenAI `text-embedding-3-small` |
-| `fts` | tsvector, generated | `to_tsvector('portuguese', content)`, stored, auto-maintained |
+| `fts` | tsvector, generated | `to_tsvector('english', content)`, stored, auto-maintained |
 | `meta` | jsonb | e.g. `{"chunking": "fixed"\|"markdown"\|"semantic"}` |
 | `client_id` | uuid, null | optional tenant/project tag |
 | `empresa` | text, null | optional tenant/project tag |
@@ -85,7 +85,7 @@ All take `p_k` (limit), optional `p_threshold`, and optional `p_client_id`/`p_em
 filters. Score is always `1 - cosine_distance` for the vector component (higher = more similar).
 
 - **`kb_vector_search`** — pure vector similarity (`embedding <=> query_embedding`).
-- **`kb_text_search`** — pure full-text search (`plainto_tsquery('portuguese', ...)`,
+- **`kb_text_search`** — pure full-text search (`plainto_tsquery('english', ...)`,
   `ts_rank_cd` score).
 - **`kb_hybrid_search`** — vector + text combined via **Reciprocal Rank Fusion**
   (fixed `K=60`, weights: vector `1.5`, text `1.0`). This is the default/recommended search mode.
